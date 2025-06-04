@@ -1,13 +1,15 @@
 {
 	"configurations": [
+		
+		
 {
 	"name": "(gdb) Launch",
 	"type": "cppdbg",
 	"request": "launch",
-	"program": "${workspaceFolder}/ex01/phonebook",
+	"program": "${workspaceFolder}/cpp00/ex01/phonebook",
 	"args": [],
 	"stopAtEntry": false,
-	"cwd": "${workspaceFolder}/ex01/",
+	"cwd": "${workspaceFolder}",
 	"environment": [],
 	"externalConsole": false,
 	"MIMode": "gdb",

@@ -14,28 +14,28 @@
 #define PHONEBOOK_HPP
 
 #include "./Contact.hpp"
-#include <iostream>
 
 class PhoneBook {
 
 public:
   void prompt(void) const;
   void addContact(std::string firstName, std::string lastName,
-	std::string nickname, std::string number,
-	std::string secret);
-  void search(void) const;
+                  std::string nickname, std::string number, std::string secret);
+  int search(void) const;
 
   PhoneBook(void) {
-    std::cout << "PhoneBook constructed!" << std::endl;
     this->m_index = 0;
+    this->m_size = 0;
   }
   ~PhoneBook(void) {}
-
-  void getUserInput(std::string str, void (Contact::*f)(std::string));
+  void printContact(int i);
 
 private:
   Contact m_contacts[8];
   int m_index;
+  int m_size;
+
+  void printSearchField(std::string str) const;
 };
 
 #endif

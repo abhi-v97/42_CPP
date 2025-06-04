@@ -23,8 +23,6 @@ public:
 
   void setInfo(std::string firstName, std::string lastName,
                   std::string nickname, std::string number, std::string secret);
-  int findContact();
-  void printContact();
 
   // getters
   std::string firstName() const { return m_first_name; }
