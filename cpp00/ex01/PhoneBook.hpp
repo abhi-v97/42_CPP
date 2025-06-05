@@ -18,16 +18,15 @@
 class PhoneBook {
 
 public:
-  void prompt(void) const;
-  void addContact(std::string firstName, std::string lastName,
-                  std::string nickname, std::string number, std::string secret);
-  int search(void) const;
-
   PhoneBook(void) {
     this->m_index = 0;
     this->m_size = 0;
   }
   ~PhoneBook(void) {}
+  void prompt(void) const;
+  void addContact(std::string firstName, std::string lastName,
+                  std::string nickname, std::string number, std::string secret);
+  int search(void) const;
   void printContact(int i);
 
 private:

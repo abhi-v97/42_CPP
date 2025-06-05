@@ -6,7 +6,7 @@
 	"name": "(gdb) Launch",
 	"type": "cppdbg",
 	"request": "launch",
-	"program": "${workspaceFolder}/cpp00/ex01/phonebook",
+	"program": "${workspaceFolder}/cpp00/ex02/account",
 	"args": [],
 	"stopAtEntry": false,
 	"cwd": "${workspaceFolder}",
