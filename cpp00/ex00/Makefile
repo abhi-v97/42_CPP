@@ -1,6 +1,5 @@
 NAME = megaphone
 
-
 SRC = MegaPhone.cpp
 
 OBJS = ${SRC:%.cpp=%.o}
@@ -12,7 +11,7 @@ CFLAGS = -g -Wall -Wextra -Werror -std=c++98
 ${NAME}: ${OBJS}
 	${CC} ${OBJS} -o $@
 
-%.o:%.c
+%.o:%.cpp
 	${CC} ${CFLAGS} -c $< -o $@
 
 all: ${NAME}
