@@ -1,5 +1,4 @@
-NAME = account
-
+NAME = accounts
 
 SRC = Account.cpp tests.cpp
 

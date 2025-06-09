@@ -23,18 +23,18 @@ public:
     this->m_size = 0;
   }
   ~PhoneBook(void) {}
-  void prompt(void) const;
   void addContact(std::string firstName, std::string lastName,
                   std::string nickname, std::string number, std::string secret);
-  int search(void) const;
+  int searchTable(void) const;
   void printContact(int i);
+  int getSize(void);
 
 private:
   Contact m_contacts[8];
   int m_index;
   int m_size;
 
-  void printSearchField(std::string str) const;
+  void printField(std::string str) const;
 };
 
 #endif

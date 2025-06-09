@@ -21,6 +21,7 @@ public:
   Contact() { return; }
   ~Contact() { return; }
 
+  // setter
   void setInfo(std::string firstName, std::string lastName,
                   std::string nickname, std::string number, std::string secret);
 
