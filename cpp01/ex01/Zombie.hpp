@@ -21,7 +21,10 @@ public:
 
   void announce(void) const;
   std::string getName(void) const { return (this->m_name); }
+  void setName(const std::string &name) { m_name = name; }
 
 private:
   std::string m_name;
 };
+
+Zombie* zombieHorde(int N, std::string name);

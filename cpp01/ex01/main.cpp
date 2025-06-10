@@ -1,27 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Zombie.hpp                                         :+:      :+:    :+:   */
+/*   main.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: abhi <abhi@student.42.fr>                  #+#  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025-06-05 18:02:24 by abhi              #+#    #+#             */
-/*   Updated: 2025-06-05 18:02:24 by abhi             ###   ########.fr       */
+/*   Created: 2025-06-05 18:52:22 by abhi              #+#    #+#             */
+/*   Updated: 2025-06-05 18:52:22 by abhi             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "Zombie.hpp"
 #include <string>
+#include <cstdlib>
 
-class Zombie {
+Zombie *newZombie(std::string name);
+void randomChump(std::string name);
 
-public:
-  Zombie(void);
-  Zombie(std::string name);
-  ~Zombie(void);
+int main(int argc, char **argv) {
+	Zombie			*horde;
+	int				n = 3;
+	std::string		name = "zombie";
 
-  void announce(void) const;
-  std::string getName(void) const { return (this->m_name); }
+	if (argc != 1 && atoi(argv[1]) > 0)
+	 	n = atoi(argv[1]);
+	if (argc >= 3)
+		name = argv[2];
 
-private:
-  std::string m_name;
-};
+	horde = zombieHorde(n, name);
+	for (int i = 0; i < n; i++)
+		horde[i].announce();
+
+	delete [] horde;
+}
