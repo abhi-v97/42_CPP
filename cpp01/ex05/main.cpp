@@ -16,8 +16,8 @@
 
 int main(int argc, char **argv)
 {
-	(void)argv;
-
+	(void) argv;
+	
 	if (argc != 4)
 		return (0);
 	std::ifstream inf(argv[1]);
@@ -28,7 +28,7 @@ int main(int argc, char **argv)
 	}
 	std::string fileName(argv[1]);
 	fileName = fileName + ".replace";
-	std::ofstream outf(fileName.c_str());
+	std::ofstream outf(fileName.c_str());	
 
 	std::string str;
 	while (std::getline(inf, str))
