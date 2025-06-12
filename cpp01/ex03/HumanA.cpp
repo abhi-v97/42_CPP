@@ -17,4 +17,3 @@ void HumanA::attack(void) const {
   std::cout << getName() << " attacks with their " << this->m_weapon.getType()
             << std::endl;
 }
-

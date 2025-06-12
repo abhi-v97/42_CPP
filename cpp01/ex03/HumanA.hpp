@@ -25,9 +25,7 @@ private:
 public:
   HumanA(std::string name_, Weapon &weapon_)
       : m_name(name_), m_weapon(weapon_) {};
-  ~HumanA(void) {
-	std::cout << "bob destroyed" << std::endl;
-  };
+  ~HumanA(void) {};
   
 
   void attack(void) const;
