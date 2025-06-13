@@ -1,6 +1,6 @@
-NAME = replace.out
+NAME = harl.out
 
-SRC = main.cpp 
+SRC = main.cpp Harl.cpp
 
 OBJS = ${SRC:%.cpp=%.o}
 

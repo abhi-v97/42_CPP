@@ -10,33 +10,17 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <string>
-#include <fstream>
+#include "Harl.hpp"
 #include <iostream>
+#include <string>
 
 int main(int argc, char **argv)
 {
+	(void) argc;
 	(void) argv;
-	
-	if (argc != 4)
-		return (0);
-	std::ifstream inf(argv[1]);
-	if (!inf)
-	{
-		std::cerr << "could not open: " << argv[1] << "\n";
-		return (1);
-	}
-	std::string fileName(argv[1]);
-	fileName = fileName + ".replace";
-	std::ofstream outf(fileName.c_str());	
+	Harl harl;
 
-	std::string str;
-	while (std::getline(inf, str))
-	{
-		if (!str.find(argv[2], 0))
-			outf << argv[3] << "\n";
-		else
-			outf << str << "\n";
-	}
+	harl.complain("debug");
+	std::cout << std::endl;
 	return (0);
 }

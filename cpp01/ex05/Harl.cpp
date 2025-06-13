@@ -12,9 +12,11 @@
 
 #include "Harl.hpp"
 #include <iostream>
+#include <map>
 
 void Harl::debug(void) const
 {
+	std::cout << "[debug]" << std::endl;
 }
 
 void Harl::info(void) const
@@ -32,6 +34,16 @@ void Harl::error(void) const
 void Harl::complain(std::string level)
 {
 	typedef void (Harl::*funcPtr) (void) const;
-	std::string level[4] = ("debug", "info", "warning", "error");
+	std::string levels[4] = {"debug", "info", "warning", "error"};
 	funcPtr errorLevels[4] =  { &Harl::debug, &Harl::info, &Harl::warning, &Harl::error };
+	
+	int i = 0;
+	while (level.compare(levels[i]))
+	{
+		std::cout << "levels don't match\n";
+		i++;
+	}
+	
+	(void) errorLevels[i];
+	return ;
 }

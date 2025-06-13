@@ -6,7 +6,7 @@
 	"name": "(gdb) Launch",
 	"type": "cppdbg",
 	"request": "launch",
-	"program": "${workspaceFolder}/cpp00/ex02/account",
+	"program": "${workspaceFolder}/cpp01/ex05/harl.out",
 	"args": [],
 	"stopAtEntry": false,
 	"cwd": "${workspaceFolder}",
