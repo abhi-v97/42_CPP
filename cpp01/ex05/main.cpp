@@ -11,16 +11,14 @@
 /* ************************************************************************** */
 
 #include "Harl.hpp"
-#include <iostream>
 #include <string>
 
-int main(int argc, char **argv)
+int main(void)
 {
-	(void) argc;
-	(void) argv;
 	Harl harl;
 
 	harl.complain("debug");
-	std::cout << std::endl;
+	harl.complain("error");
+	harl.complain("DEFCON 1");
 	return (0);
 }
