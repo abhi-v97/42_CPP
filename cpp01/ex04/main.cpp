@@ -14,29 +14,53 @@
 #include <fstream>
 #include <iostream>
 
-int main(int argc, char **argv)
-{
-	(void)argv;
+static void stringReplace(std::string *buffer, std::string s1, std::string s2);
 
+int main(int argc, char **argv)
+{	
 	if (argc != 4)
 		return (0);
+
+	// open streams for input and output
 	std::ifstream inf(argv[1]);
-	if (!inf)
+	std::string outfile(argv[1]);
+	outfile = outfile + ".replace";
+	std::ofstream outf(outfile.c_str());
+	if (!inf.good() || !outf.good())
 	{
-		std::cerr << "could not open: " << argv[1] << "\n";
+		std::cerr << "File streaming error" << "\n";
 		return (1);
 	}
-	std::string fileName(argv[1]);
-	fileName = fileName + ".replace";
-	std::ofstream outf(fileName.c_str());
 
-	std::string str;
-	while (std::getline(inf, str))
+	// loop to copy contents, make a sub if needed
+	std::string buffer;
+	while (std::getline(inf, buffer))
 	{
-		if (!str.find(argv[2], 0))
-			outf << argv[3] << "\n";
-		else
-			outf << str << "\n";
+		stringReplace(&buffer, argv[2], argv[3]);
+		outf  << buffer;
+		if (!inf.eof())
+			outf << "\n";
 	}
 	return (0);
+}
+
+static void stringReplace(std::string *buffer, std::string s1, std::string s2)
+{
+	size_t cursor;
+
+	cursor = 0;
+	if (s1.empty())
+		return ;
+	while (cursor != std::string::npos)
+	{
+		cursor = buffer->find(s1, cursor);
+		if (cursor == std::string::npos)
+			break ;
+		buffer->erase(cursor, s1.length());
+		if (!s2.empty())
+		{
+			buffer->insert(cursor, s2);
+			cursor += s2.length(); // prevent inf loop if s1 = s2
+		}
+	}
 }
