@@ -1,0 +1,30 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.cpp                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: abhi <abhi@student.42.fr>                  #+#  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025-06-10 21:38:35 by abhi              #+#    #+#             */
+/*   Updated: 2025-06-10 21:38:35 by abhi             ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "Harl.hpp"
+#include <string>
+
+int main(int argc, char **argv)
+{
+	Harl harl;
+
+	if (argc < 2)
+	{
+		harl.complain("error");
+		harl.complain("DEFCON 1");
+	}
+	else 
+	{
+		harl.complain(argv[1]);
+	}
+	return (0);
+}
