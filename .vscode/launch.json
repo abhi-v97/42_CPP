@@ -4,7 +4,7 @@
 			"name": "(gdb) Launch",
 			"type": "cppdbg",
 			"request": "launch",
-			"program": "${workspaceFolder}/cpp01/ex04/replace.out",
+			"program": "${workspaceFolder}/cpp01/ex05/harl.out",
 			"args": [
 				"test", "a",
 			],
