@@ -17,14 +17,7 @@ int main(int argc, char **argv)
 {
 	Harl harl;
 
-	if (argc < 2)
-	{
-		harl.complain("error");
-		harl.complain("DEFCON 1");
-	}
-	else 
-	{
+	if (argc > 1)
 		harl.complain(argv[1]);
-	}
 	return (0);
 }
