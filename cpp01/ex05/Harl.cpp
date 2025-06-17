@@ -14,13 +14,13 @@
 #include <cstdlib>
 #include <iostream>
 
-void Harl::debug(void) const { std::cout << "[debug]" << std::endl; }
+void Harl::debug(void) const { std::cerr << "[debug]" << std::endl; }
 
-void Harl::info(void) const { std::cout << "[info]" << std::endl; }
+void Harl::info(void) const { std::cerr << "[info]" << std::endl; }
 
-void Harl::warning(void) const { std::cout << "[warning]" << std::endl; }
+void Harl::warning(void) const { std::cerr << "[warning]" << std::endl; }
 
-void Harl::error(void) const { std::cout << "[error]" << std::endl; }
+void Harl::error(void) const { std::cerr << "[error]" << std::endl; }
 
 void Harl::complain(std::string level) {
   typedef void (Harl::*funcPtr)(void) const;
@@ -32,7 +32,7 @@ void Harl::complain(std::string level) {
     if (level == levels[i])
       return (this->*errorLevel[i])();
 
-  std::cout << "Error: I don't know what " << level << " is supposed to mean."
+  std::cerr << "Error: I don't know what " << level << " is supposed to mean."
             << std::endl;
   return;
 }

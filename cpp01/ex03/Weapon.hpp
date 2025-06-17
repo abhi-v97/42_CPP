@@ -21,10 +21,10 @@ private:
 
 public:
   Weapon() {};
-  Weapon(std::string type) :m_type(type) {};
+  Weapon(std::string type) : m_type(type) {};
   ~Weapon() {};
 
-  std::string getType() const { return m_type; }
+  std::string const &getType() const { return this->m_type; }
   void setType(const std::string &type_) { m_type = type_; }
 };
 

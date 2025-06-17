@@ -14,15 +14,12 @@
 #include <string>
 #include <cstdlib>
 
-Zombie *newZombie(std::string name);
-void randomChump(std::string name);
-
 int main(int argc, char **argv) {
 	Zombie			*horde;
 	int				n = 3;
 	std::string		name = "zombie";
 
-	if (argc != 1 && atoi(argv[1]) > 0)
+	if (argc != 1 && atoi(argv[1]) >= 0)
 	 	n = atoi(argv[1]);
 	if (argc >= 3)
 		name = argv[2];
