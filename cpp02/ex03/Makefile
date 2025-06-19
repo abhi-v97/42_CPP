@@ -1,6 +1,6 @@
 NAME = bsp.out
 
-SRC = main.cpp Fixed.cpp
+SRC = main.cpp Fixed.cpp Point.cpp
 
 OBJS = ${SRC:%.cpp=%.o}
 

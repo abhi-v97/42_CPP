@@ -16,29 +16,29 @@
 
 // constructors and destructors
 Fixed::Fixed() : m_raw(0) {
-    std::cout << "Default constructor called" << std::endl;
+    // std::cout << "Default constructor called" << std::endl;
 }
 
 Fixed::Fixed(const Fixed &obj) {
-    std::cout << "Copy constructor called" << std::endl;
+    // std::cout << "Copy constructor called" << std::endl;
   *this = obj;
 }
 
 // n * 256 is equivalent to n << m_fractionalBits (n << 8)
 Fixed::Fixed(const int n) : m_raw(n * 256) {
-    std::cout << "Int constructor called" << std::endl;
+    // std::cout << "Int constructor called" << std::endl;
 }
 
 Fixed::Fixed(const float f) : m_raw(roundf(f * 256)) {
-    std::cout << "Float constructor called, m_raw: " << m_raw << std::endl;
+    // std::cout << "Float constructor called, m_raw: " << m_raw << std::endl;
 }
 
 Fixed::~Fixed() {
-  std::cout << "Destructor called" << std::endl;
+//   std::cout << "Destructor called" << std::endl;
 }
 
 Fixed &Fixed::operator=(Fixed const &src) {
-    std::cout << "Copy assignment operator called" << std::endl;
+    // std::cout << "Copy assignment operator called" << std::endl;
   if (this == &src)
     return (*this);
   this->setRawBits(src.getRawBits());
