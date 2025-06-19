@@ -12,6 +12,7 @@
 
 #include "Fixed.hpp"
 #include <iostream>
+#include <cmath>
 
 Fixed::Fixed() : m_raw(0)
 {
@@ -23,14 +24,13 @@ Fixed::Fixed(const Fixed &obj) {
 	*this = obj;
 }
 
-Fixed::Fixed(const int n) : m_raw(n << m_fractionalBits)
-{
-	std::cout << "Int constructor called" << std::endl;
+// n * 256 is equivalent to n << m_fractionalBits (n << 8)
+Fixed::Fixed(const int n) : m_raw(n * 256) {
+    std::cout << "Int constructor called" << std::endl;
 }
 
-Fixed::Fixed(const float f): m_raw(f * (1 << m_fractionalBits))
-{
-	std::cout << "Float constructor called" << std::endl;
+Fixed::Fixed(const float f) : m_raw(roundf(f * 256)) {
+    std::cout << "Float constructor called" << std::endl;
 }
 
 Fixed::~Fixed()
@@ -59,9 +59,8 @@ int Fixed::toInt(void) const {
 	return (this->getRawBits() >> this->m_fractionalBits);
 }
 
-float Fixed::toFloat(void) const {
-	return (this->getRawBits() / (float)(1 << this->m_fractionalBits));
-}
+// 256: 2^8, there's 8 fractional bits
+float Fixed::toFloat(void) const { return ((float)m_raw / 256); }
 
 std::ostream &operator<<(std::ostream &outf, const Fixed &obj) {
 	outf << obj.toFloat();
