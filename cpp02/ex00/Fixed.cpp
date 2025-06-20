@@ -13,15 +13,14 @@
 #include "Fixed.hpp"
 #include <iostream>
 
-Fixed::Fixed()
+Fixed::Fixed() : m_raw(0)
 {
 	std::cout << "Default constructor called" << std::endl;
-	this->setRawBits(0);
 }
 
-Fixed::Fixed(const Fixed &cpy) {
+Fixed::Fixed(const Fixed &obj) {
 	std::cout << "Copy constructor called" << std::endl;
-	*this = cpy;
+	*this = obj;
 }
 
 Fixed::~Fixed()
@@ -43,5 +42,6 @@ int Fixed::getRawBits(void) const {
 }
 
 void Fixed::setRawBits(int const raw) {
+	std::cout << "setRawBits member function called" << std::endl;
 	this->m_raw = raw;
 }
