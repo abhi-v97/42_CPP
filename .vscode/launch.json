@@ -4,7 +4,7 @@
 			"name": "(gdb) Launch",
 			"type": "cppdbg",
 			"request": "launch",
-			"program": "${workspaceFolder}/cpp02/ex02/fixed.out",
+			"program": "${workspaceFolder}/cpp03/ex00/ex00.out",
 			"args": [
 				"test", "a",
 			],
