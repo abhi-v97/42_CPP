@@ -16,7 +16,7 @@
 ClapTrap::ClapTrap(void)
     : m_name("DefaultName"), m_hitPoints(10), m_energyPoints(10),
       m_attackDmg(0) {
-  std::cout << "default constructor called." << std::endl;
+  std::cout << "default constructor called for a ClapTrap object." << std::endl;
   return;
 }
 
@@ -28,7 +28,7 @@ ClapTrap::ClapTrap(std::string name)
 }
 
 ClapTrap::ClapTrap(ClapTrap const &obj) {
-  std::cout << "copy constructor called" << std::endl;
+  std::cout << "copy constructor called for a ClapTrap object" << std::endl;
   *this = obj;
 }
 
