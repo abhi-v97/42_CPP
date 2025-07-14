@@ -17,13 +17,11 @@
 
 int main(void)
 {
-	ScavTrap	st1("scavvy");
-	ScavTrap st2(st1);
+	ScavTrap	st1("scavTrap1");
 	
 	std::cout << "st1 attack: " << st1.getAttackDmg() << std::endl;
-	std::cout << "st2 attack: " << st2.getAttackDmg() << std::endl;
-	st1.setAttackDmg(199);
-	std::cout << "st1 attack: " << st1.getAttackDmg() << std::endl;
-	std::cout << "st2 attack: " << st2.getAttackDmg() << std::endl;
+	std::cout << "st1 energy: " << st1.getEnergyPoints() << std::endl;
+	std::cout << "st1 HP: " << st1.getHitPoints() << std::endl;
+	st1.guardGate();
 	return (0);
 }
