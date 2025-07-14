@@ -1,4 +1,4 @@
-NAME = ex00.out
+NAME = test.out
 
 SRC = main.cpp ClapTrap.cpp
 
