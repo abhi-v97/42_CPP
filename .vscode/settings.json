@@ -51,5 +51,8 @@
 		"stdexcept": "cpp",
 		"streambuf": "cpp",
 		"typeinfo": "cpp"
-	}
+	},
+	"C_Cpp.clang_format_path": ".vscode/.clang-format",
+	"C_Cpp.clang_format_fallbackStyle": "none",
+	"clang-format.executable": "${workspaceRoot}/.vscode/clang-format",
 }

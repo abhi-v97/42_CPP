@@ -15,20 +15,21 @@
 
 #include "ClapTrap.hpp"
 
-class ScavTrap : public ClapTrap {
+class ScavTrap : public ClapTrap
+{
 	public:
-	ScavTrap();
-	ScavTrap(std::string name);
-	ScavTrap(ScavTrap &obj);
-	~ScavTrap();
-	
-	void attack(const std::string& target);
-	void takeDamage(unsigned int amount);
-	void beRepaired(unsigned int amount);
+	static int const defaultHitPoints = 100;
+		ScavTrap();
+		ScavTrap(std::string name);
+		ScavTrap(ScavTrap &obj);
+		~ScavTrap();
 
-	ScavTrap &operator=(ScavTrap &obj);
-	void guardGate(void);
+		void attack(const std::string &target);
+		void takeDamage(unsigned int amount);
+		void beRepaired(unsigned int amount);
 
+		ScavTrap &operator=(ScavTrap &obj);
+		void guardGate(void);
 };
 
 #endif // SCAVTRAP_HPP
