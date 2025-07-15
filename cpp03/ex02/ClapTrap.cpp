@@ -73,18 +73,18 @@ void ClapTrap::attack(const std::string &target)
 void ClapTrap::takeDamage(unsigned int amount)
 {
 	if (this->m_hitPoints == 0)
-		std::cout << "ClapTrap " << this->m_name
-				  << " health is already at zero, but sure, make it suffer" << std::endl;
+		std::cout << this->m_name
+				  << ": health is already at zero, but sure, make it suffer" << std::endl;
 	else if (this->m_hitPoints <= (int)amount)
 	{
 		this->m_hitPoints = 0;
-		std::cout << "ClapTrap " << this->m_name << " takes " << amount
-				  << " points of damage and is broken!" << std::endl;
+		std::cout << this->m_name << " takes " << amount
+				  << ": points of damage and is broken!" << std::endl;
 	}
 	else
 	{
 		this->m_hitPoints -= amount;
-		std::cout << "ClapTrap " << this->m_name << " takes " << amount << " points of damage!"
+		std::cout << this->m_name << ": takes " << amount << " points of damage!"
 				  << std::endl;
 	}
 }
@@ -93,32 +93,32 @@ void ClapTrap::beRepaired(unsigned int amount)
 {
 	if (this->m_hitPoints <= 0)
 	{
-		std::cout << "ClapTrap " << this->m_name << " cannot repair itself; it is beyond repair!"
+		std::cout << this->m_name << ": cannot repair itself; it is beyond repair!"
 				  << std::endl;
 		return;
 	}
 	else if (this->m_energyPoints <= 0)
 	{
-		std::cout << "ClapTrap " << this->m_name << " cannot perform repairs; energy depleted!"
+		std::cout << this->m_name << ": cannot perform repairs; energy depleted!"
 				  << std::endl;
 		return;
 	}
 	this->m_energyPoints--;
 	if (this->m_hitPoints == defaultHP)
 	{
-		std::cout << "ClapTrap " << this->m_name
-				  << " tries to repair itself at full heath! Silly ClapTrap." << std::endl;
+		std::cout << this->m_name
+				  << ": tries to repair itself at full heath! Silly ClapTrap." << std::endl;
 	}
 	else if ((amount + this->m_hitPoints) >= defaultHP)
 	{
 		this->m_hitPoints = defaultHP;
-		std::cout << "ClapTrap " << this->m_name << " repairs itself for " << amount
+		std::cout << this->m_name << ": repairs itself for " << amount
 				  << " points and is back at full health!" << std::endl;
 	}
 	else
 	{
 		this->m_hitPoints += amount;
-		std::cout << "ClapTrap " << this->m_name << " repairs itself for " << amount << " points."
+		std::cout << this->m_name << ": repairs itself for " << amount << " points."
 				  << std::endl;
 	}
 }

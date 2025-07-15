@@ -46,16 +46,17 @@ int main(void)
 
 	// repair at max health test
 	st1.beRepaired(99);
+	std::cout << std::setw(20) << "HP: " << st1.getHitPoints() << std::endl;
 	std::cout << std::setw(20) << "Energy: " << st1.getEnergyPoints()
 			  << std::endl;
 	std::cout << std::endl;
 
 	// test taking damage and repairing itself
 	ct2.attack("Clappy");
+	std::cout << std::setw(20) << "HP: " << st1.getHitPoints() << std::endl;
 	st1.takeDamage(30);
 	std::cout << std::setw(20) << "HP: " << st1.getHitPoints() << std::endl;
 	st1.beRepaired(10);
-	std::cout << std::setw(20) << "HP: " << st1.getHitPoints() << std::endl;
 	std::cout << std::endl;
 
 	// test running out of energy
