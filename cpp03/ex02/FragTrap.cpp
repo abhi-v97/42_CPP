@@ -18,9 +18,9 @@ FragTrap::FragTrap() : ClapTrap()
 	this->m_hitPoints = 100;
 	this->m_energyPoints = 100;
 	this->m_attackDmg = 30;
-	this->defaultHP = 100;
-	this->defaultEnergy = 100;
-	this->defaultDmg = 30;
+	this->m_defaultHP = 100;
+	this->m_defaultEnergy = 100;
+	this->m_defaultDmg = 30;
 	std::cout << "FragTrap default constructor called." << std::endl;
 }
 
@@ -30,9 +30,9 @@ FragTrap::FragTrap(std::string name) : ClapTrap(name)
 	this->m_hitPoints = 100;
 	this->m_energyPoints = 100;
 	this->m_attackDmg = 30;
-	this->defaultHP = 100;
-	this->defaultEnergy = 100;
-	this->defaultDmg = 30;
+	this->m_defaultHP = 100;
+	this->m_defaultEnergy = 100;
+	this->m_defaultDmg = 30;
 	std::cout << "FragTrap constructor to construct object: " << name << std::endl;
 }
 
@@ -55,9 +55,9 @@ FragTrap &FragTrap::operator=(FragTrap &obj)
 	this->m_hitPoints = obj.m_hitPoints;
 	this->m_energyPoints = obj.m_energyPoints;
 	this->m_attackDmg = obj.m_attackDmg;
-	this->defaultHP = obj.defaultHP;
-	this->defaultEnergy = obj.defaultEnergy;
-	this->defaultDmg = obj.defaultDmg;
+	this->m_defaultHP = obj.m_defaultHP;
+	this->m_defaultEnergy = obj.m_defaultEnergy;
+	this->m_defaultDmg = obj.m_defaultDmg;
 	return (*this);
 }
 

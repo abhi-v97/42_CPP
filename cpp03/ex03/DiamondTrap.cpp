@@ -19,24 +19,24 @@
 DiamondTrap::DiamondTrap(void) : ClapTrap("DT_clap_trap")
 {
 	this->m_name = "DT";
-	this->m_hitPoints = FragTrap::defaultHP;
-	this->m_energyPoints = ScavTrap::defaultEnergy;
-	this->m_attackDmg = FragTrap::defaultDmg;
-	this->defaultHP = FragTrap::defaultHP;
-	this->defaultEnergy = ScavTrap::defaultEnergy;
-	this->defaultDmg = FragTrap::defaultDmg;
+	this->m_hitPoints = FragTrap::m_defaultHP;
+	this->m_energyPoints = ScavTrap::m_defaultEnergy;
+	this->m_attackDmg = FragTrap::m_defaultDmg;
+	this->m_defaultHP = FragTrap::m_defaultHP;
+	this->m_defaultEnergy = ScavTrap::m_defaultEnergy;
+	this->m_defaultDmg = FragTrap::m_defaultDmg;
 	std::cout << "DiamondTrap default constructor called." << std::endl;
 }
 
 DiamondTrap::DiamondTrap(std::string name) : ClapTrap(name + "_clap_name")
 {
 	this->m_name = name;
-	this->m_hitPoints = FragTrap::defaultHP;
-	this->m_energyPoints = ScavTrap::defaultEnergy;
-	this->m_attackDmg = FragTrap::defaultDmg;
-	this->defaultHP = FragTrap::defaultHP;
-	this->defaultEnergy = ScavTrap::defaultEnergy;
-	this->defaultDmg = FragTrap::defaultDmg;
+	this->m_hitPoints = FragTrap::m_defaultHP;
+	this->m_energyPoints = ScavTrap::m_defaultEnergy;
+	this->m_attackDmg = FragTrap::m_defaultDmg;
+	this->m_defaultHP = FragTrap::m_defaultHP;
+	this->m_defaultEnergy = ScavTrap::m_defaultEnergy;
+	this->m_defaultDmg = FragTrap::m_defaultDmg;
 	std::cout << "DiamondTrap constructor to construct object: " << name << std::endl;
 }
 
@@ -59,9 +59,9 @@ DiamondTrap &DiamondTrap::operator=(DiamondTrap const &obj)
 	this->m_hitPoints = obj.m_hitPoints;
 	this->m_energyPoints = obj.m_energyPoints;
 	this->m_attackDmg = obj.m_attackDmg;
-	this->defaultHP = obj.defaultHP;
-	this->defaultEnergy = obj.defaultEnergy;
-	this->defaultDmg = obj.defaultDmg;
+	this->m_defaultHP = obj.m_defaultHP;
+	this->m_defaultEnergy = obj.m_defaultEnergy;
+	this->m_defaultDmg = obj.m_defaultDmg;
 	return (*this);
 }
 

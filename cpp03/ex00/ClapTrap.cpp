@@ -16,9 +16,9 @@
 ClapTrap::ClapTrap(void)
 	: m_name("Name"), m_hitPoints(10), m_energyPoints(10), m_attackDmg(0)
 {
-	this->defaultHP = 10;
-	this->defaultEnergy = 10;
-	this->defaultDmg = 0;
+	this->m_defaultHP = 10;
+	this->m_defaultEnergy = 10;
+	this->m_defaultDmg = 0;
 	std::cout << "ClapTrap default constructor called." << std::endl;
 	return;
 }
@@ -26,9 +26,9 @@ ClapTrap::ClapTrap(void)
 ClapTrap::ClapTrap(std::string const name)
 	: m_name(name), m_hitPoints(10), m_energyPoints(10), m_attackDmg(0)
 {
-	this->defaultHP = 10;
-	this->defaultEnergy = 10;
-	this->defaultDmg = 0;
+	this->m_defaultHP = 10;
+	this->m_defaultEnergy = 10;
+	this->m_defaultDmg = 0;
 	std::cout << "ClapTrap constructor to construct object: " << name << std::endl;
 	return;
 }
@@ -52,9 +52,9 @@ ClapTrap &ClapTrap::operator=(ClapTrap const &obj)
 	this->m_hitPoints = obj.m_hitPoints;
 	this->m_energyPoints = obj.m_energyPoints;
 	this->m_attackDmg = obj.m_attackDmg;
-	this->defaultHP = obj.defaultHP;
-	this->defaultEnergy = obj.defaultEnergy;
-	this->defaultDmg = obj.defaultDmg;
+	this->m_defaultHP = obj.m_defaultHP;
+	this->m_defaultEnergy = obj.m_defaultEnergy;
+	this->m_defaultDmg = obj.m_defaultDmg;
 	return (*this);
 }
 
@@ -113,14 +113,14 @@ void ClapTrap::beRepaired(unsigned int amount)
 		return;
 	}
 	this->m_energyPoints--;
-	if (this->m_hitPoints == this->defaultHP)
+	if (this->m_hitPoints == this->m_defaultHP)
 	{
 		std::cout << this->m_name
 				  << ": tries to repair itself at full heath! Silly ClapTrap." << std::endl;
 	}
-	else if (((int)amount + this->m_hitPoints) >= this->defaultHP)
+	else if (((int)amount + this->m_hitPoints) >= this->m_defaultHP)
 	{
-		this->m_hitPoints = this->defaultHP;
+		this->m_hitPoints = this->m_defaultHP;
 		std::cout << this->m_name << ": repairs itself for " << amount
 				  << " points and is back at full health!" << std::endl;
 	}

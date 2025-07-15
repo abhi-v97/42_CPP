@@ -18,9 +18,9 @@ ScavTrap::ScavTrap() : ClapTrap()
 	this->m_hitPoints = 100;
 	this->m_energyPoints = 50;
 	this->m_attackDmg = 20;
-	this->defaultHP = 100;
-	this->defaultEnergy = 50;
-	this->defaultDmg = 20;
+	this->m_defaultHP = 100;
+	this->m_defaultEnergy = 50;
+	this->m_defaultDmg = 20;
 	std::cout << "ScavTrap default constructor called." << std::endl;
 }
 
@@ -30,9 +30,9 @@ ScavTrap::ScavTrap(std::string name) : ClapTrap(name)
 	this->m_hitPoints = 100;
 	this->m_energyPoints = 50;
 	this->m_attackDmg = 20;
-	this->defaultHP = 100;
-	this->defaultEnergy = 50;
-	this->defaultDmg = 20;
+	this->m_defaultHP = 100;
+	this->m_defaultEnergy = 50;
+	this->m_defaultDmg = 20;
 	std::cout << "ScavTrap constructor to construct object: " << name << std::endl;
 }
 
@@ -55,9 +55,9 @@ ScavTrap &ScavTrap::operator=(ScavTrap &obj)
 	this->m_hitPoints = obj.m_hitPoints;
 	this->m_energyPoints = obj.m_energyPoints;
 	this->m_attackDmg = obj.m_attackDmg;
-	this->defaultHP = obj.defaultHP;
-	this->defaultEnergy = obj.defaultEnergy;
-	this->defaultDmg = obj.defaultDmg;
+	this->m_defaultHP = obj.m_defaultHP;
+	this->m_defaultEnergy = obj.m_defaultEnergy;
+	this->m_defaultDmg = obj.m_defaultDmg;
 	return (*this);
 }
 

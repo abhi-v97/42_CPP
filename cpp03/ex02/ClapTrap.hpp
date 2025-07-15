@@ -22,9 +22,9 @@ class ClapTrap
 		int m_hitPoints;
 		int m_energyPoints;
 		int m_attackDmg;
-		int defaultHP;
-		int defaultEnergy;
-		int defaultDmg;
+		int m_defaultHP;
+		int m_defaultEnergy;
+		int m_defaultDmg;
 
 	public:
 		ClapTrap(void);
