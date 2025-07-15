@@ -18,7 +18,9 @@
 class ScavTrap : public ClapTrap
 {
 	public:
-	static int const defaultHitPoints = 100;
+		static int const defaultHP = 100;
+		static int const defaultEnergy = 50;
+		static int const defaultDmg = 20;
 		ScavTrap();
 		ScavTrap(std::string name);
 		ScavTrap(ScavTrap &obj);

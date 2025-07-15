@@ -58,6 +58,7 @@ int main(void)
 	ct1.beRepaired(10);
 	std::cout << std::endl;
 
+	// post stats
 	std::cout << "ClapTrap stats: " << std::endl;
 	std::cout << std::setw(20) << "Designation: " << ct1.getName() << std::endl;
 	std::cout << std::setw(20) << "HP: " << ct1.getHitPoints() << std::endl;
