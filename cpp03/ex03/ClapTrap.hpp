@@ -22,12 +22,11 @@ class ClapTrap
 		int m_hitPoints;
 		int m_energyPoints;
 		int m_attackDmg;
+		int defaultHP;
+		int defaultEnergy;
+		int defaultDmg;
 
 	public:
-		static int const defaultHP = 10;
-		static int const defaultEnergy = 10;
-		static int const defaultDmg = 0;
-
 		ClapTrap(void);
 		ClapTrap(std::string const name);
 		ClapTrap(ClapTrap const &obj);

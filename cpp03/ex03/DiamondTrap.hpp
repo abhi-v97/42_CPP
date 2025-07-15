@@ -20,9 +20,6 @@
 class DiamondTrap : public ScavTrap, public FragTrap
 {
 	public:
-		static int const defaultHP = FragTrap::defaultHP;
-		static int const defaultEnergy = ScavTrap::defaultEnergy;
-		static int const defaultDmg = FragTrap::defaultDmg;
 		DiamondTrap(void);
 		DiamondTrap(std::string name);
 		DiamondTrap(const DiamondTrap &obj);
@@ -31,8 +28,6 @@ class DiamondTrap : public ScavTrap, public FragTrap
 		void whoAmI(void);
 
 		void attack(const std::string &target);
-		void takeDamage(unsigned int amount);
-		void beRepaired(unsigned int amount);
 
 		std::string getName(void) const;
 

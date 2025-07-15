@@ -18,17 +18,12 @@
 class ScavTrap : public ClapTrap
 {
 	public:
-		static int const defaultHP = 100;
-		static int const defaultEnergy = 50;
-		static int const defaultDmg = 20;
 		ScavTrap();
 		ScavTrap(std::string name);
 		ScavTrap(ScavTrap &obj);
 		~ScavTrap();
 
 		void attack(const std::string &target);
-		void takeDamage(unsigned int amount);
-		void beRepaired(unsigned int amount);
 
 		ScavTrap &operator=(ScavTrap &obj);
 		void guardGate(void);

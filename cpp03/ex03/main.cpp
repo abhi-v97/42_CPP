@@ -32,6 +32,7 @@ int main(void)
 	// member inheritance test
 	dt1.highFivesGuys();
 	dt1.guardGate();
+	dt1.whoAmI();
 	std::cout << std::endl;
 
 	// repair at max health test
@@ -64,6 +65,7 @@ int main(void)
 	// member inheritance test
 	dt1.highFivesGuys();
 	dt1.guardGate();
+	dt1.whoAmI();
 	std::cout << std::endl;
 
 	// post stats
