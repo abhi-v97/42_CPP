@@ -1,37 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ScavTrap.hpp                                       :+:      :+:    :+:   */
+/*   FragTrap.hpp                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abhi <abhi@student.42.fr>                  #+#  +:+       +#+        */
+/*   By: avalsang <avalsang@student.42.fr>          #+#  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025-07-06 19:25:23 by abhi              #+#    #+#             */
-/*   Updated: 2025-07-06 19:25:23 by abhi             ###   ########.fr       */
+/*   Created: 2025-07-14 14:04:25 by avalsang          #+#    #+#             */
+/*   Updated: 2025-07-14 14:04:25 by avalsang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SCAVTRAP_HPP
-#define SCAVTRAP_HPP
+#ifndef FRAGTRAP_HPP
+#define FRAGTRAP_HPP
 
 #include "ClapTrap.hpp"
 
-class ScavTrap : public ClapTrap
+class FragTrap : virtual public ClapTrap
 {
 	public:
 		static int const defaultHP = 100;
-		static int const defaultEnergy = 50;
-		static int const defaultDmg = 20;
-		ScavTrap();
-		ScavTrap(std::string name);
-		ScavTrap(ScavTrap &obj);
-		~ScavTrap();
+		static int const defaultEnergy = 100;
+		static int const defaultDmg = 30;
+		FragTrap();
+		FragTrap(std::string name);
+		FragTrap(FragTrap &obj);
+		~FragTrap();
 
 		void attack(const std::string &target);
 		void takeDamage(unsigned int amount);
 		void beRepaired(unsigned int amount);
 
-		ScavTrap &operator=(ScavTrap &obj);
-		void guardGate(void);
+		FragTrap &operator=(FragTrap &obj);
+		void highFivesGuys(void);
 };
 
-#endif // SCAVTRAP_HPP
+#endif // FRAGTRAP_HPP
