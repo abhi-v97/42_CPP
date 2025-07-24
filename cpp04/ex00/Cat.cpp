@@ -1,45 +1,45 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Dog.cpp                                            :+:      :+:    :+:   */
+/*   Cat.cpp                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: abhi <abhi@student.42.fr>                  #+#  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025-07-18 15:10:37 by abhi              #+#    #+#             */
-/*   Updated: 2025-07-18 15:10:37 by abhi             ###   ########.fr       */
+/*   Created: 2025-07-22 19:10:11 by abhi              #+#    #+#             */
+/*   Updated: 2025-07-22 19:10:11 by abhi             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "Dog.hpp"
+#include "Cat.hpp"
 #include <string>
 #include <iostream>
 
-Dog::Dog() : Animal()
+Cat::Cat() : Animal()
 {
-	std::cout << "Dog default constructor called" << std::endl;
-	this->m_type = "Dog";
+	std::cout << "Cat default constructor called" << std::endl;
+	this->m_type = "Cat";
 }
 
-Dog::Dog(Dog const &obj) : Animal()
+Cat::Cat(Cat const &obj) : Animal()
 {
-	std::cout << "Dog copy constructor called" << std::endl;
+	std::cout << "Cat copy constructor called" << std::endl;
 	*this = obj;
 }
 
-Dog::~Dog()
+Cat::~Cat()
 {
-	std::cout << "Dog destructor called for " << this->m_type << std::endl;
+	std::cout << "Cat destructor called for " << this->m_type << std::endl;
 }
 
-Dog &Dog::operator=(Dog const &obj)
+Cat &Cat::operator=(Cat const &obj)
 {
-	std::cout << "Dog operator overload called." << std::endl;
+	std::cout << "Cat operator overload called." << std::endl;
 	if (this != &obj)
 		this->m_type = obj.m_type;
 	return (*this);
 }
 
-void Dog::makeSound() const
+void Cat::makeSound() const
 {
-	std::cout << "Dog goes woof woof" << std::endl;
+	std::cout << "Cat goes meow meow" << std::endl;
 }

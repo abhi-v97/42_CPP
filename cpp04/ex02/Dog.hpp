@@ -1,37 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Animal.hpp                                         :+:      :+:    :+:   */
+/*   Dog.hpp                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: abhi <abhi@student.42.fr>                  #+#  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025-07-18 15:01:54 by abhi              #+#    #+#             */
-/*   Updated: 2025-07-18 15:01:54 by abhi             ###   ########.fr       */
+/*   Created: 2025-07-18 15:08:35 by abhi              #+#    #+#             */
+/*   Updated: 2025-07-18 15:08:35 by abhi             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef ANIMAL_HPP
-#define ANIMAL_HPP
+#ifndef DOG_HPP
+#define DOG_HPP
 
-#include <string>
+#include "AAnimal.hpp"
+#include "Brain.hpp"
 
-class Animal
+class Dog : public AAnimal
 {
-	protected:
-		std::string m_type;
-
 	public:
-		Animal();
-		Animal(std::string &name);
-		Animal(Animal const &obj);
-		virtual ~Animal();
-		
-		Animal &operator=(Animal const &obj);
+		Dog();
+		Dog(Dog const &obj);
+		~Dog();
 
-		virtual void makeSound() const;
+		Dog &operator=(Dog const &obj);
 
-		std::string const &getType() const;
-		void setType(const std::string &type_);
+		void makeSound() const;
+
+		Brain *getBrain() const;
+
+	private:
+		Brain *m_brain;
 };
 
-#endif // ANIMAL_HPP
+#endif // DOG_HPP

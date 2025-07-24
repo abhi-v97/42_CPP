@@ -1,37 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Animal.hpp                                         :+:      :+:    :+:   */
+/*   main.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: abhi <abhi@student.42.fr>                  #+#  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025-07-18 15:01:54 by abhi              #+#    #+#             */
-/*   Updated: 2025-07-18 15:01:54 by abhi             ###   ########.fr       */
+/*   Created: 2025-07-22 19:40:47 by abhi              #+#    #+#             */
+/*   Updated: 2025-07-22 19:40:47 by abhi             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef ANIMAL_HPP
-#define ANIMAL_HPP
+#include "AAnimal.hpp"
+#include "Cat.hpp"
+#include "Dog.hpp"
+#include <iostream>
 
-#include <string>
-
-class Animal
+int main()
 {
-	protected:
-		std::string m_type;
-
-	public:
-		Animal();
-		Animal(std::string &name);
-		Animal(Animal const &obj);
-		virtual ~Animal();
-		
-		Animal &operator=(Animal const &obj);
-
-		virtual void makeSound() const;
-
-		std::string const &getType() const;
-		void setType(const std::string &type_);
-};
-
-#endif // ANIMAL_HPP
+	const AAnimal *j = new Dog();
+	const AAnimal *i = new Cat();
+	delete j; // should not create a leak
+	delete i;
+	return 0;
+}

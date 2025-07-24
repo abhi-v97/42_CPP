@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Animal.cpp                                         :+:      :+:    :+:   */
+/*   AAnimal.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: abhi <abhi@student.42.fr>                  #+#  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,50 +10,50 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "Animal.hpp"
+#include "AAnimal.hpp"
 #include <iostream>
 
-Animal::Animal() : m_type("Unkown animal")
+AAnimal::AAnimal() : m_type("Unkown Aanimal")
 {
-	std::cout << "Animal default constructor called" << std::endl;
+	std::cout << "AAnimal default constructor called" << std::endl;
 }
 
-Animal::Animal(Animal const &obj)
+AAnimal::AAnimal(AAnimal const &obj)
 {
-	std::cout << "Animal copy constructor called" << std::endl;
+	std::cout << "AAnimal copy constructor called" << std::endl;
 	*this = obj;
 }
 
-Animal::Animal(std::string &name) : m_type("Animal")
+AAnimal::AAnimal(std::string &name) : m_type("AAnimal")
 {
-	std::cout << "Animal constructor called for " << name << std::endl;
+	std::cout << "AAnimal constructor called for " << name << std::endl;
 }
 
-Animal::~Animal()
+AAnimal::~AAnimal()
 {
-	std::cout << "Animal destructor called for " << this->m_type << std::endl;
+	std::cout << "AAnimal destructor called for " << this->m_type << std::endl;
 }
 
-Animal &Animal::operator=(Animal const &obj)
+AAnimal &AAnimal::operator=(AAnimal const &obj)
 {
-	std::cout << "Animal operator overload called." << std::endl;
+	std::cout << "AAnimal operator overload called." << std::endl;
 	if (this != &obj)
 		this->m_type = obj.m_type;
 	return (*this);
 }
 
-std::string const &Animal::getType() const
+std::string const &AAnimal::getType() const
 {
 	return (this->m_type);
 }
 
-void Animal::setType(const std::string &type_)
+void AAnimal::setType(const std::string &type_)
 {
 	this->m_type = type_;
 	return;
 }
 
-void Animal::makeSound() const
+void AAnimal::makeSound() const
 {
-	std::cout << "Generic animal noises" << std::endl;
+	std::cout << "Generic Aanimal noises" << std::endl;
 }

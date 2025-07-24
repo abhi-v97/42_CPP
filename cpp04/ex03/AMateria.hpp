@@ -1,37 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Animal.hpp                                         :+:      :+:    :+:   */
+/*   AMateria.hpp                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: abhi <abhi@student.42.fr>                  #+#  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025-07-18 15:01:54 by abhi              #+#    #+#             */
-/*   Updated: 2025-07-18 15:01:54 by abhi             ###   ########.fr       */
+/*   Created: 2025-07-22 20:52:52 by abhi              #+#    #+#             */
+/*   Updated: 2025-07-22 20:52:52 by abhi             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef ANIMAL_HPP
-#define ANIMAL_HPP
+#ifndef AMATERIA_HPP
+#define AMATERIA_HPP
 
 #include <string>
 
-class Animal
+class ICharacter;
+
+class AMateria
 {
 	protected:
 		std::string m_type;
-
+	
 	public:
-		Animal();
-		Animal(std::string &name);
-		Animal(Animal const &obj);
-		virtual ~Animal();
+		AMateria();
+		AMateria(AMateria const &obj);
+		AMateria(std::string const &type);
+		virtual ~AMateria();
 		
-		Animal &operator=(Animal const &obj);
-
-		virtual void makeSound() const;
-
+		AMateria &operator=(AMateria const &obj);
+		
 		std::string const &getType() const;
-		void setType(const std::string &type_);
+		virtual AMateria *clone (void) const = 0;
+		virtual void use(ICharacter &target);
 };
 
-#endif // ANIMAL_HPP
+#endif // AMATERIA_HPP

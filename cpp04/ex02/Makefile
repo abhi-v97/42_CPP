@@ -1,6 +1,6 @@
 NAME = test.out
 
-SRC = main.cpp Animal.cpp Cat.cpp Dog.cpp WrongCat.cpp WrongAnimal.cpp
+SRC = main.cpp AAnimal.cpp Cat.cpp Dog.cpp Brain.cpp
 
 OBJS = ${SRC:%.cpp=%.o}
 

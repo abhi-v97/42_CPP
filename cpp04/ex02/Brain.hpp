@@ -1,37 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Animal.hpp                                         :+:      :+:    :+:   */
+/*   Brain.hpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: abhi <abhi@student.42.fr>                  #+#  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025-07-18 15:01:54 by abhi              #+#    #+#             */
-/*   Updated: 2025-07-18 15:01:54 by abhi             ###   ########.fr       */
+/*   Created: 2025-07-22 20:04:32 by abhi              #+#    #+#             */
+/*   Updated: 2025-07-22 20:04:32 by abhi             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef ANIMAL_HPP
-#define ANIMAL_HPP
+#ifndef BRAIN_HPP
+#define BRAIN_HPP
 
 #include <string>
 
-class Animal
+class Brain
 {
-	protected:
-		std::string m_type;
 
 	public:
-		Animal();
-		Animal(std::string &name);
-		Animal(Animal const &obj);
-		virtual ~Animal();
-		
-		Animal &operator=(Animal const &obj);
+		Brain();
+		Brain(Brain const &obj);
+		~Brain();
 
-		virtual void makeSound() const;
+		Brain &operator=(Brain const &obj);
 
-		std::string const &getType() const;
-		void setType(const std::string &type_);
+		static int const nb_ideas = 100;
+
+		std::string getIdeas(int index) const;
+		void setIdeas(int index, const std::string &ideas);
+
+	private:
+		std::string m_ideas[nb_ideas];
 };
 
-#endif // ANIMAL_HPP
+#endif // BRAIN_HPP

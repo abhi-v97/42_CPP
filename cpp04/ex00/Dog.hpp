@@ -10,15 +10,21 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <string>
-#include "Animal.hpp"
+#ifndef DOG_HPP
+#define DOG_HPP
+
+# include "Animal.hpp"
 
 class Dog: public Animal
 {
 	public:
 		Dog();
-		Dog(std::string name);
+		Dog(Dog const &obj);
 		~Dog();
 		
-		void	makeSound();
+		Dog &operator=(Dog const &obj);
+		
+		void	makeSound() const;
 };
+
+#endif // DOG_HPP
