@@ -13,7 +13,7 @@
 #include "AAnimal.hpp"
 #include <iostream>
 
-AAnimal::AAnimal() : m_type("Unkown Aanimal")
+AAnimal::AAnimal() : m_type("Unknown Aanimal")
 {
 	std::cout << "AAnimal default constructor called" << std::endl;
 }

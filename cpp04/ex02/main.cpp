@@ -17,9 +17,13 @@
 
 int main()
 {
-	const AAnimal *j = new Dog();
-	const AAnimal *i = new Cat();
-	delete j; // should not create a leak
-	delete i;
+	// will not compile, AAnimal is an abstract class
+	// AAnimal *animal = new AAnimal();
+
+	AAnimal *dog = new Dog();
+	dog->makeSound();
+	std::cout << std::endl;
+
+	delete dog;
 	return 0;
 }

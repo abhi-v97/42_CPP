@@ -16,7 +16,6 @@
 #include "WrongAnimal.hpp"
 #include "WrongCat.hpp"
 #include <iostream>
-#include <string>
 
 int main()
 {
@@ -24,15 +23,42 @@ int main()
 	const Animal *j = new Dog();
 	const Animal *i = new Cat();
 	std::cout << std::endl;
-	std::cout << j->getType() << " " << std::endl;
-	std::cout << i->getType() << " " << std::endl;
+
+	std::cout << i->getType() << ": ";
 	i->makeSound(); // will output the cat sound!
+	std::cout << j->getType() << ": ";
 	j->makeSound();
+	std::cout << meta->getType() << ": ";
 	meta->makeSound();
 	std::cout << std::endl;
+
 	delete i;
 	delete j;
 	delete meta;
+
 	std::cout << std::endl;
+	Animal a = Animal();
+	a.makeSound();
+	std::cout << std::endl;
+
+	a = Cat();
+	std::cout << a.getType() << ": ";
+	a.makeSound();
+	std::cout << std::endl;
+	
+	WrongAnimal *wa = new WrongAnimal();
+	WrongAnimal *wc = new WrongCat();
+	std::cout << std::endl;
+
+	std::cout << wa->getType() << ": ";
+	wa->makeSound();
+	std::cout << wc->getType() << ": ";
+	wc->makeSound();
+	std::cout << std::endl;
+
+	delete wa;
+	delete wc;
+	std::cout << std::endl;
+
 	return 0;
 }

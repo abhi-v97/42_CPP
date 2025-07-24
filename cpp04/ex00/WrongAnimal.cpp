@@ -13,7 +13,7 @@
 #include "WrongAnimal.hpp"
 #include <iostream>
 
-WrongAnimal::WrongAnimal() : m_type("Unkown WrongAnimal")
+WrongAnimal::WrongAnimal() : m_type("Unknown WrongAnimal")
 {
 	std::cout << "WrongAnimal default constructor called" << std::endl;
 }
