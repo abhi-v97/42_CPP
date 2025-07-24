@@ -1,32 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Ice.hpp                                            :+:      :+:    :+:   */
+/*   Cure.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: avalsang <avalsang@student.42.fr>          #+#  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025-07-24 13:08:16 by avalsang          #+#    #+#             */
-/*   Updated: 2025-07-24 13:08:16 by avalsang         ###   ########.fr       */
+/*   Created: 2025-07-24 14:50:57 by avalsang          #+#    #+#             */
+/*   Updated: 2025-07-24 14:50:57 by avalsang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef ICE_HPP
-#define ICE_HPP
 
-#include "AMateria.hpp"
+#include "Cure.hpp"
 
-class ICharacter;
-
-class Ice : public AMateria
+Cure::Cure()
 {
-	public:
-		Ice();
-		Ice(const Ice &obj);
-		~Ice();
-		
-		Ice &operator=(Ice const &obj);
-		AMateria *clone() const;
-		void use(ICharacter &obj);
-};
+}
 
-#endif // ICE_HPP
+Cure::Cure(Cure const & obj)
+{
+	*this = obj;
+}
+
+Cure::~Cure()
+{
+}
+
+Cure & Cure::operator=(Cure const & obj)
+{
+	if (this != &obj)
+		this->m_type = obj.m_type;
+	return (*this);
+}
+
+void Cure::use(ICharacter & target)
+{
+	(void) target;
+}

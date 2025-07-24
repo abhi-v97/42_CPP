@@ -19,13 +19,23 @@
 
 class Character : public ICharacter
 {
-	public:
-
 	private:
+		std::string m_name;
+		static const int m_invSize = 4;	
+		AMateria *m_inv[m_invSize];
+
+	public:
+		Character();
+		Character(std::string &name);
+		Character(Character &obj);
+		~Character();
 		
+		Character &operator=(Character const &obj);
 	
+		std::string &getName() const;
+		void equip(AMateria *m);
+		void unequip(int idx);
+		void use(int idx, ICharacter &target);
 };
-
-
 
 #endif // CHARACTER_HPP

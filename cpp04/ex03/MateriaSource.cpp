@@ -1,32 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Ice.hpp                                            :+:      :+:    :+:   */
+/*   MateriaSource.cpp                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: avalsang <avalsang@student.42.fr>          #+#  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025-07-24 13:08:16 by avalsang          #+#    #+#             */
-/*   Updated: 2025-07-24 13:08:16 by avalsang         ###   ########.fr       */
+/*   Created: 2025-07-24 16:34:31 by avalsang          #+#    #+#             */
+/*   Updated: 2025-07-24 16:34:31 by avalsang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef ICE_HPP
-#define ICE_HPP
+#include "MateriaSource.hpp"
 
-#include "AMateria.hpp"
-
-class ICharacter;
-
-class Ice : public AMateria
+MateriaSource::MateriaSource()
 {
-	public:
-		Ice();
-		Ice(const Ice &obj);
-		~Ice();
-		
-		Ice &operator=(Ice const &obj);
-		AMateria *clone() const;
-		void use(ICharacter &obj);
-};
 
-#endif // ICE_HPP
+}
+
+MateriaSource::MateriaSource(MateriaSource const & obj)
+{
+}
+
+MateriaSource::~MateriaSource()
+{
+}
+
+void MateriaSource::learnMateria(AMateria *mat)
+{
+	for (int i = 0; i < m_invSize; i++)
+	{
+		if (!this->m_inv[i])
+			this->m_inv[i] = mat;
+	}
+}
+
+AMateria * MateriaSource::createMateria(std::string const & type)
+{
+	return nullptr;
+}
