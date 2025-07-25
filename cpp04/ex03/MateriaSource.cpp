@@ -11,18 +11,44 @@
 /* ************************************************************************** */
 
 #include "MateriaSource.hpp"
+#include <iostream>
 
 MateriaSource::MateriaSource()
 {
-
+	for (int i = 0; i < this->m_invSize; i++)
+		this->m_inv[i] = NULL;
 }
 
 MateriaSource::MateriaSource(MateriaSource const & obj)
 {
+	*this = obj;
 }
 
 MateriaSource::~MateriaSource()
 {
+	for (int i = 0; i < this->m_invSize; i++)
+		if (this->m_inv[i])
+		{
+			
+			delete this->m_inv[i];
+		}
+}
+
+MateriaSource &MateriaSource::operator=(const MateriaSource &obj)
+{
+	if (this != &obj)
+	{
+		for (int i = 0; i < this->m_invSize; i++)
+		{
+			if (this->m_inv[i])
+				delete this->m_inv[i];
+			if (obj.m_inv[i])
+				this->m_inv[i] = obj.m_inv[i]->clone();
+			else
+			 	this->m_inv[i] = NULL;
+		}
+	}
+	return (*this);
 }
 
 void MateriaSource::learnMateria(AMateria *mat)
@@ -30,11 +56,21 @@ void MateriaSource::learnMateria(AMateria *mat)
 	for (int i = 0; i < m_invSize; i++)
 	{
 		if (!this->m_inv[i])
+		{
+			std::cout << "learnMateria " << mat->getType() << std::endl;
 			this->m_inv[i] = mat;
+			return ;
+		}
 	}
+	std::cout << "No space left in inventory, dropping materia on the floor" << std::endl;
+	delete mat;
 }
 
 AMateria * MateriaSource::createMateria(std::string const & type)
 {
-	return nullptr;
+	for (int i = 0; i < m_invSize; i++)
+		if (this->m_inv[i] && this->m_inv[i]->getType() == type)
+			return (this->m_inv[i]->clone());
+	std::cout << "Materia not learned" << std::endl;
+	return NULL;
 }

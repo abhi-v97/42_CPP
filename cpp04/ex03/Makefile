@@ -1,6 +1,6 @@
 NAME = test.out
 
-SRC = Cure.cpp Ice.cpp Character.cpp AMateria.cpp
+SRC = Cure.cpp Ice.cpp Character.cpp AMateria.cpp main.cpp MateriaSource.cpp
 
 OBJS = ${SRC:%.cpp=%.o}
 

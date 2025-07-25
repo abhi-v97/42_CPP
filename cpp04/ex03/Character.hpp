@@ -26,13 +26,13 @@ class Character : public ICharacter
 
 	public:
 		Character();
-		Character(std::string &name);
+		Character(const std::string &name);
 		Character(Character &obj);
 		~Character();
 		
 		Character &operator=(Character const &obj);
 	
-		std::string &getName() const;
+		const std::string &getName() const;
 		void equip(AMateria *m);
 		void unequip(int idx);
 		void use(int idx, ICharacter &target);
