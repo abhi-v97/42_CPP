@@ -53,18 +53,25 @@ Character &Character::operator=(Character const &obj)
 	return (*this);
 }
 
-const std::string	&Character::getName() const {
+const std::string &Character::getName() const
+{
 	return (this->m_name);
 }
 
 void Character::equip(AMateria *m)
 {
+	if (!m)
+	{
+		std::cout << "Materia doesn't exist! Can't equip it" << std::endl;
+		return ;
+	}
 	for (int i = 0; i < m_invSize; i++)
 		if (!this->m_inv[i])
 		{
 			this->m_inv[i] = m;
-			std::cout << this->m_name << " equips " << m->getType() << " in slot " << i << std::endl;
-			return ;
+			std::cout << this->m_name << " equips " << m->getType() << " in slot " << i
+					  << std::endl;
+			return;
 		}
 	std::cout << "Inventory is full, dropping Materia on the floor" << std::endl;
 	delete m;
@@ -72,12 +79,13 @@ void Character::equip(AMateria *m)
 
 void Character::unequip(int idx)
 {
-	this->m_inv[idx] = NULL;
-	if (idx >= 0 && idx < this->m_invSize)
+	if (idx >= 0 && idx < this->m_invSize && this->m_inv[idx])
 	{
 		std::cout << this->m_name << " unequips " << this->m_inv[idx]->getType() << std::endl;
 		this->m_inv[idx] = NULL;
+		return ;
 	}
+	std::cout << "Cannot unequip item because reasons" << std::endl;
 }
 
 void Character::use(int idx, ICharacter &target)
@@ -85,5 +93,5 @@ void Character::use(int idx, ICharacter &target)
 	if (idx >= 0 && idx < this->m_invSize && this->m_inv[idx])
 		this->m_inv[idx]->use(target);
 	else
-	 	std::cout << this->m_name << " scratches his head in confusion" << std::endl;
+		std::cout << " * " << this->m_name << " scratches his head in confusion * " << std::endl;
 }

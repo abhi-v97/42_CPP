@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Cure.hpp                                           :+:      :+:    :+:   */
+/*   Materia.hpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: avalsang <avalsang@student.42.fr>          #+#  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,23 +10,24 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef CURE_HPP
-#define CURE_HPP
+#ifndef Materia_HPP
+#define Materia_HPP
 
 #include "AMateria.hpp"
 
 class ICharacter;
 
-class Cure : public AMateria
+class Materia : public AMateria
 {
 	public:
-		Cure();
-		Cure(const Cure &obj);
-		~Cure();
+		Materia();
+		Materia(const Materia &obj);
+		Materia(std::string const &type);
+		~Materia();
 
-		Cure &operator=(Cure const &obj);
-		Cure *clone() const;
+		Materia &operator=(Materia const &obj);
+		Materia *clone() const;
 		void use(ICharacter &obj);
 };
 
-#endif // CURE_HPP
+#endif // Materia_HPP

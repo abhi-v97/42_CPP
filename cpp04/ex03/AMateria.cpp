@@ -16,30 +16,29 @@ AMateria::AMateria() : m_type("undefined")
 {
 }
 
-AMateria::AMateria(AMateria const & obj)
+AMateria::AMateria(AMateria const &obj)
 {
 	*this = obj;
 }
 
-AMateria::AMateria(std::string const & type) : m_type(type)
+AMateria::AMateria(std::string const &type) : m_type(type)
 {
-	
 }
 
 AMateria::~AMateria()
 {
 }
 
-AMateria & AMateria::operator=(AMateria const & obj)
+AMateria &AMateria::operator=(AMateria const &obj)
 {
 	if (this != &obj)
 		this->m_type = obj.m_type;
 	return (*this);
 }
 
-void AMateria::use(ICharacter & target)
+void AMateria::use(ICharacter &target)
 {
-	(void) target;
+	(void)target;
 }
 
 std::string const &AMateria::getType() const

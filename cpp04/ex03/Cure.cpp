@@ -10,7 +10,6 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-
 #include "Cure.hpp"
 #include "AMateria.hpp"
 #include <iostream>
@@ -28,19 +27,19 @@ Cure::~Cure()
 {
 }
 
-Cure & Cure::operator=(Cure const & obj)
+Cure &Cure::operator=(Cure const &obj)
 {
 	if (this != &obj)
 		this->m_type = obj.m_type;
 	return (*this);
 }
 
-Cure	*Cure::clone() const
+Cure *Cure::clone() const
 {
 	return (new Cure(*this));
 }
 
-void Cure::use(ICharacter & target)
+void Cure::use(ICharacter &target)
 {
 	std::cout << " * heals " << target.getName() << "'s wounds *" << std::endl;
 }

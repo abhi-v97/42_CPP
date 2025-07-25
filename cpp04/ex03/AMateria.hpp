@@ -13,8 +13,8 @@
 #ifndef AMATERIA_HPP
 #define AMATERIA_HPP
 
-#include <string>
 #include "ICharacter.hpp"
+#include <string>
 
 class ICharacter;
 
@@ -22,17 +22,17 @@ class AMateria
 {
 	protected:
 		std::string m_type;
-	
+
 	public:
 		AMateria();
 		AMateria(AMateria const &obj);
 		AMateria(std::string const &type);
 		virtual ~AMateria();
-		
+
 		AMateria &operator=(AMateria const &obj);
-		
+
 		std::string const &getType() const;
-		virtual AMateria *clone (void) const = 0;
+		virtual AMateria *clone(void) const = 0;
 		virtual void use(ICharacter &target);
 };
 

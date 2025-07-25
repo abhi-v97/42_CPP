@@ -21,15 +21,14 @@ class MateriaSource : public IMateriaSource
 		static const int m_invSize = 4;
 		AMateria *m_inv[m_invSize];
 
-
 	public:
 		MateriaSource();
 		MateriaSource(MateriaSource const &obj);
 		~MateriaSource();
-		
+
 		MateriaSource &operator=(MateriaSource const &obj);
-		
-		void learnMateria(AMateria*);
+
+		void learnMateria(AMateria *mat);
 		AMateria *createMateria(std::string const &type);
 };
 

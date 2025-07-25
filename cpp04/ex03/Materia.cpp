@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Ice.cpp                                            :+:      :+:    :+:   */
+/*   Materia.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: avalsang <avalsang@student.42.fr>          #+#  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,36 +10,41 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "Ice.hpp"
+#include "Materia.hpp"
 #include "AMateria.hpp"
 #include <iostream>
 
-Ice::Ice() : AMateria("Ice")
+Materia::Materia() : AMateria("Materia")
 {
 }
 
-Ice::Ice(Ice const &obj) : AMateria(obj)
+Materia::Materia(Materia const &obj) : AMateria(obj)
 {
 	*this = obj;
 }
 
-Ice::~Ice()
+Materia::Materia(std::string const &type)
+	: AMateria(type)
 {
 }
 
-Ice &Ice::operator=(Ice const &obj)
+Materia::~Materia()
+{
+}
+
+Materia &Materia::operator=(Materia const &obj)
 {
 	if (this != &obj)
 		this->m_type = obj.m_type;
 	return (*this);
 }
 
-Ice *Ice::clone() const
+Materia *Materia::clone() const
 {
-	return (new Ice(*this));
+	return (new Materia(*this));
 }
 
-void Ice::use(ICharacter &target)
+void Materia::use(ICharacter &target)
 {
-	std::cout << " * shoots an ice bolt at " << target.getName() << " *" << std::endl;
+	std::cout << " * used " << this->m_type << " materia on " << target.getName() << " *" << std::endl;
 }

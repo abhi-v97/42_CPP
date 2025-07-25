@@ -21,7 +21,7 @@ class Character : public ICharacter
 {
 	private:
 		std::string m_name;
-		static const int m_invSize = 4;	
+		static const int m_invSize = 4;
 		AMateria *m_inv[m_invSize];
 
 	public:
@@ -29,9 +29,9 @@ class Character : public ICharacter
 		Character(const std::string &name);
 		Character(Character &obj);
 		~Character();
-		
+
 		Character &operator=(Character const &obj);
-	
+
 		const std::string &getName() const;
 		void equip(AMateria *m);
 		void unequip(int idx);
