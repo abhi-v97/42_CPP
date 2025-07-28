@@ -14,10 +14,10 @@
 #include <string>
 #include <iostream>
 
-Cat::Cat() : Animal()
+Cat::Cat() : Animal("Cat")
 {
 	std::cout << "Cat default constructor called" << std::endl;
-	this->m_type = "Cat";
+	// this->m_type = "Cat";
 }
 
 Cat::Cat(Cat const &obj) : Animal()

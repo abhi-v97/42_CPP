@@ -20,8 +20,8 @@
 int main()
 {
 	const Animal *meta = new Animal();
-	const Animal *j = new Dog();
 	const Animal *i = new Cat();
+	const Animal *j = new Dog();
 	std::cout << std::endl;
 
 	std::cout << i->getType() << ": ";
@@ -47,16 +47,20 @@ int main()
 	std::cout << std::endl;
 	
 	WrongAnimal *wa = new WrongAnimal();
-	WrongAnimal *wc = new WrongCat();
+	WrongAnimal *wb = new WrongCat();
+	WrongCat *wc = new WrongCat();
 	std::cout << std::endl;
 
 	std::cout << wa->getType() << ": ";
 	wa->makeSound();
+	std::cout << wb->getType() << ": ";
+	wb->makeSound();
 	std::cout << wc->getType() << ": ";
 	wc->makeSound();
 	std::cout << std::endl;
 
 	delete wa;
+	delete wb;
 	delete wc;
 	std::cout << std::endl;
 

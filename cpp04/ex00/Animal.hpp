@@ -22,7 +22,7 @@ class Animal
 
 	public:
 		Animal();
-		Animal(std::string &name);
+		Animal(std::string const &name);
 		Animal(Animal const &obj);
 		virtual ~Animal();
 		

@@ -21,7 +21,7 @@ class Dog : public AAnimal
 	public:
 		Dog();
 		Dog(Dog const &obj);
-		~Dog();
+		virtual ~Dog();
 
 		Dog &operator=(Dog const &obj);
 

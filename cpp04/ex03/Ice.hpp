@@ -22,7 +22,7 @@ class Ice : public AMateria
 	public:
 		Ice();
 		Ice(const Ice &obj);
-		~Ice();
+		virtual ~Ice();
 
 		Ice &operator=(Ice const &obj);
 		Ice *clone() const;

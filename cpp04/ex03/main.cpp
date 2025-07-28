@@ -74,6 +74,7 @@ void my_test()
 	Cloud->use(0, *Cloud);
 	Cloud->use(1, *Cloud);
 	Cloud->use(2, *Cloud);
+	Cloud->use(42, *Cloud);
 	std::cout << std::endl;
 	
 	// test unequip

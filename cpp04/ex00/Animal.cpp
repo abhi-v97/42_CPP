@@ -24,7 +24,7 @@ Animal::Animal(Animal const &obj)
 	*this = obj;
 }
 
-Animal::Animal(std::string &name) : m_type("Animal")
+Animal::Animal(std::string const &name) : m_type(name)
 {
 	std::cout << "Animal constructor called for " << name << std::endl;
 }

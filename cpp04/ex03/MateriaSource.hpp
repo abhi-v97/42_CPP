@@ -24,7 +24,7 @@ class MateriaSource : public IMateriaSource
 	public:
 		MateriaSource();
 		MateriaSource(MateriaSource const &obj);
-		~MateriaSource();
+		virtual ~MateriaSource();
 
 		MateriaSource &operator=(MateriaSource const &obj);
 

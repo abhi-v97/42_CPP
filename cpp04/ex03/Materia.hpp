@@ -23,7 +23,7 @@ class Materia : public AMateria
 		Materia();
 		Materia(const Materia &obj);
 		Materia(std::string const &type);
-		~Materia();
+		virtual ~Materia();
 
 		Materia &operator=(Materia const &obj);
 		Materia *clone() const;

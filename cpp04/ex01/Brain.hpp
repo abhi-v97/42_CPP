@@ -21,7 +21,7 @@ class Brain
 	public:
 		Brain();
 		Brain(Brain const &obj);
-		~Brain();
+		virtual ~Brain();
 
 		Brain &operator=(Brain const &obj);
 

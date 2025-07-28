@@ -21,7 +21,7 @@ class Cat : public Animal
 	public:
 		Cat();
 		Cat(Cat const &obj);
-		~Cat();
+		virtual ~Cat();
 
 		Cat &operator=(Cat const &obj);
 
