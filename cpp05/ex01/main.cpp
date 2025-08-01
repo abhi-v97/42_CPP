@@ -17,18 +17,12 @@ int main()
 {
 	try
 	{
-		// Bureaucrat b1(-123);
-		// std::cout << "outstream test: " << b1 << std::endl;
-		Bureaucrat b2(123);
-		std::cout << "outstream test: " << b2 << std::endl;
-		Bureaucrat b3(160);
-		std::cout << "outstream test: " << b3 << std::endl;
-		Bureaucrat b4(42);
-		std::cout << "outstream test: " << b4 << std::endl;
+		Bureaucrat beau(123);
+		std::cout << "outstream test: " << beau << std::endl;
 	}
-	catch(std::string &str)
+	catch(int)
 	{
-		std::cerr << "Error: " << str << '\n';
+		std::cerr << "Uh oh" << '\n';
 	}
 	
 }
