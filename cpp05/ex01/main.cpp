@@ -11,18 +11,70 @@
 /* ************************************************************************** */
 
 #include "Bureaucrat.hpp"
+#include "Form.hpp"
+#include <exception>
+#include <ios>
 #include <iostream>
+
+void testForm(std::string const &name, int const signGrade, int const execGrade)
+{
+	std::cout << "Attempting to create a Form object " << name << " with sign grade " << signGrade
+			  << " & exec grade " << execGrade << std::endl;
+	try
+	{
+		Form form(name, signGrade, execGrade);
+		std::cout << "Success! Form created successfully." << std::endl;
+		return;
+	}
+	catch (std::exception &e)
+	{
+		std::cerr << "Error: " << e.what() << std::endl;
+	}
+}
 
 int main()
 {
+	std::cout << "** Testing object creation **" << std::endl;
+	testForm("LargeSignGrade", 1200, 12);
+	testForm("LargeExecGrade", 1, 1234);
+	testForm("SmallSignGrade", 0, 12);
+	testForm("SmallExecGrade", 1, 0);
+	std::cout << std::endl;
+
+	std::cout << "** Test signForm() from class Bureaucrat **" << std::endl;
 	try
 	{
-		Bureaucrat beau(123);
-		std::cout << "outstream test: " << beau << std::endl;
+		Bureaucrat a("name", 12);
+
+		Form form("form", 24, 1);
+		a.signForm(form);
+		std::cout << "Success!." << std::endl;
 	}
-	catch(int)
+	catch (std::exception &e)
 	{
-		std::cerr << "Uh oh" << '\n';
+		std::cerr << "Error: " << e.what() << std::endl;
 	}
+	std::cout << std::endl;
+
+	{
+		std::cout << "** test signForm() when form is already signed **" << std::endl;
+		Bureaucrat a("name", 12);
+		Form form("form", 24, 1);
 	
+		a.signForm(form);
+		std::cout << std::boolalpha;
+		std::cout << "Form sign: " << form.isSigned() << std::endl;
+		a.signForm(form);
+		std::cout << std::endl;
+	}
+	{
+		std::cout << "** test beSigned() member function **" << std::endl;
+		Bureaucrat a("name", 42);
+		Form form("form", 24, 1);
+	
+		a.signForm(form);
+		std::cout << std::endl;
+	}
+
+	return (0);
 }

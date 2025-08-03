@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "Bureaucrat.hpp"
+#include "Form.hpp"
 
 /*
 ** ------------------------------- CONSTRUCTOR --------------------------------
@@ -62,6 +63,19 @@ std::ostream &operator<<(std::ostream &o, Bureaucrat const &src)
 ** --------------------------------- METHODS ----------------------------------
 */
 
+void Bureaucrat::signForm(Form &form) const
+{
+	try
+	{
+		form.beSigned(*this);
+	}
+	catch (std::exception &e)
+	{
+		std::cerr << "Bureaucrat " << this->m_name << " couldn't sign " << form.getName()
+				  << " because " << e.what() << std::endl;
+	}
+}
+
 void Bureaucrat::gradeUp(void)
 {
 	if (this->m_grade - 1 < Bureaucrat::m_maxGrade)
@@ -84,6 +98,7 @@ std::string Bureaucrat::getName() const
 {
 	return m_name;
 }
+
 int Bureaucrat::getGrade() const
 {
 	return m_grade;

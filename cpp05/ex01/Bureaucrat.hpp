@@ -16,6 +16,8 @@
 #include <iostream>
 #include <string>
 
+class Form;
+
 class Bureaucrat
 {
 
@@ -28,6 +30,7 @@ class Bureaucrat
 		std::string getName() const;
 		int getGrade() const;
 
+		void signForm(Form &form) const;
 		void gradeUp(void);
 		void gradeDown(void);
 		Bureaucrat &operator=(Bureaucrat const &rhs);
@@ -44,11 +47,12 @@ class Bureaucrat
 				virtual const char *what() const throw();
 		};
 
+		static int const m_maxGrade = 1;
+		static int const m_minGrade = 150;
+
 	private:
 		std::string m_name;
 		int m_grade;
-		static int const m_maxGrade = 1;
-		static int const m_minGrade = 150;
 };
 
 std::ostream &operator<<(std::ostream &o, Bureaucrat const &i);
