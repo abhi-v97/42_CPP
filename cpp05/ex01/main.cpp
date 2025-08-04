@@ -22,7 +22,7 @@ void testForm(std::string const &name, int const signGrade, int const execGrade)
 			  << " & exec grade " << execGrade << std::endl;
 	try
 	{
-		Form form(name, signGrade, execGrade);
+		AForm form(name, signGrade, execGrade);
 		std::cout << "Success! Form created successfully." << std::endl;
 		return;
 	}
@@ -46,7 +46,7 @@ int main()
 	{
 		Bureaucrat a("name", 12);
 
-		Form form("form", 24, 1);
+		AForm form("form", 24, 1);
 		a.signForm(form);
 		std::cout << "Success!." << std::endl;
 	}
@@ -59,7 +59,7 @@ int main()
 	{
 		std::cout << "** test signForm() when form is already signed **" << std::endl;
 		Bureaucrat a("name", 12);
-		Form form("form", 24, 1);
+		AForm form("form", 24, 1);
 	
 		a.signForm(form);
 		std::cout << std::boolalpha;
@@ -70,7 +70,7 @@ int main()
 	{
 		std::cout << "** test beSigned() member function **" << std::endl;
 		Bureaucrat a("name", 42);
-		Form form("form", 24, 1);
+		AForm form("form", 24, 1);
 	
 		a.signForm(form);
 		std::cout << std::endl;

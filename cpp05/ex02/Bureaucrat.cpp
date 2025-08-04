@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include "Bureaucrat.hpp"
-#include "Form.hpp"
+#include "AForm.hpp"
 
 /*
 ** ------------------------------- CONSTRUCTOR --------------------------------
@@ -62,6 +62,19 @@ std::ostream &operator<<(std::ostream &o, Bureaucrat const &src)
 /*
 ** --------------------------------- METHODS ----------------------------------
 */
+
+void Bureaucrat::executeForm(AForm &form) const
+{
+	try
+	{
+		form.execute(*this);
+	}
+	catch (std::exception &e)
+	{
+		std::cerr << "Bureaucrat " << this->m_name << " couldn't execute " << form.getName()
+				  << " because " << e.what() << std::endl;
+	}
+}
 
 void Bureaucrat::signForm(AForm &form) const
 {

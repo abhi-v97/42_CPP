@@ -31,6 +31,7 @@ class Bureaucrat
 		int getGrade() const;
 
 		void signForm(AForm &form) const;
+		void executeForm(AForm &form) const;
 		void gradeUp(void);
 		void gradeDown(void);
 		Bureaucrat &operator=(Bureaucrat const &rhs);

@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Form.cpp                                           :+:      :+:    :+:   */
+/*   AForm.cpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: abhi <abhi@student.42.fr>                  #+#  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025-08-03 20:14:48 by abhi              #+#    #+#             */
-/*   Updated: 2025-08-03 20:14:48 by abhi             ###   ########.fr       */
+/*   Created: 2025-08-03 21:34:28 by abhi              #+#    #+#             */
+/*   Updated: 2025-08-03 21:34:28 by abhi             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "Form.hpp"
+#include "AForm.hpp"
 #include "Bureaucrat.hpp"
 
 /*
@@ -70,7 +70,16 @@ std::ostream &operator<<(std::ostream &o, AForm const &i)
 ** --------------------------------- METHODS ----------------------------------
 */
 
-void	AForm::beSigned(Bureaucrat const &b)
+void AForm::execute(Bureaucrat const &executor) const
+{
+	if (executor.getGrade() > this->m_execGrade)
+		throw(AForm::GradeTooHighException());
+	else if (this->isSigned() != true)
+		throw(AForm::NotSignedException());
+	this->executeTarget();
+}
+
+void AForm::beSigned(Bureaucrat const &b)
 {
 	if (this->m_signed)
 		throw(AForm::IsSignedException());
@@ -79,19 +88,24 @@ void	AForm::beSigned(Bureaucrat const &b)
 	this->m_signed = true;
 }
 
-const char	*AForm::GradeTooHighException::what() const throw()
+const char *AForm::GradeTooHighException::what() const throw()
 {
 	return ("grade value is too high");
 }
 
-const char	*AForm::GradeTooLowException::what() const throw()
+const char *AForm::GradeTooLowException::what() const throw()
 {
 	return ("grade value is too low");
 }
 
-const char	*AForm::IsSignedException::what() const throw()
+const char *AForm::IsSignedException::what() const throw()
 {
 	return ("Form is already signed.");
+}
+
+const char *AForm::NotSignedException::what() const throw()
+{
+	return ("Form is not signed.");
 }
 
 /*
@@ -103,17 +117,17 @@ std::string const &AForm::getName() const
 	return (this->m_name);
 }
 
-bool	AForm::isSigned() const
+bool AForm::isSigned() const
 {
 	return (this->m_signed);
 }
 
-int	AForm::getSignGrade() const
+int AForm::getSignGrade() const
 {
 	return (this->m_signGrade);
 }
 
-int	AForm::getExecuteGrade() const
+int AForm::getExecuteGrade() const
 {
 	return (this->m_execGrade);
 }

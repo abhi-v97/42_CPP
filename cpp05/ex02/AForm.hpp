@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Form.hpp                                           :+:      :+:    :+:   */
+/*   AForm.hpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: abhi <abhi@student.42.fr>                  #+#  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025-08-03 20:10:10 by abhi              #+#    #+#             */
-/*   Updated: 2025-08-03 20:10:10 by abhi             ###   ########.fr       */
+/*   Created: 2025-08-03 21:34:18 by abhi              #+#    #+#             */
+/*   Updated: 2025-08-03 21:34:18 by abhi             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,14 +25,16 @@ class AForm
 		AForm();
 		AForm(AForm const &src);
 		AForm(std::string const &name, int const signGrade, int const executeGrade);
-		~AForm();
+		virtual ~AForm();
 
 		AForm &operator=(AForm const &rhs);
-		void beSigned(Bureaucrat const &b);
 		std::string const &getName(void) const;
 		bool isSigned() const;
 		int getSignGrade() const;
 		int getExecuteGrade() const;
+
+		void beSigned(Bureaucrat const &b);
+		void execute(Bureaucrat const &executor) const;
 
 		class GradeTooHighException : public std::exception
 		{
@@ -51,6 +53,15 @@ class AForm
 			public:
 				virtual const char *what() const throw();
 		};
+
+		class NotSignedException : public std::exception
+		{
+			public:
+				virtual const char *what() const throw();
+		};
+
+	protected:
+		virtual void executeTarget(void) const = 0;
 
 	private:
 		bool m_signed;
