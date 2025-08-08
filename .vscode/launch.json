@@ -4,8 +4,9 @@
 			"name": "(gdb) Launch",
 			"type": "cppdbg",
 			"request": "launch",
-			"program": "${workspaceFolder}/cpp04/ex03/test.out",
+			"program": "${workspaceFolder}/cpp06/ex00/test.out",
 			"args": [
+				"'*'"
 			],
 			"stopAtEntry": false,
 			"cwd": "${fileDirname}",

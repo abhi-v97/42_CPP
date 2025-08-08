@@ -1,6 +1,6 @@
-NAME = harl.out
+NAME = test.out
 
-SRC = main.cpp Harl.cpp
+SRC = main.cpp ScalarConverter.cpp
 
 OBJS = ${SRC:%.cpp=%.o}
 
