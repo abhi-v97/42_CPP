@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ScalarConverter.cpp                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abhi <abhi@student.42.fr>                  #+#  +:+       +#+        */
+/*   By: avalsang <avalsang@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025-08-08 16:25:03 by abhi              #+#    #+#             */
-/*   Updated: 2025-08-08 16:25:03 by abhi             ###   ########.fr       */
+/*   Created: 2025/08/08 16:25:03 by abhi              #+#    #+#             */
+/*   Updated: 2025/08/09 18:51:26 by avalsang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,8 +105,6 @@ void ScalarConverter::convert(std::string const &str)
 
 	if (str.empty())
 		return;
-	// else if (str.length() == 1 && std::isdigit(str[0]))
-	// 	value = static_cast<int>(str[0]);
 	else if (str.length() == 3 && str[0] == '\'' && str[2] == '\'')
 		value = static_cast<char>(str[1]);
 	else
@@ -115,7 +113,7 @@ void ScalarConverter::convert(std::string const &str)
 	if (value == 0 && !std::isdigit(str[0]))
 		return ;
 
-	if (std::isnan(value) || std::isinf(value))
+	if (std::isnan(value) || std::isinf(value) || std::isinf(static_cast<float>(value)))
 	{
 		std::cout << "char: impossible" << std::endl;
 		std::cout << "int: impossible" << std::endl;
@@ -129,17 +127,6 @@ void ScalarConverter::convert(std::string const &str)
 		printFloat(value);
 		printDouble(value);
 	}
-
-	// if (errno == ERANGE)
-	// 	std::cout << value << std::endl;
-	// if (value == 0 && str.length() == 1 && !std::isprint(str[0]))
-	// {
-	// }
-	// if (str.length() == 3 && str[0] == '\'' && str[2] == '\'')
-	// {
-	// }
-	// printInt(value);
-	// std::cout << "double: " << i << std::endl;
 }
 
 /*
