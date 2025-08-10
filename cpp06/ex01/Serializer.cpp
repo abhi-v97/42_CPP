@@ -11,63 +11,65 @@
 /* ************************************************************************** */
 
 #include "Serializer.hpp"
+#include <cstdint>
 
 /*
 ** ------------------------------- CONSTRUCTOR --------------------------------
 */
 
-uintptr_t Serializer::serialize(Data * ptr)
+uintptr_t Serializer::serialize(Data *ptr)
 {
-	
-	return (uintptr_t());
+	return (reinterpret_cast<uintptr_t>(ptr));
+}
+
+Data *deserialize(uintptr_t raw)
+{
+	return (reinterpret_cast<Data *>(raw));
 }
 
 Serializer::Serializer()
 {
 }
 
-Serializer::Serializer( const Serializer & src )
+Serializer::Serializer(const Serializer &src)
 {
 }
 
-
 /*
-** -------------------------------- DESTRUCTOR --------------------------------
+** -------------------------------- DESTRUCTOR --sssssssssssssssssssssssssssssssssssssssss-----------------------------
 */
 
 Serializer::~Serializer()
 {
 }
 
-
 /*
 ** --------------------------------- OVERLOAD ---------------------------------
 */
 
-Serializer &				Serializer::operator=( Serializer const & rhs )
+Serializer &Serializer::operator=(Serializer const &rhs)
 {
-	//if ( this != &rhs )
+	// if ( this != &rhs )
 	//{
-		//this->_value = rhs.getValue();
+	// this->_value = rhs.getValue();
 	//}
 	return *this;
 }
 
-std::ostream &			operator<<( std::ostream & o, Serializer const & i )
+std::ostream &operator<<(std::ostream &outf, Data const &obj)
 {
-	//o << "Value = " << i.getValue();
-	return o;
+	outf << "Data struct address: " << &obj << std::endl;
+	outf << "int x: " << obj.x << std::endl;
+	outf << "int y: " << obj.y << std::endl;
+	return outf;
 }
-
 
 /*
 ** --------------------------------- METHODS ----------------------------------
 */
 
-
 /*
 ** --------------------------------- ACCESSOR ---------------------------------
 */
-
 
 /* ************************************************************************** */

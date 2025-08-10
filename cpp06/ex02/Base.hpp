@@ -1,19 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.cpp                                           :+:      :+:    :+:   */
+/*   Base.hpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: abhi <abhi@student.42.fr>                  #+#  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025-08-10 17:56:28 by abhi              #+#    #+#             */
-/*   Updated: 2025-08-10 17:56:28 by abhi             ###   ########.fr       */
+/*   Created: 2025-08-10 19:41:56 by abhi              #+#    #+#             */
+/*   Updated: 2025-08-10 19:41:56 by abhi             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "Serializer.hpp"
+#ifndef BASE_HPP
+#define BASE_HPP
 
-int main()
+class Base
 {
-	Data data = {.x = 123, .y = 456};
-	return (0);
-}
+	public:
+		virtual ~Base(void);
+};
+
+#endif // BASE_HPP
