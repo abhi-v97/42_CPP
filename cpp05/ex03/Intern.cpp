@@ -1,5 +1,20 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   Intern.cpp                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: abhi <abhi@student.42.fr>                  #+#  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025-08-22 23:04:12 by abhi              #+#    #+#             */
+/*   Updated: 2025-08-22 23:04:12 by abhi             ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "Intern.hpp"
 #include "AForm.hpp"
+#include "PresidentialPardonForm.hpp"
+#include "RobotomyRequestForm.hpp"
+#include "ShrubberyCreationForm.hpp"
 
 /*
 ** ------------------------------- CONSTRUCTOR --------------------------------
@@ -11,6 +26,7 @@ Intern::Intern()
 
 Intern::Intern(const Intern &src)
 {
+	(void)src;
 }
 
 /*
@@ -27,16 +43,14 @@ Intern::~Intern()
 
 Intern &Intern::operator=(Intern const &rhs)
 {
-	// if ( this != &rhs )
-	//{
-	// this->_value = rhs.getValue();
-	//}
+	(void)rhs;
 	return *this;
 }
 
 std::ostream &operator<<(std::ostream &o, Intern const &i)
 {
-	// o << "Value = " << i.getValue();
+	(void)o;
+	(void)i;
 	return o;
 }
 
@@ -72,13 +86,16 @@ AForm *Intern::makeForm(std::string name, std::string target)
 		if (name == formNames[i])
 		{
 			form = formPointer[i](target);
-			break ;
+			return (form);
 		}
 	}
-	// replace this with an exception
-	if (!form)
-		std::cout << "Intern failed to create the form!" << std::endl;
-	return (form);
+	std::cout << "Intern failed to create form " << name << std::endl;
+	throw Intern::InvalidFormName();
+}
+
+const char *Intern::InvalidFormName::what() const throw()
+{
+	return ("Intern: bad form name");
 }
 
 /*
