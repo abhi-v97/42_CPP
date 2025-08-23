@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   AForm.cpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abhi <abhi@student.42.fr>                  #+#  +:+       +#+        */
+/*   By: avalsang <avalsang@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025-08-03 21:34:28 by abhi              #+#    #+#             */
-/*   Updated: 2025-08-03 21:34:28 by abhi             ###   ########.fr       */
+/*   Created: 2025/08/03 21:34:28 by abhi              #+#    #+#             */
+/*   Updated: 2025/08/23 16:56:15 by avalsang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ std::ostream &operator<<(std::ostream &o, AForm const &i)
 void AForm::execute(Bureaucrat const &executor) const
 {
 	if (executor.getGrade() > this->m_execGrade)
-		throw(AForm::GradeTooHighException());
+		throw(AForm::GradeTooLowException());
 	else if (this->isSigned() != true)
 		throw(AForm::NotSignedException());
 	this->executeTarget();

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Form.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abhi <abhi@student.42.fr>                  #+#  +:+       +#+        */
+/*   By: avalsang <avalsang@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025-08-03 20:14:48 by abhi              #+#    #+#             */
-/*   Updated: 2025-08-03 20:14:48 by abhi             ###   ########.fr       */
+/*   Created: 2025/08/03 20:14:48 by abhi              #+#    #+#             */
+/*   Updated: 2025/08/23 16:50:22 by avalsang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,8 +59,8 @@ AForm &AForm::operator=(AForm const &rhs)
 
 std::ostream &operator<<(std::ostream &o, AForm const &i)
 {
-	std::cout << std::ostream::boolalpha;
-	o << "Form name: " << i.getName() << "; " << "Sign: " << i.isSigned() << "; "
+	std::cout << std::boolalpha;
+	o << "Form name: " << i.getName() << "; " << "signed: " << i.isSigned() << "; "
 	  << "Grade to sign: " << i.getSignGrade() << "; "
 	  << "Grade to execute: " << i.getExecuteGrade();
 	return o;

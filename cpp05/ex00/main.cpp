@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: avalsang <avalsang@student.42.fr>          #+#  +:+       +#+        */
+/*   By: avalsang <avalsang@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025-08-01 15:29:10 by avalsang          #+#    #+#             */
-/*   Updated: 2025-08-01 15:29:10 by avalsang         ###   ########.fr       */
+/*   Created: 2025/08/01 15:29:10 by avalsang          #+#    #+#             */
+/*   Updated: 2025/08/23 16:40:13 by avalsang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ int main()
 		Bureaucrat goodTest("goodTest", 2);
 		Bureaucrat badTest("badTest", 1);
 		goodTest.gradeUp();
-		std::cout << "goodTest gradeUp executed" << std::endl;
+		std::cout << "goodTest gradeUp executed, new grade: " << goodTest.getGrade() << std::endl;
 		badTest.gradeUp();
 		std::cout << "badTest gradeUp executed" << std::endl;
 	}
@@ -79,7 +79,7 @@ int main()
 		Bureaucrat goodTest("goodTest", 149);
 		Bureaucrat badTest("badTest", 150);
 		goodTest.gradeDown();
-		std::cout << "goodTest gradeDown executed" << std::endl;
+		std::cout << "goodTest gradeDown executed, new grade: " << goodTest.getGrade() << std::endl;
 		badTest.gradeDown();
 		std::cout << "badTest gradeDown executed" << std::endl;
 	}

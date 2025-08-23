@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: avalsang <avalsang@student.42.fr>          #+#  +:+       +#+        */
+/*   By: avalsang <avalsang@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025-08-01 15:29:10 by avalsang          #+#    #+#             */
-/*   Updated: 2025-08-01 15:29:10 by avalsang         ###   ########.fr       */
+/*   Created: 2025/08/01 15:29:10 by avalsang          #+#    #+#             */
+/*   Updated: 2025/08/23 16:55:13 by avalsang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,9 +46,10 @@ int main()
 	{
 		Bureaucrat a("name", 12);
 
-		AForm form("form", 24, 1);
+		AForm form("form abc", 24, 1);
+		std::cout << form << std::endl;
 		a.signForm(form);
-		std::cout << "Success!." << std::endl;
+		std::cout << form << std::endl;
 	}
 	catch (std::exception &e)
 	{
