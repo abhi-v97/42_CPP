@@ -21,6 +21,7 @@
 
 Base *generate(void)
 {
+	std::srand(std::time(0));
 	int random = std::rand() % 3;
 
 	switch (random)
@@ -79,7 +80,6 @@ int main()
 {
 	Base *base;
 
-	std::srand(std::time(0));
 	std::cout << "TEST" << std::endl;
 	base = generate();
 	identify(base);

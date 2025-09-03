@@ -14,7 +14,6 @@
 #include <cmath>
 #include <cstdio>
 #include <cstdlib>
-#include <errno.h>
 #include <iomanip>
 #include <limits>
 #include <string>
@@ -53,7 +52,7 @@ ScalarConverter &ScalarConverter::operator=(ScalarConverter const &rhs)
 std::ostream &operator<<(std::ostream &o, ScalarConverter const &i)
 {
 	(void)i;
-	// o << "Value = " << i.getValue();
+	(void)o;
 	return o;
 }
 
@@ -111,7 +110,7 @@ void ScalarConverter::convert(std::string const &str)
 		value = strtod(str.c_str(), NULL);
 
 	if (value == 0 && !std::isdigit(str[0]))
-		return ;
+		return;
 
 	if (std::isnan(value) || std::isinf(value) || std::isinf(static_cast<float>(value)))
 	{

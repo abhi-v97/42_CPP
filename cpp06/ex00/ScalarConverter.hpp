@@ -11,10 +11,10 @@
 /* ************************************************************************** */
 
 #ifndef SCALARCONVERTER_HPP
-# define SCALARCONVERTER_HPP
+#define SCALARCONVERTER_HPP
 
-# include <iostream>
-# include <string>
+#include <iostream>
+#include <string>
 
 class ScalarConverter
 {
@@ -22,22 +22,19 @@ class ScalarConverter
 		static void convert(std::string const &str);
 
 	protected:
-
 		ScalarConverter();
-		ScalarConverter( ScalarConverter const & src );
+		ScalarConverter(ScalarConverter const &src);
 		~ScalarConverter();
 
-		ScalarConverter &		operator=( ScalarConverter const & rhs );
-		
+		ScalarConverter &operator=(ScalarConverter const &rhs);
 
 	private:
 		static void printInt(double d);
 		static void printChar(double d);
 		static void printFloat(double d);
 		static void printDouble(double d);
-
 };
 
-std::ostream &			operator<<( std::ostream & o, ScalarConverter const & i );
+std::ostream &operator<<(std::ostream &o, ScalarConverter const &i);
 
 #endif /* ************************************************* SCALARCONVERTER_H */

@@ -15,5 +15,14 @@
 int main()
 {
 	Data data = {.x = 123, .y = 456};
+	uintptr_t ptr = Serializer::serialize(&data);
+	Data *deserializePtr = Serializer::deserialize(ptr);
+
+	std::cout << data << std::endl;
+	std::cout << "serialize:\t\t" << ptr << std::endl;
+	std::cout << "deserialize: \t\t" << deserializePtr << std::endl;
+	
+	std::cout << std::endl;
+	std::cout << data << std::endl;
 	return (0);
 }
