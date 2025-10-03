@@ -13,23 +13,25 @@
 #include "Zombie.hpp"
 #include <iostream>
 
-Zombie::Zombie(void) {
-  std::cout << "A zombie appeared!" << std::endl;
-  return;
+Zombie::Zombie(void)
+{
+	std::cout << "A zombie appeared!" << std::endl;
+	return;
 }
 
-Zombie::Zombie(std::string name) : m_name(name) {
-  std::cout << "A zombie named " << this->getName() << " appeared!"
-            << std::endl;
-  return;
+Zombie::Zombie(std::string name) : m_name(name)
+{
+	std::cout << "A zombie named " << this->getName() << " appeared!" << std::endl;
+	return;
 }
 
-Zombie::~Zombie(void) {
-  std::cout << "A zombie named " << this->getName() << " has been destroyed!"
-            << std::endl;
+Zombie::~Zombie(void)
+{
+	std::cout << "A zombie named " << this->getName() << " has been destroyed!" << std::endl;
 }
 
-void Zombie::announce(void) const {
-  std::cout << this->getName() << ": BraiiiiiiinnnzzzZ..." << std::endl;
-  return;
+void Zombie::announce(void) const
+{
+	std::cout << this->getName() << ": BraiiiiiiinnnzzzZ..." << std::endl;
+	return;
 }
