@@ -11,25 +11,7 @@
 /* ************************************************************************** */
 
 #include <iostream>
-
-template <typename T> void swap(T &x, T &y)
-{
-	T temp;
-
-	temp = x;
-	x = y;
-	y = temp;
-}
-
-template <typename T> T min(T &x, T &y)
-{
-	return (x < y ? x : y);
-}
-
-template <typename T> T max(T &x, T &y)
-{
-	return (x > y ? x : y);
-}
+#include "template.hpp"
 
 int main(void)
 {
@@ -47,5 +29,20 @@ int main(void)
 	std::cout << "c = " << c << ", d = " << d << std::endl;
 	std::cout << "min( c, d ) = " << ::min(c, d) << std::endl;
 	std::cout << "max( c, d ) = " << ::max(c, d) << std::endl;
+
+	std::cout << std::endl;
+	float e = 2.4;
+	float f = 4.2;
+	std::cout << "e = " << e << ", f = " << f << std::endl;
+	std::cout << "min( e, f ) = " << min<float>(e, f) << std::endl;
+	std::cout << "max( e, f ) = " << max<float>(e, f) << std::endl;
+
+	std::cout << std::endl;
+	std::string g = "abc";
+	std::string h = "ABC";
+	std::cout << "g = " << g << ", h = " << h << std::endl;
+	std::cout << "min( g, h ) = " << min<std::string>(g, h) << std::endl;
+	std::cout << "max( g, h ) = " << max<std::string>(g, h) << std::endl;
+
 	return (0);
 }

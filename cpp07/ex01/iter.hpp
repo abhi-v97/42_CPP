@@ -42,4 +42,5 @@ void timesTwo(T &n)
 {
 	n *= 2;
 }
+
 #endif // ITER_HPP
