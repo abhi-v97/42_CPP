@@ -21,5 +21,16 @@ int main()
 	std::cout << array[2] << std::endl;
 	std::cout << array[3] << std::endl;
 	std::cout << array[4] << std::endl;
+	
+	// test empty array creation
+	Array<std::string> emptyArray;
+	std::cout << "emptyArray: " << emptyArray << std::endl;
 
+	// test assigment operator overload
+	Array<std::string> strArray(3);
+	strArray[0] = "hello";
+	strArray[1] = "world";
+	strArray[2] = "!";
+	emptyArray = strArray;
+	std::cout << "emptyArray: " << emptyArray << std::endl;
 }

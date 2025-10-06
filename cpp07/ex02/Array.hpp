@@ -38,6 +38,6 @@ class Array
 		size_t	m_size;
 };
 
-// add the template definitions AFTER the class has been declared
 # include "Array.tpp"
+
 #endif // ARRAY_HPP

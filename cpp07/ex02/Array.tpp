@@ -28,7 +28,6 @@ Array<T>::~Array()
 template<typename T>
 Array<T> &Array<T>::operator=(Array<T> const &src)
 {
-	if (*this != src)
 	{
 		if (this->m_size != src.m_size)
 		{
