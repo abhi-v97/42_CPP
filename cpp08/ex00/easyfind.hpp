@@ -13,22 +13,25 @@
 #ifndef EASYFIND_HPP
 #define EASYFIND_HPP
 
-#include <vector>
-#include <iostream>
+# include <algorithm>
+# include <iostream>
+# include <stdexcept>
 
 template <typename T>
-int easyFind(std::vector<T> vect, int i)
+typename T::iterator easyFind(T &vect, int i)
 {
-	if (vect.empty() != true)
+	typename T::iterator j = std::find(vect.begin(), vect.end(), i);
+	if (j != vect.end())
 	{
-		for (size_t j = 0; j < vect.size(); j++)
-		{
-			if (vect[j] == i)
-				return (vect[j]);
-		}
+		int index = j - vect.begin();
+		std::cout << "Element " << vect[index] << " found at pos " << index << std::endl;
+		return (j);
 	}
-	std::cout << "failed to find element in vector" << std::endl;
-	return (-1);
+	else
+	{
+		throw (std::out_of_range("Element not found"));
+	}
+	return (j);
 }
 
 #endif // EASYFIND_HPP
