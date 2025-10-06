@@ -33,4 +33,32 @@ int main()
 	strArray[2] = "!";
 	emptyArray = strArray;
 	std::cout << "emptyArray: " << emptyArray << std::endl;
+
+	// test copy constructor
+	Array<std::string> copyArray(strArray);
+	std::cout << "copyArray: " << copyArray << std::endl;
+
+	// test [] operator
+	copyArray[1] = "WORLD";
+	std::cout << "emptyArray[1]: " << emptyArray[1] << std::endl;
+	std::cout << "copyArray[1]: " << copyArray[1] << std::endl;
+	std::cout << std::endl;
+
+	// test exception
+	try
+	{
+		copyArray[42];
+	}
+	catch (std::exception &e)
+	{
+		std::cout << "Error: " << e.what() << std::endl;	
+	}
+	std::cout << std::endl;
+
+	// test size method
+	Array<float> floatArray(24);	
+	std::cout << "floatArray size: " << floatArray.size() << std::endl;
+	
+	return (0);
 }
+

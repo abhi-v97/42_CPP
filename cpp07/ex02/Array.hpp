@@ -14,6 +14,7 @@
 #define ARRAY_HPP
 
 # include <cstddef>
+# include <exception>
 
 template <typename T>
 class Array
@@ -29,10 +30,15 @@ class Array
 		
 		size_t size() const;
 
-		virtual char const *what() const throw()
+		class OutofBoundsException : public std::exception
 		{
-			return ("Array out of bounds");
-		}
+		public:
+			virtual char const *what() const throw()
+			{
+				return ("Array out of bounds");
+			}
+		};
+		
 	private:
 		T *m_array;
 		size_t	m_size;

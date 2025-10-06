@@ -45,7 +45,7 @@ template<typename T>
 T &Array<T>::operator[](size_t index)
 {
 	if (index >= this->m_size)
-		throw(std::exception());
+		throw(OutofBoundsException());
 	return (this->m_array[index]);
 }
 
