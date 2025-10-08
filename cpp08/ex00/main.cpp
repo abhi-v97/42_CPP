@@ -36,6 +36,7 @@ int main()
 	std::cout << std::endl;
 
 	std::deque<int> deque;
+
 	for (int i = 11; i < 16; i++)
 		deque.push_back(i);
 	std::cout << "Container deque: ";
