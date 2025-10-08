@@ -10,20 +10,22 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "Span.hpp"
-#include <cstdlib>
+# include "Span.hpp"
+# include <cstdlib>
+# include <algorithm>
+# include <numeric>
+# include <vector>
 
 /*
 ** ------------------------------- CONSTRUCTOR --------------------------------
 */
 
-Span::Span()
+Span::Span() : m_maxN(0), vect()
 {
 }
 
-Span::Span( const Span & src )
+Span::Span( Span const & src ) : m_maxN(src.m_maxN), vect(src.vect)
 {
-	(void) src;
 }
 
 Span::Span(int n) : m_maxN(n)
@@ -41,33 +43,34 @@ Span::~Span()
 
 void Span::addNumber(int n)
 {
+	if ((int)this->vect.size() == this->m_maxN)
+		throw(Span::isFullException());
 	this->vect.push_back(n);
-	if ((int)this->vect.size() < this->m_maxN)
-		;
 }
 
 int Span::shortestSpan()
 {
-	int span = std::abs(this->vect[0] - this->vect[1]);
+	int result;
+	std::vector<int> temp(this->vect);
+	std::vector<int> distance(temp);
 
-	for (size_t i = 0; i < this->vect.size() - 1; i++)
-	{
-		if (std::abs(this->vect[i] - this->vect[i + 1]) < span)
-			span = std::abs(this->vect[i] - this->vect[i + 1]);
-	}
-	return (span);
+	if (this->m_maxN < 2)
+		throw(Span::invalidSizeException());
+	std::sort(temp.begin(), temp.end());
+	std::adjacent_difference(temp.begin(), temp.end(), distance.begin());
+	result = *std::min_element(distance.begin() + 1, distance.end());
+	return (result);
 }
 
 int Span::longestSpan()
 {
-	int span = std::abs(this->vect[0] - this->vect[1]);
+	int min, max;
 
-	for (size_t i = 0; i < this->vect.size() - 1; i++)
-	{
-		if (std::abs(this->vect[i] - this->vect[i + 1]) > span)
-			span = std::abs(this->vect[i] - this->vect[i + 1]);
-	}
-	return (span);
+	if (this->m_maxN < 2)
+		throw(Span::invalidSizeException());
+	min = *std::min_element(this->vect.begin(), this->vect.end());
+	max = *std::max_element(this->vect.begin(), this->vect.end());
+	return (max - min);
 }
 
 
@@ -75,33 +78,49 @@ int Span::longestSpan()
 ** --------------------------------- OVERLOAD ---------------------------------
 */
 
-Span &				Span::operator=( Span const & rhs )
+Span	&Span::operator=( Span const & rhs )
 {
-	(void) rhs;
-	//if ( this != &rhs )
-	//{
-		//this->_value = rhs.getValue();
-	//}
+	if (this != &rhs)
+	{
+		this->m_maxN = rhs.m_maxN;
+		this->vect.clear();
+		this->vect.insert(this->vect.begin(), rhs.vect.begin(),
+		    rhs.vect.end());
+	}
 	return *this;
 }
 
-std::ostream &			operator<<( std::ostream & o, Span const & i )
+std::ostream	&operator<<( std::ostream &outf, Span const &obj)
 {
-	(void) o;
-	(void) i;
-	//o << "Value = " << i.getValue();
-	return o;
+	outf << "{ ";
+	for (size_t i = 0; i < obj.getVect().size(); i++)
+		std::cout << obj.getVect().at(i) << " ";
+	outf << "}";
+	return outf;
 }
-
 
 /*
 ** --------------------------------- METHODS ----------------------------------
 */
 
+const char *Span::isFullException::what() const throw()
+{
+	return ("Container full, no more space remaining");
+}
+
+const char *Span::invalidSizeException::what() const throw()
+{
+	return ("Container has less than two elements");
+}
 
 /*
 ** --------------------------------- ACCESSOR ---------------------------------
 */
+
+std::vector<int> Span::getVect() const
+{
+	return (this->vect);
+}
 
 
 /* ************************************************************************** */
