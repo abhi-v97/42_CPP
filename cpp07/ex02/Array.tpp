@@ -67,7 +67,7 @@ std::ostream &operator<<(std::ostream &outf, Array<T> &obj)
 		if (i < len - 1)
 			std::cout << ", ";
 	}
-	std::cout << " }" << std::endl;
+	std::cout << " }";
 	return (outf);
 }
 
