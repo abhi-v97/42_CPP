@@ -33,10 +33,7 @@ class Array
 		class OutofBoundsException : public std::exception
 		{
 		public:
-			virtual char const *what() const throw()
-			{
-				return ("Array out of bounds");
-			}
+			virtual char const *what() const throw();
 		};
 		
 	private:

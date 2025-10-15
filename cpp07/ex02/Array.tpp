@@ -71,3 +71,8 @@ std::ostream &operator<<(std::ostream &outf, Array<T> &obj)
 	return (outf);
 }
 
+template <typename T>
+const char * Array<T>::OutofBoundsException::what() const throw()
+{
+	return ("Array out of bounds");
+}
