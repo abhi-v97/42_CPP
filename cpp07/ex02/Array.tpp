@@ -3,8 +3,8 @@
 # include <cstddef>
 
 template<typename T>
-Array<T>::Array(void) : m_array(NULL), m_size(0) {
-
+Array<T>::Array(void) : m_array(NULL), m_size(0)
+{
 }
 
 template<typename T>

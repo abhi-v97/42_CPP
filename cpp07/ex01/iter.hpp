@@ -24,23 +24,4 @@ void iter(A *array, size_t len, F func)
 		func(array[i]);
 }
 
-template <typename T>
-void printArray(T *array, size_t len)
-{
-	std::cout << "{ ";
-	for (size_t i = 0; i < len; i++)
-	{
-		std::cout << array[i];
-		if (i < len - 1)
-			std::cout << ", ";
-	}
-	std::cout << " }" << std::endl;
-}
-
-template <typename T>
-void timesTwo(T &n)
-{
-	n *= 2;
-}
-
 #endif // ITER_HPP
