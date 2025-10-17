@@ -14,20 +14,31 @@
 #include <deque>
 #include "easyfind.hpp"
 
+template<typename Iter>
+void printArray(Iter begin, Iter end)
+{
+	std::cout << "{ ";
+	for (; begin != end; begin++)
+		std::cout << *begin  << std::endl;
+}
+
 int main()
 {
-	std::vector<int> array;
+	std::vector<int> vect;
 	
 	for (int i = 3; i < 8; i++)
-		array.push_back(i);
+		vect.push_back(i);
 	std::cout << "Container array: ";
-	for (std::vector<int>::iterator it = array.begin(); it != array.end(); it++)
-		std::cout << *it << " ";
+	printArray(vect.begin(), vect.end());
+
+	std::cout << "Test 1: find valid element in vector container" << std::endl;
+	easyFind(vect, 5);
 	std::cout << std::endl;
-	easyFind(array, 5);
+	
+	std::cout << "Test 2: test exception, array out of bounds" << std::endl;
 	try
 	{
-		easyFind(array, 42);
+		easyFind(vect, 42);
 	}
 	catch (std::exception &e)
 	{
@@ -40,18 +51,10 @@ int main()
 	for (int i = 11; i < 16; i++)
 		deque.push_back(i);
 	std::cout << "Container deque: ";
-	for (std::deque<int>::iterator it = deque.begin(); it != deque.end(); it++)
-		std::cout << *it << " ";
-	std::cout << std::endl;
+	printArray(deque.begin(), deque.end());
+
+	std::cout << "Test 3: find valid element in deque container" << std::endl;
 	easyFind(deque, 12);
-	try
-	{
-		easyFind(deque, 42);
-	}
-	catch (std::exception &e)
-	{
-		std::cout << "Error: " << e.what() << std::endl;
-	}
+	std::cout << std::endl;
 	return (0);
 }
-

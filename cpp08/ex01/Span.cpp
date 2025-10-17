@@ -48,6 +48,13 @@ void Span::addNumber(int n)
 	this->vect.push_back(n);
 }
 
+void Span::addRandom(int n)
+{
+	srand(time(NULL));
+	for (int i = 0; i < n; i++)
+		addNumber(rand() % (101));
+}
+
 int Span::shortestSpan()
 {
 	int result;

@@ -50,7 +50,8 @@
 		"sstream": "cpp",
 		"stdexcept": "cpp",
 		"streambuf": "cpp",
-		"typeinfo": "cpp"
+		"typeinfo": "cpp",
+		"list": "cpp"
 	},
 	"C_Cpp.clang_format_path": ".vscode/.clang-format",
 	"C_Cpp.clang_format_fallbackStyle": "none",

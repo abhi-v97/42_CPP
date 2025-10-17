@@ -17,7 +17,7 @@ int main()
 {
 	Span sp = Span(5);
 	
-	// test empty span obj
+	std::cout << "TEST: empty span obj" << std::endl;
 	Span empty = Span();
 
 	std::cout << "empty: " << empty << std::endl;
@@ -39,7 +39,7 @@ int main()
 	}
 	std::cout << std::endl;
 
-	// test adding numbers over max limit
+	std::cout << "TEST: add number to empty obj" << std::endl;
 	try
 	{
 		empty.addNumber(42);
@@ -50,14 +50,15 @@ int main()
 	}
 	std::cout << std::endl;
 
-	// test addNumber method
+	std::cout << "TEST: addNumber method" << std::endl;
 	sp.addNumber(6);
 	sp.addNumber(1);
 	sp.addNumber(17);
 	sp.addNumber(9);
 	sp.addNumber(11);
+	std::cout << "sp: " << sp << std::endl << std::endl;
 	
-	// test shortest and longest span for sp
+	std::cout << "TEST: shortest and longest span for sp" << std::endl;
 	std::cout << "Shortest span: " << sp.shortestSpan() << std::endl;
 	std::cout << "Longest span: " << sp.longestSpan() << std::endl;
 	std::cout << std::endl;
@@ -68,23 +69,30 @@ int main()
 	test.push_back(5);
 	test.push_back(1);
 
-	// test addRange method
+	std::cout << "TEST: addRange method" << std::endl;
 	Span sp2 = Span(5);
 	sp2.addRange(test.begin(), test.end());
 	std::cout << "Shortest span: " << sp2.shortestSpan() << std::endl;
 	std::cout << "Longest span: " << sp2.longestSpan() << std::endl;
 	std::cout << std::endl;
 
-	// test copy constructor
+	std::cout << "TEST: copy constructor" << std::endl;
 	Span sp3 = Span(sp2);
 	sp3.addNumber(42);
 	std::cout << "Shortest span: " << sp3.shortestSpan() << std::endl;
 	std::cout << "Longest span: " << sp3.longestSpan() << std::endl;
 	std::cout << std::endl;
 
-	// test insertion operator overload
+	std::cout << "TEST: insertion operator overload" << std::endl;
 	std::cout << "sp2: " << sp2 << std::endl;
 	std::cout << "sp3: " << sp3 << std::endl;
+	std::cout << std::endl;
+	
+	std::cout << "TEST: test addRandom" << std::endl;
+	Span sp4 = Span(10);
+	sp4.addRandom(10);
+	std::cout << "sp4: " << sp4 << std::endl;
+	std::cout << "Shortest span: " << sp4.shortestSpan() << std::endl;
+	std::cout << "Longest span: " << sp4.longestSpan() << std::endl;
 	return (0);
 }
-
