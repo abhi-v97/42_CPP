@@ -10,10 +10,10 @@ class MutantStack : public std::stack<T, U>
 {
 public:
 
-	typedef typename std::stack<T, U>::container_type::iterator iterator;
-	typedef typename std::stack<T, U>::container_type::const_iterator const_iterator;
-	typedef typename std::stack<T, U>::container_type::reverse_iterator reverse_iterator;
-	typedef typename std::stack<T, U>::container_type::const_reverse_iterator reverse_const_iterator;
+	typedef typename U::iterator iterator;
+	typedef typename U::const_iterator const_iterator;
+	typedef typename U::reverse_iterator reverse_iterator;
+	typedef typename U::const_reverse_iterator reverse_const_iterator;
 
 	MutantStack<T, U>() : std::stack<T, U>() {};
 	MutantStack<T, U>(const MutantStack<T, U> &src) : std::stack<T, U>(src) { (void)src; };
@@ -26,7 +26,6 @@ public:
 		return (*this);
 	}
 
-	void push()
 	iterator begin() { return (this->c.begin()); }
 	iterator end() { return (this->c.end()); }
 	reverse_iterator rbegin() { return (this->c.rbegin()); }
@@ -36,9 +35,7 @@ public:
 	reverse_const_iterator rbegin() const { return (this->c.rbegin()); }
 	const_iterator end() const { return (this->c.end()); }
 	reverse_const_iterator rend() const { return (this->c.rend()); }
-
 };
-
 
 template <typename T, typename U>
 std::ostream &operator<<( std::ostream & o, const MutantStack<T, U> &ms)
