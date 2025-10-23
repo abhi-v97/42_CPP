@@ -19,7 +19,8 @@ void printArray(Iter begin, Iter end)
 {
 	std::cout << "{ ";
 	for (; begin != end; begin++)
-		std::cout << *begin  << std::endl;
+		std::cout << *begin  << " ";
+	std::cout << "}" << std::endl;
 }
 
 int main()
@@ -32,10 +33,12 @@ int main()
 	printArray(vect.begin(), vect.end());
 
 	std::cout << "Test 1: find valid element in vector container" << std::endl;
+	std::cout << "Result: ";
 	easyFind(vect, 5);
 	std::cout << std::endl;
 	
 	std::cout << "Test 2: test exception, array out of bounds" << std::endl;
+	std::cout << "Result: ";
 	try
 	{
 		easyFind(vect, 42);
@@ -54,6 +57,7 @@ int main()
 	printArray(deque.begin(), deque.end());
 
 	std::cout << "Test 3: find valid element in deque container" << std::endl;
+	std::cout << "Result: ";
 	easyFind(deque, 12);
 	std::cout << std::endl;
 	return (0);
