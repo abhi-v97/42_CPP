@@ -3,6 +3,7 @@
 
 # include <iostream>
 # include <string>
+# include <map>
 
 class BitcoinExchange
 {
@@ -16,6 +17,9 @@ class BitcoinExchange
 		BitcoinExchange &		operator=( BitcoinExchange const & rhs );
 
 	private:
+		void checkDate(std::string &str);
+		void checkValue(float value);
+		std::map<std::string, float> mData;
 
 };
 

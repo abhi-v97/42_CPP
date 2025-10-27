@@ -4,11 +4,11 @@
 ** ------------------------------- CONSTRUCTOR --------------------------------
 */
 
-BitcoinExchange::BitcoinExchange()
+BitcoinExchange::BitcoinExchange() : mData()
 {
 }
 
-BitcoinExchange::BitcoinExchange( const BitcoinExchange & src )
+BitcoinExchange::BitcoinExchange( const BitcoinExchange & src ) : mData()
 {
 }
 
@@ -45,6 +45,9 @@ std::ostream &			operator<<( std::ostream & o, BitcoinExchange const & i )
 /*
 ** --------------------------------- METHODS ----------------------------------
 */
+
+
+
 
 
 /*
