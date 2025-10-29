@@ -1,6 +1,6 @@
 NAME = btc
 
-SRC = main.cpp 
+SRC = main.cpp BitcoinExchange.cpp
 
 OBJS = ${SRC:%.cpp=%.o}
 
