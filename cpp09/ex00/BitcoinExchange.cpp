@@ -1,9 +1,10 @@
 #include <fstream>
 #include <cstring>
+#include <stdlib.h>
 #include <cstdlib>
-#include <ctime> // for tm struct to hold date info
 #include <sstream>
 #include <stdexcept>
+
 #include "BitcoinExchange.hpp"
 
 /*
@@ -88,9 +89,13 @@ int BitcoinExchange::getMonth(std::string &date) const
 int BitcoinExchange::getDay(std::string &date) const
 {
 	size_t lenDay = date.rfind("-");
-	size_t lenMon = date.rfind("-", lenDay - 1);
-	std::cout << lenMon << "lskdjf\n";
-	return (0);
+	std::string dayStr = date.substr(lenDay + 1, date.size() - lenDay);
+	int day = std::atoi(dayStr.c_str());
+	if (dayStr.empty() || day < 1 || day > 31)
+	{
+		throw (std::out_of_range(date + ": invalid date"));
+	}
+	return (day);
 }
 /**
 	\details
@@ -99,7 +104,7 @@ int BitcoinExchange::getDay(std::string &date) const
 	tm_mon is months since Jan, so range 0-11
 	tm_mday is day of the month, so 1-31
 */
-void BitcoinExchange::checkDate(std::string &date) const
+std::time_t BitcoinExchange::checkDate(std::string &date) const
 {
 	if (date.empty())
 	{
@@ -117,42 +122,68 @@ void BitcoinExchange::checkDate(std::string &date) const
 	tm.tm_year = getYear(date) - 1900;
 	tm.tm_mon = getMonth(date) - 1;
 	tm.tm_mday = getDay(date);
+	std::time_t t = std::mktime(&tm);
+	return (t);
 }
 
-void BitcoinExchange::checkValue(std::string &value) const
+double BitcoinExchange::checkValue(std::string &buffer) const
 {
-
-	std::cout << value << std::endl;
+	double result = std::strtod(buffer.c_str(), NULL);
+	if (result < 0 || result > 1000)
+	{
+		throw(std::out_of_range("value out of range"));
+	}
+	return (result);
 }
 
-void BitcoinExchange::splitString(std::string &buffer) const
+void BitcoinExchange::addEntry(std::time_t &date, double &value)
 {
-	std::stringstream temp(buffer);
-	std::string date, value;
+	std::map<std::time_t, double>::iterator it;
+	it = mData.find(date);
+	if (it == mData.end())
+	{
+		mData[date] = value;
+	}
+	else
+	{
+		it->second = value;
+	}
+}
 
-	std::getline(temp, date, ',');
-	checkDate(date);
-	std::getline(temp, value, ',');
-	checkValue(value);
+void BitcoinExchange::splitString(std::string &line)
+{
+	std::stringstream temp(line);
+	std::string buffer;
+	std::time_t date;
+	double value;
+
+	std::getline(temp, buffer, ',');
+	date = checkDate(buffer);
+	std::getline(temp, buffer, ',');
+	value = checkValue(buffer);
+	// std::cout << "date: " << date << ", value: " << value << std::endl;
+	addEntry(date, value);
 }
 
 void BitcoinExchange::fillTable()
 {
 	std::ifstream input;
-	std::string buffer;
+	std::string line;
 	
 	input.open("data.csv");
 	if (input.fail())
 		throw(std::runtime_error("Failed to open file"));
 
-	std::getline(input, buffer);
-	std::getline(input, buffer);
+	std::getline(input, line);
+	std::getline(input, line);
 
-	splitString(buffer);
-	// for (std::string line; std::getline(input, line);)
-	// {
-	// 	std::cout << line << std::endl;
-	// }
+	for (std::string line; std::getline(input, line);)
+	{
+		try
+      		{
+			splitString(line);
+		} catch (std::exception &e) {}
+	}
 }
 
 

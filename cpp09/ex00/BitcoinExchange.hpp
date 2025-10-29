@@ -2,6 +2,7 @@
 # define BITCOINEXCHANGE_HPP
 
 # include <iostream>
+# include <ctime> // for tm struct to hold date info
 # include <string>
 # include <map>
 
@@ -18,16 +19,17 @@ class BitcoinExchange
 		BitcoinExchange &		operator=( BitcoinExchange const & rhs );
 
 	private:
-		void checkDate(std::string &str) const;
-		void checkValue(std::string &str) const;
+		std::time_t checkDate(std::string &str) const;
+		double checkValue(std::string &buffer) const;
 		void fillTable(void);
 
-		void splitString(std::string &buffer) const;
+		void splitString(std::string &line);
+		void addEntry(std::time_t &date, double &value);
 		int getYear(std::string &date) const;
 		int getMonth(std::string &date) const;
 		int getDay(std::string &date) const;
 
-		std::map<std::string, float> mData;
+		std::map<std::time_t, double> mData;
 		std::string file;
 
 };
