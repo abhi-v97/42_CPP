@@ -17,11 +17,13 @@ class BitcoinExchange
 		~BitcoinExchange();
 
 		BitcoinExchange &		operator=( BitcoinExchange const & rhs );
+		void evaluate(std::string &date, std::string &num);
 
 	private:
 		std::time_t checkDate(std::string &str) const;
 		double checkValue(std::string &buffer) const;
 		void fillTable(void);
+		std::time_t setClosestDate(std::time_t inputDate);
 
 		void splitString(std::string &line);
 		void addEntry(std::time_t &date, double &value);

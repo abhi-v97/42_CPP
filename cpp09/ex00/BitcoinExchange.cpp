@@ -1,9 +1,10 @@
-#include <fstream>
-#include <cstring>
-#include <stdlib.h>
 #include <cstdlib>
+#include <cstring>
+#include <fstream>
+#include <limits>
 #include <sstream>
 #include <stdexcept>
+#include <stdlib.h>
 
 #include "BitcoinExchange.hpp"
 
@@ -16,15 +17,15 @@ BitcoinExchange::BitcoinExchange() : mData()
 	fillTable();
 }
 
-BitcoinExchange::BitcoinExchange( const BitcoinExchange & src ) : mData()
+BitcoinExchange::BitcoinExchange(const BitcoinExchange &src) : mData()
 {
-	(void) src;
+	(void)src;
 	fillTable();
 }
 
 BitcoinExchange::BitcoinExchange(const std::string &str) : mData(), file(str)
 {
-	(void) str;
+	(void)str;
 	fillTable();
 }
 
@@ -36,12 +37,11 @@ BitcoinExchange::~BitcoinExchange()
 {
 }
 
-
 /*
 ** --------------------------------- OVERLOAD ---------------------------------
 */
 
-BitcoinExchange &				BitcoinExchange::operator=( BitcoinExchange const & rhs )
+BitcoinExchange &BitcoinExchange::operator=(BitcoinExchange const &rhs)
 {
 	if (this != &rhs)
 	{
@@ -51,9 +51,9 @@ BitcoinExchange &				BitcoinExchange::operator=( BitcoinExchange const & rhs )
 	return *this;
 }
 
-std::ostream &			operator<<( std::ostream & outf, BitcoinExchange const &obj)
+std::ostream &operator<<(std::ostream &outf, BitcoinExchange const &obj)
 {
-	(void) obj;
+	(void)obj;
 	outf << "This program tracks bitcoin prices across dates";
 	return outf;
 }
@@ -68,7 +68,7 @@ int BitcoinExchange::getYear(std::string &date) const
 	int year = std::atoi(yearStr.c_str());
 	if (yearStr.empty() || year < 0)
 	{
-		throw (std::out_of_range(date + ": invalid date"));
+		throw(std::out_of_range(date + ": invalid date"));
 	}
 	return (year);
 }
@@ -81,7 +81,7 @@ int BitcoinExchange::getMonth(std::string &date) const
 	int month = std::atoi(monthStr.c_str());
 	if (monthStr.empty() || month < 1 || month > 12)
 	{
-		throw (std::out_of_range(date + ": invalid date"));
+		throw(std::out_of_range(date + ": invalid date"));
 	}
 	return (month);
 }
@@ -93,13 +93,13 @@ int BitcoinExchange::getDay(std::string &date) const
 	int day = std::atoi(dayStr.c_str());
 	if (dayStr.empty() || day < 1 || day > 31)
 	{
-		throw (std::out_of_range(date + ": invalid date"));
+		throw(std::out_of_range(date + ": invalid date"));
 	}
 	return (day);
 }
 /**
 	\details
-	tm struct info: 
+	tm struct info:
 	tm_year is years since 1900
 	tm_mon is months since Jan, so range 0-11
 	tm_mday is day of the month, so 1-31
@@ -110,13 +110,13 @@ std::time_t BitcoinExchange::checkDate(std::string &date) const
 	{
 		throw(std::runtime_error("empty date string"));
 	}
-	std::string valid = "0123456789-"; 
+	std::string valid = "0123456789-";
 	size_t pos = date.find_first_not_of(valid, 0);
 	if (pos != date.npos)
 	{
-		throw(std::runtime_error(date + ": invalid date"));
+		throw(std::runtime_error("Error: bad input => " + date));
 	}
-	
+
 	tm tm = {};
 	std::memset(&tm, 0, sizeof(tm));
 	tm.tm_year = getYear(date) - 1900;
@@ -126,12 +126,25 @@ std::time_t BitcoinExchange::checkDate(std::string &date) const
 	return (t);
 }
 
-double BitcoinExchange::checkValue(std::string &buffer) const
+/**
+	\brief Checks value string in data.csv
+
+	Subject says value must be between 0-1000, but I'm assuming that's only for
+	input.txt, not data.csv
+*/
+double BitcoinExchange::checkValue(std::string &value) const
 {
-	double result = std::strtod(buffer.c_str(), NULL);
-	if (result < 0 || result > 1000)
+	std::string valid = "0123456789.-";
+	size_t pos = value.find_first_not_of(valid, 0);
+	if (pos != value.npos)
 	{
-		throw(std::out_of_range("value out of range"));
+		throw(std::runtime_error("Error: bad input => " + value));
+	}
+
+	double result = std::strtod(value.c_str(), NULL);
+	if (result > std::numeric_limits<int>::max())
+	{
+		throw(std::out_of_range("too large a number."));
 	}
 	return (result);
 }
@@ -161,7 +174,6 @@ void BitcoinExchange::splitString(std::string &line)
 	date = checkDate(buffer);
 	std::getline(temp, buffer, ',');
 	value = checkValue(buffer);
-	// std::cout << "date: " << date << ", value: " << value << std::endl;
 	addEntry(date, value);
 }
 
@@ -169,28 +181,58 @@ void BitcoinExchange::fillTable()
 {
 	std::ifstream input;
 	std::string line;
-	
+
 	input.open("data.csv");
 	if (input.fail())
 		throw(std::runtime_error("Failed to open file"));
 
 	std::getline(input, line);
-	std::getline(input, line);
 
 	for (std::string line; std::getline(input, line);)
 	{
 		try
-      		{
+		{
 			splitString(line);
-		} catch (std::exception &e) {}
+		}
+		catch (std::exception &e)
+		{
+		}
 	}
 }
 
+std::time_t BitcoinExchange::setClosestDate(std::time_t inputDate)
+{
+	std::map<std::time_t, double>::iterator it;
 
+	if (inputDate < mData.begin()->first)
+	{
+		return (mData.begin()->first);
+	}
+	it = mData.lower_bound(inputDate);
+	return (it->first);
+}
+
+void BitcoinExchange::evaluate(std::string &inputDateStr, std::string &inputValueStr)
+{
+	std::time_t inputDate = checkDate(inputDateStr);
+	double inputValue = checkValue(inputValueStr);
+	if (inputValue < 0)
+	{
+		throw(std::out_of_range("Error: not a positive number."));
+	}
+	else if (inputValue > 1000)
+	{
+		throw(std::out_of_range("Error: too large a number."));
+	}
+
+	std::time_t closestDate = setClosestDate(inputDate);
+	double exchangeValue = mData[closestDate] * std::strtod(inputValueStr.c_str(), NULL);
+	std::cout.precision(2);
+	std::cout << inputDateStr << " => " << inputValueStr << " = " << exchangeValue << std::endl;
+}
 
 /*
 ** --------------------------------- ACCESSOR ---------------------------------
 */
-
 
 /* ************************************************************************** */
