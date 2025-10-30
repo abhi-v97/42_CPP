@@ -3,6 +3,8 @@
 
 # include <iostream>
 # include <string>
+# include <sstream>
+# include <stack>
 
 class RPN
 {
@@ -15,9 +17,13 @@ class RPN
 
 		RPN &		operator=( RPN const & rhs );
 		
-		void calculate(const std::string &expr);
+		int calculate(const std::string &expr);
 
 	private:
+		void performOperation(std::string &buffer);
+		void addNumber(std::string &buffer);
+		std::stack<int> mData;
+		int mResult;
 
 };
 

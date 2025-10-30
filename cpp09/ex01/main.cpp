@@ -15,11 +15,22 @@ int main(int argc, char **argv)
 	{
 		for (int i = 1; argv[i]; i++)
 		{
-			expr = expr + std::string(argv[i]) + " ";
+			expr += std::string(argv[i]) + " ";
 		}
 		std::cout << "\"" << expr << "\"" << std::endl;
 	}
-	
-	calculator.calculate(expr);
+	else
+	{
+		expr = std::string(argv[1]);
+	}
+
+	try
+	{
+		std::cout << calculator.calculate(expr) << std::endl;
+	}
+	catch (std::exception &e)
+	{
+		std::cerr << "Error: " << e.what() << std::endl;
+	}
 	return (0);
 }
