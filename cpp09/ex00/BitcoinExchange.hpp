@@ -1,22 +1,26 @@
 #ifndef BITCOINEXCHANGE_HPP
-# define BITCOINEXCHANGE_HPP
+#define BITCOINEXCHANGE_HPP
 
-# include <iostream>
-# include <ctime> // for tm struct to hold date info
-# include <string>
-# include <map>
+#include <ctime> // for tm struct to hold date info
+#include <iostream>
+#include <map>
+#include <string>
 
+/*
+ * \class BitcoinExchange
+ * Reads bitcoin prices from data.csv on construction and stores them in a map
+ * container. The evaluate() function can be used to retrieve the price of
+ * bitcoin on a given date.
+ */
 class BitcoinExchange
 {
-
 	public:
-
 		BitcoinExchange();
 		BitcoinExchange(BitcoinExchange const &src);
 		BitcoinExchange(std::string const &str);
 		~BitcoinExchange();
 
-		BitcoinExchange &		operator=( BitcoinExchange const & rhs );
+		BitcoinExchange &operator=(BitcoinExchange const &rhs);
 		void evaluate(std::string &date, std::string &num);
 
 	private:
@@ -24,7 +28,6 @@ class BitcoinExchange
 		double checkValue(std::string &buffer) const;
 		void fillTable(void);
 		std::time_t setClosestDate(std::time_t inputDate);
-
 		void splitString(std::string &line);
 		void addEntry(std::time_t &date, double &value);
 		int getYear(std::string &date) const;
@@ -32,10 +35,9 @@ class BitcoinExchange
 		int getDay(std::string &date) const;
 
 		std::map<std::time_t, double> mData;
-		std::string file;
-
+		std::string mFile;
 };
 
-std::ostream &			operator<<( std::ostream & o, BitcoinExchange const & i );
+std::ostream &operator<<(std::ostream &o, BitcoinExchange const &i);
 
 #endif /* ************************************************* BITCOINEXCHANGE_H */

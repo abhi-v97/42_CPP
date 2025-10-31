@@ -4,6 +4,10 @@
 
 #include "BitcoinExchange.hpp"
 
+/**
+ * \brief takes each line in param file and tries to pass it as args to
+ * evaluate() member fucntion
+ */
 void evaluateInput(const std::string &file, BitcoinExchange &btc)
 {
 	std::ifstream input;
@@ -43,9 +47,9 @@ int main(int argc, char **argv)
 	if (argc < 2)
 		return (0);
 
-	BitcoinExchange btc = BitcoinExchange(argv[1]);
 	try
 	{
+		BitcoinExchange btc = BitcoinExchange(argv[1]);
 		evaluateInput(std::string(argv[1]), btc);
 	}
 	catch (std::exception &e)

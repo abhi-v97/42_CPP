@@ -19,13 +19,12 @@ BitcoinExchange::BitcoinExchange() : mData()
 
 BitcoinExchange::BitcoinExchange(const BitcoinExchange &src) : mData()
 {
-	(void)src;
-	fillTable();
+	this->mData = src.mData;
+	this->mFile = src.mFile;
 }
 
-BitcoinExchange::BitcoinExchange(const std::string &str) : mData(), file(str)
+BitcoinExchange::BitcoinExchange(const std::string &str) : mData(), mFile(str)
 {
-	(void)str;
 	fillTable();
 }
 
@@ -45,7 +44,7 @@ BitcoinExchange &BitcoinExchange::operator=(BitcoinExchange const &rhs)
 {
 	if (this != &rhs)
 	{
-		this->file = rhs.file;
+		this->mFile = rhs.mFile;
 		this->mData = rhs.mData;
 	}
 	return *this;
@@ -66,7 +65,7 @@ int BitcoinExchange::getYear(std::string &date) const
 {
 	std::string yearStr = date.substr(0, date.find("-", 0));
 	int year = std::atoi(yearStr.c_str());
-	if (yearStr.empty() || year < 0)
+	if (yearStr.empty() || year < 0 || year > 2100)
 	{
 		throw(std::out_of_range(date + ": invalid date"));
 	}
@@ -97,7 +96,10 @@ int BitcoinExchange::getDay(std::string &date) const
 	}
 	return (day);
 }
+
 /**
+  Converts date from std::string into epoch time
+
 	\details
 	tm struct info:
 	tm_year is years since 1900
@@ -152,6 +154,7 @@ double BitcoinExchange::checkValue(std::string &value) const
 void BitcoinExchange::addEntry(std::time_t &date, double &value)
 {
 	std::map<std::time_t, double>::iterator it;
+
 	it = mData.find(date);
 	if (it == mData.end())
 	{
@@ -177,6 +180,13 @@ void BitcoinExchange::splitString(std::string &line)
 	addEntry(date, value);
 }
 
+/**
+ * \brief goes through each line in data.csv and attempts to convert the info
+ * into map<time_t, double> format.
+ *
+ * If an exception is thrown, discards the current line and moves onto the next
+ * one.
+ */
 void BitcoinExchange::fillTable()
 {
 	std::ifstream input;
@@ -198,8 +208,14 @@ void BitcoinExchange::fillTable()
 		{
 		}
 	}
+	if (mData.empty())
+		throw(std::runtime_error("No valid data entered"));
 }
 
+/**
+ * \brief searches the map container for inputDate. If not found, it will return
+ * the closest date that's lower than inputDate.
+ */
 std::time_t BitcoinExchange::setClosestDate(std::time_t inputDate)
 {
 	std::map<std::time_t, double>::iterator it;
@@ -209,9 +225,20 @@ std::time_t BitcoinExchange::setClosestDate(std::time_t inputDate)
 		return (mData.begin()->first);
 	}
 	it = mData.lower_bound(inputDate);
+	if (it->first == inputDate)
+		return (it->first);
+	it--;
+	if (it == mData.begin())
+		return (mData.begin()->first);
 	return (it->first);
 }
 
+/**
+ * \brief prints the total worth of given bitcoin on the given date, if valid
+ *
+ * \param inputDateStr date string which is used to determine the value of bitcoin
+ * \param inputValueStr total amount of bitcoin
+ */
 void BitcoinExchange::evaluate(std::string &inputDateStr, std::string &inputValueStr)
 {
 	std::time_t inputDate = checkDate(inputDateStr);
@@ -224,11 +251,10 @@ void BitcoinExchange::evaluate(std::string &inputDateStr, std::string &inputValu
 	{
 		throw(std::out_of_range("Error: too large a number."));
 	}
-
 	std::time_t closestDate = setClosestDate(inputDate);
 	double exchangeValue = mData[closestDate] * std::strtod(inputValueStr.c_str(), NULL);
-	std::cout.precision(2);
-	std::cout << inputDateStr << " => " << inputValueStr << " = " << exchangeValue << std::endl;
+	// std::cout.precision(2);
+	std::cout << inputDateStr << " => " << inputValue << " = " << exchangeValue << std::endl;
 }
 
 /*
