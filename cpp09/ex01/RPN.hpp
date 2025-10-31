@@ -17,13 +17,12 @@ class RPN
 
 		RPN &		operator=( RPN const & rhs );
 		
-		int calculate(const std::string &expr);
+		double calculate(const std::string &expr);
 
 	private:
 		void performOperation(std::string &buffer);
 		void addNumber(std::string &buffer);
-		std::stack<int> mData;
-		int mResult;
+		std::stack<double> mData;
 
 };
 

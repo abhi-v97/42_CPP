@@ -6,13 +6,12 @@
 ** ------------------------------- CONSTRUCTOR --------------------------------
 */
 
-RPN::RPN()
+RPN::RPN() : mData(std::stack<double>())
 {
 }
 
-RPN::RPN(const RPN &src)
+RPN::RPN(const RPN &src) : mData(src.mData)
 {
-	(void)src;
 }
 
 /*
@@ -29,13 +28,17 @@ RPN::~RPN()
 
 RPN &RPN::operator=(RPN const &rhs)
 {
-	(void)rhs;
+	if (this != &rhs)
+	{
+		this->mData = rhs.mData;
+	}
 	return *this;
 }
 
 std::ostream &operator<<(std::ostream &o, RPN const &i)
 {
-	(void)o, (void)i;
+	(void)i;
+	o << "this class takes a Reverse Polish Notation expression and returns its result";
 	return o;
 }
 
@@ -52,40 +55,39 @@ int checkInput(std::string &buffer)
 
 void RPN::addNumber(std::string &buffer)
 {
-	if (mResult == 0)
-		mResult = buffer.at(0) - '0';
-	else
-		mData.push(buffer.at(0) - '0');
+	mData.push(buffer.at(0) - '0');
 }
 void RPN::performOperation(std::string &buffer)
 {
 	if (mData.size() < 1)
 		throw(std::runtime_error("not enough operands for operator " + buffer));
-	int rhs = mData.top();
+	double rhs = mData.top();
 	mData.pop();
 	int op = buffer.at(0);
 	switch (op)
 	{
 	case '+': {
-		mResult += rhs;
+		mData.top() = mData.top() + rhs;
 		break;
 	}
 	case '-': {
-		mResult -= rhs;
+		mData.top() = mData.top() - rhs;
 		break;
 	}
 	case '*': {
-		mResult *= rhs;
+		mData.top() = mData.top() * rhs;
 		break;
 	}
 	case '/': {
-		mResult /= rhs;
+		if (rhs == 0)
+			throw(std::runtime_error("divide by zero"));
+		mData.top() = mData.top() / rhs;
 		break;
 	}
 	}
 }
 
-int RPN::calculate(const std::string &expr)
+double RPN::calculate(const std::string &expr)
 {
 	std::stringstream ss(expr);
 	std::string buffer;
@@ -98,7 +100,7 @@ int RPN::calculate(const std::string &expr)
 		{
 			throw(std::runtime_error("bad input given: " + buffer));
 		}
-		if (buffer.find("+-*/", 0, 1) != std::string::npos)
+		if (buffer.find_first_of("+-*/") != std::string::npos)
 		{
 			performOperation(buffer);
 		}
@@ -107,7 +109,7 @@ int RPN::calculate(const std::string &expr)
 			addNumber(buffer);
 		}
 	}
-	return (mResult);
+	return (mData.top());
 }
 
 /*

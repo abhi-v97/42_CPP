@@ -215,6 +215,8 @@ void BitcoinExchange::fillTable()
 /**
  * \brief searches the map container for inputDate. If not found, it will return
  * the closest date that's lower than inputDate.
+ *
+ * lower_bound returns smallest key that's greater than or equal to param. Subject wants
  */
 std::time_t BitcoinExchange::setClosestDate(std::time_t inputDate)
 {
