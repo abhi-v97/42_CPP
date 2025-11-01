@@ -1,5 +1,6 @@
 #include "RPN.hpp"
 #include <cstdlib>
+#include <sstream>
 #include <stdexcept>
 
 /*
