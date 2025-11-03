@@ -22,13 +22,13 @@ class PmergeMe
 
 		typename C::iterator begin();
 		typename C::iterator end();
+		int getJacobsthal(int n);
 
 	private:
 		time_t mStart;
 		time_t mEnd;
 		C mContainer;
 		double time();
-		int Jacobsthal(int k);
 		void sort(C &cont);
 		std::string container_type();
 };

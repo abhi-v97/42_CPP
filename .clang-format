@@ -24,3 +24,4 @@ UseTab: Always
 ColumnLimit: 100
 IndentAccessModifiers: true
 BreakTemplateDeclarations: Yes
+SpacesInAngles: true

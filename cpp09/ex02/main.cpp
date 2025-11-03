@@ -15,8 +15,10 @@ int main(int argc, char **argv)
 	}
 	else if (argc == 2)
 	{
-		PmergeMe<std::vector<int> > pm = PmergeMe<std::vector<int> >(std::string(argv[1]));
+		PmergeMe< std::vector< int > > pm = PmergeMe< std::vector< int > >(std::string(argv[1]));
 		pm.printData("Before:\t");
+		for (int i = 0; i < 20; i++)
+			std::cout << pm.getJacobsthal(i) << std::endl;
 	}
 	else if (argc > 2)
 	{

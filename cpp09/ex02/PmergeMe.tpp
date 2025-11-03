@@ -3,6 +3,7 @@
 #include "PmergeMe.hpp"
 #include <cstdlib>
 #include <sstream>
+#include <cmath>
 
 /*
 ** ------------------------------- CONSTRUCTOR --------------------------------
@@ -58,6 +59,11 @@ template <typename C> void PmergeMe<C>::printData(const std::string &msg) {
   std::cout << std::endl;
 }
 
+template <typename C>
+int PmergeMe<C>::getJacobsthal(int n)
+{
+  return ((std::pow(2, n) - std::pow(-1, n)) / 3);
+}
 /*
 ** --------------------------------- ACCESSOR ---------------------------------
 */
