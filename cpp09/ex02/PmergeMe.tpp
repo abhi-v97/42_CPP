@@ -69,15 +69,34 @@ int PmergeMe<C>::getJacobsthal(int n)
 template <typename C>
 void PmergeMe<C>::sort()
 {
-  static size_t pairSize = 2;
+  static size_t orderNum = 2;
 
-  int unitSize = mContainer / pairSize;
+  int units = mContainer.size() / orderNum;
 
-  if (pairSize > mContainer.size() / 2)
+  if (units < 2)
     return ;
 
-  pairSize *= 2;
+  bool oddPair = units % 2 == 1;
+  (void) oddPair;
+
+iterator begin = mContainer.begin();
+iterator end = mContainer.begin() + ((orderNum * units) - (orderNum * oddPair));
+for (iterator it = begin; it < end; it += (orderNum * 2))
+  {
+    if (*(it + orderNum - 1) > *(it + orderNum * 2 - 1))
+	{
+		for (size_t i = 0; i < orderNum; i++)
+        	std::swap(*(it + i), *(it + i + orderNum));
+  	}
+}
+  
+  std::cout << "Order num: " << orderNum << std::endl;
+  printData("");
+
+  orderNum *= 2;
+
   sort();
+
 }
 
 /*

@@ -20,6 +20,7 @@ class PmergeMe
 
 		void printData(const std::string &msg);
 
+		typedef typename C::iterator iterator;
 		typename C::iterator begin();
 		typename C::iterator end();
 		int getJacobsthal(int n);
