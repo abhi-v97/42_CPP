@@ -4,6 +4,7 @@
 #include <cstdlib>
 #include <sstream>
 #include <cmath>
+#include <algorithm>
 
 /*
 ** ------------------------------- CONSTRUCTOR --------------------------------
@@ -64,6 +65,21 @@ int PmergeMe<C>::getJacobsthal(int n)
 {
   return ((std::pow(2, n) - std::pow(-1, n)) / 3);
 }
+
+template <typename C>
+void PmergeMe<C>::sort()
+{
+  static size_t pairSize = 2;
+
+  int unitSize = mContainer / pairSize;
+
+  if (pairSize > mContainer.size() / 2)
+    return ;
+
+  pairSize *= 2;
+  sort();
+}
+
 /*
 ** --------------------------------- ACCESSOR ---------------------------------
 */

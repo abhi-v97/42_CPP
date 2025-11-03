@@ -4,7 +4,7 @@
 #include <iostream>
 #include <string>
 
-template <typename C>
+template < typename C >
 class PmergeMe
 {
 
@@ -23,6 +23,7 @@ class PmergeMe
 		typename C::iterator begin();
 		typename C::iterator end();
 		int getJacobsthal(int n);
+		void sort();
 
 	private:
 		time_t mStart;
@@ -33,7 +34,7 @@ class PmergeMe
 		std::string container_type();
 };
 
-template <typename C>
-std::ostream &operator<<(std::ostream &o, PmergeMe<C> const &i);
+template < typename C >
+std::ostream &operator<<(std::ostream &o, PmergeMe< C > const &i);
 
 #include "PmergeMe.tpp"
