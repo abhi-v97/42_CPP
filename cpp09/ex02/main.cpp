@@ -3,6 +3,7 @@
 // https://dev.to/emuminov/human-explanation-and-step-by-step-visualisation-of-the-ford-johnson-algorithm-5g91
 
 #include "PmergeMe.hpp"
+#include <vector>
 
 int main(int argc, char **argv)
 {
@@ -14,7 +15,7 @@ int main(int argc, char **argv)
 	}
 	else if (argc == 2)
 	{
-		PmergeMe pm = PmergeMe(std::string(argv[1]));
+		PmergeMe<std::vector<int> > pm = PmergeMe<std::vector<int> >(std::string(argv[1]));
 		pm.printData("Before:\t");
 	}
 	else if (argc > 2)

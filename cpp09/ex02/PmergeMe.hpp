@@ -1,10 +1,10 @@
-#ifndef PMERGEME_HPP
-#define PMERGEME_HPP
+#pragma once
 
+#include <ctime>
 #include <iostream>
 #include <string>
-#include <vector>
 
+template <typename C>
 class PmergeMe
 {
 
@@ -20,10 +20,20 @@ class PmergeMe
 
 		void printData(const std::string &msg);
 
+		typename C::iterator begin();
+		typename C::iterator end();
+
 	private:
-		std::vector<int> mData;
+		time_t mStart;
+		time_t mEnd;
+		C mContainer;
+		double time();
+		int Jacobsthal(int k);
+		void sort(C &cont);
+		std::string container_type();
 };
 
-std::ostream &operator<<(std::ostream &o, PmergeMe const &i);
+template <typename C>
+std::ostream &operator<<(std::ostream &o, PmergeMe<C> const &i);
 
-#endif /* ******************************************************** PMERGEME_H */
+#include "PmergeMe.tpp"
