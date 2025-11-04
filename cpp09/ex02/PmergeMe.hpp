@@ -19,6 +19,8 @@ class PmergeMe
 		PmergeMe &operator=(PmergeMe const &rhs);
 
 		void printData(const std::string &msg);
+		void printPairs(size_t orderNum);
+		int pairCompare();
 
 		typedef typename C::iterator iterator;
 		typename C::iterator begin();
@@ -33,9 +35,10 @@ class PmergeMe
 		double time();
 		void sort(C &cont);
 		std::string container_type();
+		int mComp;
 };
 
 template < typename C >
 std::ostream &operator<<(std::ostream &o, PmergeMe< C > const &i);
 
-#include "PmergeMe.tpp"
+#include "PmergeMe.cpp"
