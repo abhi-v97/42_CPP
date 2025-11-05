@@ -17,7 +17,7 @@ ${NAME}: ${OBJS}
 all: ${NAME}
 
 debug: CFLAGS += -g -D DEBUG
-debug: ${OBJS}
+debug: clean ${OBJS}
 	${CC} ${CFLAGS}  ${OBJS} -o ${NAME}
 
 clean:

@@ -33,14 +33,15 @@ class PmergeMe
 
 		double time();
 		void printPairs(size_t orderNum);
+		void printMainChain(int posPend, int pairSize);
 		int pairCompare();
 		size_t countNumMoved(const Container &insertOrder, iterator endIt,
 							 int bX);
 		int getJacobsthal(int n);
 		int getK(int bX, const Container &jacobSeq);
 		size_t insertPair(int value, size_t pairSize, size_t numPairs);
-		void insert(int pairSize, int numPairs, int numPend, Container &jacobSeq);
-		Container insertOrder(int numPend, Container jacobSeq);
+		void insert(int pairSize, int numPend, Container &jacobSeq);
+		Container insertOrder(int numPend, Container &jacobSeq);
 		typename Container::reference getElement(typename Container::size_type index);
 		typename Container::reference getElementOverload(typename Container::size_type index,
 														 std::random_access_iterator_tag);
@@ -51,6 +52,9 @@ class PmergeMe
 
 template < typename C >
 std::ostream &operator<<(std::ostream &o, PmergeMe< C > const &i);
+
+size_t getUsefulMain(int k, size_t posPend, size_t pairSize);
+bool isMainChain(int i, int pairSize, int size);
 
 #include "PmergeMe.cpp"
 
