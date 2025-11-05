@@ -24,6 +24,15 @@ PmergeMe< C >::PmergeMe(const PmergeMe &src)
 }
 
 template < typename C >
+PmergeMe< C >::PmergeMe(char **argv)
+{
+	for (int i = 1; argv[i]; i++)
+	{
+		mContainer.push_back(std::atoi(argv[i]));
+	}
+}
+
+template < typename C >
 PmergeMe< C >::PmergeMe(const std::string &str)
 {
 	std::stringstream ss(str);
@@ -71,6 +80,20 @@ std::ostream &operator<<(std::ostream &o, PmergeMe< C > const &i)
 /*
 ** --------------------------------- METHODS ----------------------------------
 */
+
+template < typename C >
+void PmergeMe< C >::isSorted()
+{
+	for (size_t i = 1; i < mContainer.size(); i++)
+	{
+		if (mContainer.at(i) < mContainer.at(i - 1))
+		{
+			std::cout << "NOT SORTED" << std::endl;
+			return ;
+		}
+	}
+	std::cout << "SEE IT, SAY IT, SORTED" << std::endl;
+}
 
 template < typename C >
 void PmergeMe< C >::printData(const std::string &msg)
@@ -259,11 +282,11 @@ void PmergeMe< Container >::insert(int pairSize, int numPairs, int numPend, Cont
 	posPend = mResult.size();
 	std::cout << "posPend: " << posPend << std::endl;
 	mResult.insert(mResult.end(), mPend.begin(), mPend.end());
-	printMainChain(posPend, pairSize, mResult);
+	// printMainChain(posPend, pairSize, mResult);
 	std::cout << "-----" << std::endl;
 	mContainer = mResult;
 
-	Container insertOrder = this->insertOrder(9, jacobSeq);
+	Container insertOrder = this->insertOrder(numPend, jacobSeq);
 
 	for (size_t i = 0; i < insertOrder.size(); ++i)
 	{
@@ -278,12 +301,17 @@ void PmergeMe< Container >::insert(int pairSize, int numPairs, int numPend, Cont
 		int k = getK(bX, jacobSeq);
 		size_t usefulMain = getUsefulMain(k, posPend, pairSize);
 
+		// std::cout << "Looking at b" << bX << ", value = " << mContainer.at(end - 1) << std::endl;
+		// std::cout << "insertion group k: " << k << std::endl;
+		// std::cout << "last useful chain: " << usefulMain << std::endl;
+		// std::cout << "-----" << std::endl;
 		size_t insertPos = (bX != 1) ? insertPair(mContainer[end - 1], pairSize, usefulMain) : 0;
 
 		if (insertPos < start)
 			std::rotate(mContainer.begin() + insertPos, mContainer.begin() + start,
 						mContainer.begin() + end);
 
+		// printData("container after insertion:\t");
 		posPend += pairSize;
 	}
 }
@@ -346,17 +374,17 @@ void PmergeMe< C >::sort()
 	int maxPend = mContainer.size() / 2 + 1;
 	Container jacobSeq = Container();
 
-	for (int i = 2; i < maxPend; i++)
+	for (int i = 0; i < maxPend; i++)
 	{
 		jacobSeq.push_back(getJacobsthal(i));
 		// std::cout << jacobSeq[i] << std::endl;
 	}
 
-	// if (jacobSeq.size() > 2)
-	// {
-	// 	typename Container::iterator it = jacobSeq.begin();
-	// 	jacobSeq.erase(++it);
-	// }
+	if (jacobSeq.size() > 2)
+	{
+		typename Container::iterator it = jacobSeq.begin();
+		jacobSeq.erase(++it);
+	}
 
 	while (pairSize > 0)
 	{

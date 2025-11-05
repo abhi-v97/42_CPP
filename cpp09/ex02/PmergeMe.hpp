@@ -32,6 +32,7 @@ class PmergeMe
 		void insert(int pairSize, int numPairs, int numPend,
 								   Container &jacobSeq);
 		Container insertOrder(int numPend, Container jacobSeq);
+		void isSorted();
 
 	private:
 		time_t mStart;

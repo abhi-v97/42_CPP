@@ -24,10 +24,17 @@ int main(int argc, char **argv)
 		// for (int i = 0; i < 20; i++)
 		// 	std::cout << pm.getJacobsthal(i) << std::endl;
 		pm.sort();
+		pm.isSorted();
 	}
 	else if (argc > 2)
 	{
-		// PmergeMe pm = PmergeMe(argv);
+		PmergeMe< std::vector< int > > pm = PmergeMe< std::vector< int > >(argv);
+		pm.printData("Before:\t");
+		// TEST: Jacobsthal sequence
+		// for (int i = 0; i < 20; i++)
+		// 	std::cout << pm.getJacobsthal(i) << std::endl;
+		pm.sort();
+		pm.isSorted();
 	}
 	return (0);
 }
