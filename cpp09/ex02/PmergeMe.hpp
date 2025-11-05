@@ -29,7 +29,8 @@ class PmergeMe
 		typename C::iterator end();
 		int getJacobsthal(int n);
 		void sort();
-		void insert(int pairSize, int numPairs, int numPend, std::vector<int> jacobSeq);
+		void insert(int pairSize, int numPairs, int numPend,
+								   Container &jacobSeq);
 		Container insertOrder(int numPend, Container jacobSeq);
 
 	private:
@@ -40,6 +41,10 @@ class PmergeMe
 		void sort(C &cont);
 		std::string container_type();
 		int mComp;
+
+		size_t countNumMoved(const Container &insertOrder, typename Container::const_iterator endIt, int bX);
+		int getK(int bX, const Container &jacobSeq);
+		size_t insertPair(int value, size_t pairSize, size_t numPairs);
 };
 
 template < typename C >

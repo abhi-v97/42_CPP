@@ -138,7 +138,6 @@ int PmergeMe< C >::pairCompare()
 	return (pairCompare());
 }
 
-
 /**
 	returns true if an element is part of the main chain (comapred)
 */
@@ -155,7 +154,7 @@ bool isMainChain(int i, int pairSize, int size)
 	return (false);
 }
 
-template < typename C>
+template < typename C >
 void printMainChain(int posPend, int pairSize, C mResult)
 {
 	std::cout << "main: [ ";
@@ -179,22 +178,22 @@ void printMainChain(int posPend, int pairSize, C mResult)
 
 	For each Jacobsthal number between 0 and numPend, insert the number and all
 	numbers between it and the previous Jacobsthal number.
-	
+
 	Skip over a number if it already exists.
-	
+
 	Any remaining indices greater than the last Jacobsthal number or not
 	included yet go last.
-	
+
 	eg: 1, 3, 2, 5, 4, 10, 9, 8, 7, 6...
 */
 template < typename Container >
-Container PmergeMe<Container>::insertOrder(int numPend, Container jacobSeq)
+Container PmergeMe< Container >::insertOrder(int numPend, Container jacobSeq)
 {
 	Container order = Container();
-	
+
 	if (numPend <= 0 || jacobSeq.empty())
 		return (order);
-	
+
 	int prev = 0;
 	for (typename Container::const_iterator it = jacobSeq.begin(); it != jacobSeq.end(); it++)
 	{
@@ -207,13 +206,12 @@ Container PmergeMe<Container>::insertOrder(int numPend, Container jacobSeq)
 			prev = i;
 		}
 	}
-	
+
 	Container expanded;
 	for (typename Container::const_iterator it = order.begin(); it != order.end(); it++)
 	{
 		int j = *it;
 		expanded.push_back(j);
-		
 	}
 
 	for (int i = numPend; i > 1; i--)
@@ -221,23 +219,32 @@ Container PmergeMe<Container>::insertOrder(int numPend, Container jacobSeq)
 		if (std::find(order.begin(), order.end(), i) == order.end())
 			order.push_back(i);
 	}
-	
+
 	// for (size_t i = 0; i < order.size(); i++)
 	// 	std::cout << order.at(i) << std::endl;
-	
+
 	return (order);
 }
 
+size_t getUsefulMain(int k, size_t posPend, size_t pairSize)
+{
+	size_t usefulEnd = (1u << k) - 1;
+	size_t availPairs = posPend / pairSize;
+
+	if (usefulEnd > availPairs)
+		return (availPairs);
+	return (usefulEnd);
+}
+
 template < typename Container >
-void PmergeMe< Container >::insert(int pairSize, int numPairs, int numPend, std::vector<int> jacobSeq)
+void PmergeMe< Container >::insert(int pairSize, int numPairs, int numPend, Container &jacobSeq)
 {
 	int posPend;
 	size_t contSize = mContainer.size();
 	Container mResult, mPend;
-	
-	std::cout << "PairSize: " << pairSize << ", numPairs: " << numPairs << ", numPend: " << numPend << std::endl;
-	mResult.reserve(contSize);
-	mPend.reserve(contSize);
+
+	std::cout << "PairSize: " << pairSize << ", numPairs: " << numPairs << ", numPend: " << numPend
+			  << std::endl;
 	for (size_t i = 0; i < contSize; i++)
 	{
 		if (isMainChain(i, pairSize, contSize))
@@ -257,7 +264,74 @@ void PmergeMe< Container >::insert(int pairSize, int numPairs, int numPend, std:
 	mContainer = mResult;
 
 	Container insertOrder = this->insertOrder(9, jacobSeq);
-	;
+
+	for (size_t i = 0; i < insertOrder.size(); ++i)
+	{
+		int bX = insertOrder[i];
+		typename Container::const_iterator it = insertOrder.begin();
+		std::advance(it, i);
+		size_t numMoved = countNumMoved(insertOrder, it, bX);
+
+		size_t start = posPend + (bX - 1 - numMoved) * pairSize;
+		size_t end = start + pairSize;
+
+		int k = getK(bX, jacobSeq);
+		size_t usefulMain = getUsefulMain(k, posPend, pairSize);
+
+		size_t insertPos = (bX != 1) ? insertPair(mContainer[end - 1], pairSize, usefulMain) : 0;
+
+		if (insertPos < start)
+			std::rotate(mContainer.begin() + insertPos, mContainer.begin() + start,
+						mContainer.begin() + end);
+
+		posPend += pairSize;
+	}
+}
+
+template < typename Container >
+size_t PmergeMe< Container >::insertPair(int value, size_t pairSize, size_t numPairs)
+{
+	size_t left = 0;
+	size_t right = numPairs;
+
+	while (left < right)
+	{
+		size_t mid = (left + right) / 2;
+		int midValue = mContainer[(pairSize - 1) + mid * pairSize];
+
+		std::cout << "Comparing: " << value << " < " << midValue << std::endl;
+		if (value < midValue)
+			right = mid;
+		else
+			left = mid + 1;
+	}
+	return (left * pairSize);
+}
+
+template < typename Container >
+int PmergeMe< Container >::getK(int bX, const Container &jacobSeq)
+{
+	typename Container::const_iterator it = jacobSeq.begin();
+	int i = 0;
+
+	for (; it != jacobSeq.end(); it++, i++)
+		if (bX <= *it)
+			return (i);
+	return (i);
+}
+
+template < typename Container >
+size_t PmergeMe< Container >::countNumMoved(const Container &insertOrder,
+											typename Container::const_iterator endIt, int bX)
+{
+	size_t count = 0;
+
+	for (typename Container::const_iterator it = insertOrder.begin(); it != endIt; it++)
+	{
+		if (*it < bX)
+			count++;
+	}
+	return (count);
 }
 
 template < typename C >
@@ -265,7 +339,7 @@ void PmergeMe< C >::sort()
 {
 	std::cout << "Pair Comparison Stage" << std::endl;
 	int pairSize = pairCompare();
-	
+
 	std::cout << "-----" << std::endl;
 	std::cout << "Insertion Stage" << std::endl;
 	std::cout << "-----" << std::endl;
@@ -277,7 +351,7 @@ void PmergeMe< C >::sort()
 		jacobSeq.push_back(getJacobsthal(i));
 		// std::cout << jacobSeq[i] << std::endl;
 	}
-	
+
 	// if (jacobSeq.size() > 2)
 	// {
 	// 	typename Container::iterator it = jacobSeq.begin();
@@ -288,7 +362,7 @@ void PmergeMe< C >::sort()
 	{
 		int numPairs = mContainer.size() / pairSize;
 		int numPend = numPairs / 2 + (numPairs % 2 == 1);
-		(void) numPend;
+		(void)numPend;
 		if (numPend > 1)
 			insert(pairSize, numPairs, numPend, jacobSeq);
 		pairSize /= 2;
