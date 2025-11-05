@@ -3,6 +3,7 @@
 #include <ctime>
 #include <iostream>
 #include <string>
+#include <vector>
 
 template < typename C >
 class PmergeMe
@@ -22,11 +23,14 @@ class PmergeMe
 		void printPairs(size_t orderNum);
 		int pairCompare();
 
+		typedef C Container;
 		typedef typename C::iterator iterator;
 		typename C::iterator begin();
 		typename C::iterator end();
 		int getJacobsthal(int n);
 		void sort();
+		void insert(int pairSize, int numPairs, int numPend, std::vector<int> jacobSeq);
+		Container insertOrder(int numPend, Container jacobSeq);
 
 	private:
 		time_t mStart;

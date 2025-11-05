@@ -1,7 +1,10 @@
 
 
+// References
 // https://dev.to/emuminov/human-explanation-and-step-by-step-visualisation-of-the-ford-johnson-algorithm-5g91
-
+// https://arxiv.org/pdf/1905.09656
+// https://github.com/leske42/CPP09?tab=readme-ov-file#but-how-to-keep-track-of-my-pairs
+// https://github.com/decidedlyso/merge-insertion-sort
 #include "PmergeMe.hpp"
 #include <vector>
 
