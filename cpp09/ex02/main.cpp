@@ -21,9 +21,6 @@ int main(int argc, char **argv)
 	{
 		PmergeMe< std::vector< int > > pm = PmergeMe< std::vector< int > >(std::string(argv[1]));
 		pm.printData("Before:\t");
-		// TEST: Jacobsthal sequence
-		// for (int i = 0; i < 20; i++)
-		// 	std::cout << pm.getJacobsthal(i) << std::endl;
 		pm.sort();
 		pm.isSorted();
 	}
@@ -32,9 +29,6 @@ int main(int argc, char **argv)
 		PmergeMe< std::vector< int > > pm = PmergeMe< std::vector< int > >(argv);
 		// PmergeMe< std::list<int> > pm = PmergeMe< std::list<int> >(argv);
 		pm.printData("Before:\t");
-		// TEST: Jacobsthal sequence
-		// for (int i = 0; i < 20; i++)
-		// 	std::cout << pm.getJacobsthal(i) << std::endl;
 		pm.sort();
 		pm.isSorted();
 	}

@@ -6,7 +6,7 @@ OBJS = ${SRC:%.cpp=%.o}
 
 CC = c++
 
-CFLAGS = -g -Wall -Wextra -Werror -std=c++98
+CFLAGS = -Wall -Wextra -Werror -std=c++98
 
 ${NAME}: ${OBJS}
 	${CC} ${CFLAGS} ${OBJS} -o $@
@@ -16,11 +16,15 @@ ${NAME}: ${OBJS}
 
 all: ${NAME}
 
+debug: CFLAGS += -g -D DEBUG
+debug: ${OBJS}
+	${CC} ${CFLAGS}  ${OBJS} -o ${NAME}
+
 clean:
 	rm -f ${OBJS}
 
 fclean: clean
-	rm -f ${NAME} 
+	rm -f ${NAME}
 
 re: fclean all
 

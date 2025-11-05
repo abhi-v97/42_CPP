@@ -6,6 +6,14 @@
 #include <cstdlib>
 #include <sstream>
 
+#ifdef DEBUG
+  #define DEBUG_PRINT(expr) do { (expr); } while (0)
+  #define DEBUG_BLOCK(code) do { code } while (0)
+#else
+  #define DEBUG_PRINT(expr) do { (void)0; } while (0)
+  #define DEBUG_BLOCK(code) do { (void)0; } while (0)
+#endif
+
 /*
 ** ------------------------------- CONSTRUCTOR --------------------------------
 */
@@ -17,10 +25,9 @@ PmergeMe< C >::PmergeMe()
 }
 
 template < typename C >
-PmergeMe< C >::PmergeMe(const PmergeMe &src)
+PmergeMe< C >::PmergeMe(const PmergeMe< C > &src)
 {
-	(void)src;
-	mComp = 0;
+	this->mContainer = src.mContainer;
 }
 
 template < typename C >
@@ -61,20 +68,52 @@ PmergeMe< C >::~PmergeMe()
 template < typename C >
 PmergeMe< C > &PmergeMe< C >::operator=(PmergeMe const &rhs)
 {
-	(void)rhs;
-	// if ( this != &rhs )
-	//{
-	// this->_value = rhs.getValue();
-	//}
+	this->mContainer = rhs.mContainer;
 	return *this;
 }
 
 template < typename C >
 std::ostream &operator<<(std::ostream &o, PmergeMe< C > const &i)
 {
-	(void)o, (void)i;
-	// o << "Value = " << i.getValue();
+	o << "This class attempts to sort a list of numbers using the Merge-Insertion Sort Algorithm";
 	return o;
+}
+
+
+/*
+** --------------------------------- ITERARATOR ABSTRACTION---------------------------------
+*/
+
+template < typename Container >
+typename Container::reference PmergeMe< Container >::getElement(typename Container::size_type index)
+{
+	return getElementOverload(
+		index, typename std::iterator_traits< typename Container::iterator >::iterator_category());
+}
+
+template < typename Container >
+typename Container::reference PmergeMe< Container >::getElementOverload(
+	typename Container::size_type index, std::random_access_iterator_tag)
+{
+	if (index >= mContainer.size())
+	{
+		throw std::out_of_range("Index out of bounds (vector)");
+	}
+	return mContainer.at(index);
+}
+
+template < typename Container >
+typename Container::reference PmergeMe< Container >::getElementOverload(
+	typename Container::size_type index, std::bidirectional_iterator_tag)
+{
+
+	if (index >= mContainer.size())
+	{
+		throw std::out_of_range("Index out of bounds (list)");
+	}
+	typename Container::iterator it = mContainer.begin();
+	std::advance(it, index);
+	return *it;
 }
 
 /*
@@ -123,63 +162,77 @@ void PmergeMe< C >::printPairs(size_t orderNum)
 	std::cout << std::endl;
 }
 
+template < typename Container >
+void PmergeMe< Container >::sort()
+{
+	std::cout << "Pair Comparison Stage" << std::endl;
+	int pairSize = pairCompare();
+
+	std::cout << "-----" << std::endl;
+	std::cout << "Insertion Stage" << std::endl;
+	std::cout << "-----" << std::endl;
+	int maxPend = mContainer.size() / 2 + 1;
+	Container jacobSeq = Container();
+
+	for (int i = 0; i < maxPend; i++)
+	{
+		jacobSeq.push_back(getJacobsthal(i));
+	}
+
+	if (jacobSeq.size() > 2)
+	{
+		typename Container::iterator it = jacobSeq.begin();
+		jacobSeq.erase(++it);
+	}
+
+	while (pairSize > 0)
+	{
+		int numPairs = mContainer.size() / pairSize;
+		int numPend = numPairs / 2 + (numPairs % 2 == 1);
+		(void)numPend;
+		if (numPend > 1)
+			insert(pairSize, numPairs, numPend, jacobSeq);
+		pairSize /= 2;
+	}
+	printData("After:\t");
+}
+
 template < typename C >
 int PmergeMe< C >::pairCompare()
 {
 	static size_t pairSize = 1;
+	DEBUG_PRINT(std::cout << "Pair Size: " << pairSize << std::endl);
 
 	int units = mContainer.size() / pairSize;
-
 	if (units < 2)
 		return (pairSize / 2);
 
 	bool oddPair = units % 2 == 1;
 
-	// printPairs(pairSize * 2);
-	std::cout << "-----" << std::endl;
-
 	iterator begin = mContainer.begin();
-	// iterator end = mContainer.begin() + ((pairSize * units) - (pairSize * oddPair));
 	iterator end = begin;
 	std::advance(end, (pairSize * units) - (pairSize * oddPair));
-
-	// for (iterator it = begin; it < end; it += (pairSize * 2))
-	// {
-	// 	std::cout << "Comparing: " << *(it + pairSize - 1) << " > " << *(it + pairSize * 2 - 1)
-	// 			  << std::endl;
-	// 	mComp++;
-	// 	if (*(it + pairSize - 1) > *(it + pairSize * 2 - 1))
-	// 	{
-	// 		// for (size_t i = 0; i < orderNum; i++)
-	// 		// 	std::swap(*(it + i), *(it + i + orderNum));
-	// 		std::cout << "Swapping: " << *it << " and " << *(it + pairSize) << std::endl;
-	// 		std::swap_ranges(it, it + pairSize, it + pairSize);
-	// 	}
-	// }
 
 	for (iterator it = begin; it != end;)
 	{
 		iterator lastA = it;
-		std::advance(lastA, pairSize - 1);
 		iterator lastB = it;
+		std::advance(lastA, pairSize - 1);
 		std::advance(lastB, pairSize * 2 - 1);
 
-		// std::cout << "Comparing: " << *lastA << " > " << *lastB << std::endl;
+		DEBUG_PRINT(std::cout << "Comparing: " << *lastA << " > " << *lastB << std::endl);
 		mComp++;
 		if (*lastA > *lastB)
 		{
 			iterator mid = it;
-
+			
+			DEBUG_PRINT(std::cout << "Swapping: " << *lastA << " and " << *lastB << std::endl);
 			std::advance(mid, pairSize);
-			// std::cout << "Swapping: " << *lastA << " and " << *lastB << std::endl;
 			std::swap_ranges(it, mid, mid);
 		}
 		std::advance(it, pairSize * 2);
 	}
-	// std::cout << "Recursion Depth: " << pairSize << std::endl;
-
 	pairSize *= 2;
-
 	return (pairCompare());
 }
 
@@ -188,9 +241,6 @@ int PmergeMe< C >::pairCompare()
 */
 bool isMainChain(int i, int pairSize, int size)
 {
-	// int pairNum = i / pairSize;
-
-	// if ((pairNum + 1) * pairSize > size)
 	if (i + pairSize > size)
 		return (false);
 	if ((i / pairSize) % 2 == 1)
@@ -251,23 +301,11 @@ Container PmergeMe< Container >::insertOrder(int numPend, Container jacobSeq)
 			prev = i;
 		}
 	}
-
-	Container expanded;
-	for (typename Container::const_iterator it = order.begin(); it != order.end(); it++)
-	{
-		int j = *it;
-		expanded.push_back(j);
-	}
-
 	for (int i = numPend; i > 1; i--)
 	{
 		if (std::find(order.begin(), order.end(), i) == order.end())
 			order.push_back(i);
 	}
-
-	// for (size_t i = 0; i < order.size(); i++)
-	// 	std::cout << order.at(i) << std::endl;
-
 	return (order);
 }
 
@@ -287,11 +325,12 @@ void PmergeMe< Container >::insert(int pairSize, int numPairs, int numPend, Cont
 	int posPend;
 	size_t contSize = mContainer.size();
 	Container mResult, mPend;
-	
-	(void) numPairs;
 
-	// std::cout << "PairSize: " << pairSize << ", numPairs: " << numPairs << ", numPend: " << numPend
-			//   << std::endl;
+	(void)numPairs;
+
+	// std::cout << "PairSize: " << pairSize << ", numPairs: " << numPairs << ", numPend: " <<
+	// numPend
+	//   << std::endl;
 	for (size_t i = 0; i < contSize; i++)
 	{
 		if (isMainChain(i, pairSize, contSize))
@@ -314,7 +353,7 @@ void PmergeMe< Container >::insert(int pairSize, int numPairs, int numPend, Cont
 
 	for (size_t i = 0; i < insertOrder.size(); ++i)
 	{
-		typename Container::const_iterator it = insertOrder.begin();
+		iterator it = insertOrder.begin();
 		std::advance(it, i);
 		int bX = *it;
 		size_t numMoved = countNumMoved(insertOrder, it, bX);
@@ -336,7 +375,7 @@ void PmergeMe< Container >::insert(int pairSize, int numPairs, int numPend, Cont
 			iterator first = mContainer.begin();
 			iterator middle = first;
 			iterator last = first;
-			
+
 			std::advance(first, insertPos);
 			std::advance(middle, start);
 			std::advance(last, end);
@@ -383,7 +422,7 @@ int PmergeMe< Container >::getK(int bX, const Container &jacobSeq)
 
 template < typename Container >
 size_t PmergeMe< Container >::countNumMoved(const Container &insertOrder,
-											typename Container::const_iterator endIt, int bX)
+											iterator endIt, int bX)
 {
 	size_t count = 0;
 
@@ -393,42 +432,6 @@ size_t PmergeMe< Container >::countNumMoved(const Container &insertOrder,
 			count++;
 	}
 	return (count);
-}
-
-template < typename C >
-void PmergeMe< C >::sort()
-{
-	std::cout << "Pair Comparison Stage" << std::endl;
-	int pairSize = pairCompare();
-
-	std::cout << "-----" << std::endl;
-	std::cout << "Insertion Stage" << std::endl;
-	std::cout << "-----" << std::endl;
-	int maxPend = mContainer.size() / 2 + 1;
-	Container jacobSeq = Container();
-
-	for (int i = 0; i < maxPend; i++)
-	{
-		jacobSeq.push_back(getJacobsthal(i));
-		// std::cout << jacobSeq[i] << std::endl;
-	}
-
-	if (jacobSeq.size() > 2)
-	{
-		typename Container::iterator it = jacobSeq.begin();
-		jacobSeq.erase(++it);
-	}
-
-	while (pairSize > 0)
-	{
-		int numPairs = mContainer.size() / pairSize;
-		int numPend = numPairs / 2 + (numPairs % 2 == 1);
-		(void)numPend;
-		if (numPend > 1)
-			insert(pairSize, numPairs, numPend, jacobSeq);
-		pairSize /= 2;
-	}
-	// printData("After:\t");
 }
 
 /*
