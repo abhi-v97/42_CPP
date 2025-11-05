@@ -96,7 +96,13 @@ double RPN::calculate(const std::string &expr)
 	for (; std::getline(ss, buffer, ' ');)
 	{
 		if (buffer.empty())
-			continue;
+			continue ;
+		if (buffer.at(0) == '-' && buffer.size() == 2)
+		{
+			int i = buffer.at(1) - '0';
+			mData.push(-i);
+			continue ;
+		}
 		if (buffer.size() > 1 || checkInput(buffer))
 		{
 			throw(std::runtime_error("bad input given: " + buffer));
