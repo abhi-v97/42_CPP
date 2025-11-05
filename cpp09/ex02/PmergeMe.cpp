@@ -86,10 +86,10 @@ void PmergeMe< C >::isSorted()
 {
 	for (size_t i = 1; i < mContainer.size(); i++)
 	{
-		if (mContainer.at(i) < mContainer.at(i - 1))
+		if (getElement(i) < getElement(i - 1))
 		{
 			std::cout << "NOT SORTED" << std::endl;
-			return ;
+			return;
 		}
 	}
 	std::cout << "SEE IT, SAY IT, SORTED" << std::endl;
@@ -100,7 +100,7 @@ void PmergeMe< C >::printData(const std::string &msg)
 {
 	std::cout << msg;
 	for (size_t i = 0; i < mContainer.size(); i++)
-		std::cout << mContainer.at(i) << ' ';
+		std::cout << getElement(i) << ' ';
 	std::cout << std::endl;
 }
 
@@ -116,7 +116,7 @@ void PmergeMe< C >::printPairs(size_t orderNum)
 	std::cout << "Pairs: { ";
 	for (size_t i = 0; i < mContainer.size(); i++)
 	{
-		std::cout << mContainer.at(i) << ' ';
+		std::cout << getElement(i) << ' ';
 		if ((i + 1) % orderNum == 0)
 			std::cout << "} { ";
 	}
@@ -135,26 +135,48 @@ int PmergeMe< C >::pairCompare()
 
 	bool oddPair = units % 2 == 1;
 
-	printPairs(pairSize * 2);
+	// printPairs(pairSize * 2);
 	std::cout << "-----" << std::endl;
 
 	iterator begin = mContainer.begin();
-	iterator end = mContainer.begin() + ((pairSize * units) - (pairSize * oddPair));
-	for (iterator it = begin; it < end; it += (pairSize * 2))
-	{
-		std::cout << "Comparing: " << *(it + pairSize - 1) << " > " << *(it + pairSize * 2 - 1)
-				  << std::endl;
-		mComp++;
-		if (*(it + pairSize - 1) > *(it + pairSize * 2 - 1))
-		{
-			// for (size_t i = 0; i < orderNum; i++)
-			// 	std::swap(*(it + i), *(it + i + orderNum));
-			std::cout << "Swapping: " << *it << " and " << *(it + pairSize) << std::endl;
-			std::swap_ranges(it, it + pairSize, it + pairSize);
-		}
-	}
+	// iterator end = mContainer.begin() + ((pairSize * units) - (pairSize * oddPair));
+	iterator end = begin;
+	std::advance(end, (pairSize * units) - (pairSize * oddPair));
 
-	std::cout << "Recursion Depth: " << pairSize << std::endl;
+	// for (iterator it = begin; it < end; it += (pairSize * 2))
+	// {
+	// 	std::cout << "Comparing: " << *(it + pairSize - 1) << " > " << *(it + pairSize * 2 - 1)
+	// 			  << std::endl;
+	// 	mComp++;
+	// 	if (*(it + pairSize - 1) > *(it + pairSize * 2 - 1))
+	// 	{
+	// 		// for (size_t i = 0; i < orderNum; i++)
+	// 		// 	std::swap(*(it + i), *(it + i + orderNum));
+	// 		std::cout << "Swapping: " << *it << " and " << *(it + pairSize) << std::endl;
+	// 		std::swap_ranges(it, it + pairSize, it + pairSize);
+	// 	}
+	// }
+
+	for (iterator it = begin; it != end;)
+	{
+		iterator lastA = it;
+		std::advance(lastA, pairSize - 1);
+		iterator lastB = it;
+		std::advance(lastB, pairSize * 2 - 1);
+
+		// std::cout << "Comparing: " << *lastA << " > " << *lastB << std::endl;
+		mComp++;
+		if (*lastA > *lastB)
+		{
+			iterator mid = it;
+
+			std::advance(mid, pairSize);
+			// std::cout << "Swapping: " << *lastA << " and " << *lastB << std::endl;
+			std::swap_ranges(it, mid, mid);
+		}
+		std::advance(it, pairSize * 2);
+	}
+	// std::cout << "Recursion Depth: " << pairSize << std::endl;
 
 	pairSize *= 2;
 
@@ -265,34 +287,36 @@ void PmergeMe< Container >::insert(int pairSize, int numPairs, int numPend, Cont
 	int posPend;
 	size_t contSize = mContainer.size();
 	Container mResult, mPend;
+	
+	(void) numPairs;
 
-	std::cout << "PairSize: " << pairSize << ", numPairs: " << numPairs << ", numPend: " << numPend
-			  << std::endl;
+	// std::cout << "PairSize: " << pairSize << ", numPairs: " << numPairs << ", numPend: " << numPend
+			//   << std::endl;
 	for (size_t i = 0; i < contSize; i++)
 	{
 		if (isMainChain(i, pairSize, contSize))
 		{
-			mResult.push_back(mContainer.at(i));
+			mResult.push_back(getElement(i));
 		}
 		else
 		{
-			mPend.push_back(mContainer.at(i));
+			mPend.push_back(getElement(i));
 		}
 	}
 	posPend = mResult.size();
-	std::cout << "posPend: " << posPend << std::endl;
+	// std::cout << "posPend: " << posPend << std::endl;
 	mResult.insert(mResult.end(), mPend.begin(), mPend.end());
 	// printMainChain(posPend, pairSize, mResult);
-	std::cout << "-----" << std::endl;
+	// std::cout << "-----" << std::endl;
 	mContainer = mResult;
 
 	Container insertOrder = this->insertOrder(numPend, jacobSeq);
 
 	for (size_t i = 0; i < insertOrder.size(); ++i)
 	{
-		int bX = insertOrder[i];
 		typename Container::const_iterator it = insertOrder.begin();
 		std::advance(it, i);
+		int bX = *it;
 		size_t numMoved = countNumMoved(insertOrder, it, bX);
 
 		size_t start = posPend + (bX - 1 - numMoved) * pairSize;
@@ -301,15 +325,23 @@ void PmergeMe< Container >::insert(int pairSize, int numPairs, int numPend, Cont
 		int k = getK(bX, jacobSeq);
 		size_t usefulMain = getUsefulMain(k, posPend, pairSize);
 
-		// std::cout << "Looking at b" << bX << ", value = " << mContainer.at(end - 1) << std::endl;
+		// std::cout << "Looking at b" << bX << ", value = " << getElement(end - 1) << std::endl;
 		// std::cout << "insertion group k: " << k << std::endl;
 		// std::cout << "last useful chain: " << usefulMain << std::endl;
 		// std::cout << "-----" << std::endl;
-		size_t insertPos = (bX != 1) ? insertPair(mContainer[end - 1], pairSize, usefulMain) : 0;
+		size_t insertPos = (bX != 1) ? insertPair(getElement(end - 1), pairSize, usefulMain) : 0;
 
 		if (insertPos < start)
-			std::rotate(mContainer.begin() + insertPos, mContainer.begin() + start,
-						mContainer.begin() + end);
+		{
+			iterator first = mContainer.begin();
+			iterator middle = first;
+			iterator last = first;
+			
+			std::advance(first, insertPos);
+			std::advance(middle, start);
+			std::advance(last, end);
+			std::rotate(first, middle, last);
+		}
 
 		// printData("container after insertion:\t");
 		posPend += pairSize;
@@ -325,9 +357,10 @@ size_t PmergeMe< Container >::insertPair(int value, size_t pairSize, size_t numP
 	while (left < right)
 	{
 		size_t mid = (left + right) / 2;
-		int midValue = mContainer[(pairSize - 1) + mid * pairSize];
+		// int midValue = mContainer[(pairSize - 1) + mid * pairSize];
+		int midValue = getElement((pairSize - 1) + mid * pairSize);
 
-		std::cout << "Comparing: " << value << " < " << midValue << std::endl;
+		// std::cout << "Comparing: " << value << " < " << midValue << std::endl;
 		if (value < midValue)
 			right = mid;
 		else
@@ -395,7 +428,7 @@ void PmergeMe< C >::sort()
 			insert(pairSize, numPairs, numPend, jacobSeq);
 		pairSize /= 2;
 	}
-	printData("After:\t");
+	// printData("After:\t");
 }
 
 /*

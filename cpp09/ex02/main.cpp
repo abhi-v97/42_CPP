@@ -7,6 +7,7 @@
 // https://github.com/decidedlyso/merge-insertion-sort
 #include "PmergeMe.hpp"
 #include <vector>
+#include <list>
 
 int main(int argc, char **argv)
 {
@@ -29,6 +30,7 @@ int main(int argc, char **argv)
 	else if (argc > 2)
 	{
 		PmergeMe< std::vector< int > > pm = PmergeMe< std::vector< int > >(argv);
+		// PmergeMe< std::list<int> > pm = PmergeMe< std::list<int> >(argv);
 		pm.printData("Before:\t");
 		// TEST: Jacobsthal sequence
 		// for (int i = 0; i < 20; i++)
