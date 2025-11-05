@@ -424,16 +424,16 @@ void PmergeMe<C>::printMainChain(int posPend, int pairSize)
 	std::cout << "main: [ ";
 	for (int i = pairSize - 1; i < posPend; i += pairSize)
 	{
-		std::cout << mContainer.at(i) << ' ';
+		std::cout << getElement(i) << ' ';
 	}
 	std::cout << "]" << std::endl;
 	std::cout << "pend: [ ";
 	for (size_t i = posPend; i < mContainer.size() - pairSize; i += pairSize)
-		std::cout << mContainer.at(i + pairSize - 1) << ' ';
+		std::cout << getElement(i + pairSize - 1) << ' ';
 	std::cout << "]" << std::endl;
 	std::cout << "mResult: [ ";
 	for (size_t i = 0; i < mContainer.size(); i++)
-		std::cout << mContainer.at(i) << ' ';
+		std::cout << getElement(i) << ' ';
 	std::cout << "]" << std::endl;
 }
 
