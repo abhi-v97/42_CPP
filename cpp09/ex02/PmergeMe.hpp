@@ -27,8 +27,6 @@ class PmergeMe
 
 	private:
 		Container mContainer;
-		time_t mStart;
-		time_t mEnd;
 		int mComp;
 
 		double time();
@@ -39,7 +37,7 @@ class PmergeMe
 							 int bX);
 		int getJacobsthal(int n);
 		int getK(int bX, const Container &jacobSeq);
-		size_t insertPair(int value, size_t pairSize, size_t numPairs);
+		size_t insertPairPos(int value, size_t pairSize, size_t numPairs);
 		void insert(int pairSize, int numPend, Container &jacobSeq);
 		Container insertOrder(int numPend, Container &jacobSeq);
 		typename Container::reference getElement(typename Container::size_type index);

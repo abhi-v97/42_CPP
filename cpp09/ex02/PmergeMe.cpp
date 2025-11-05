@@ -4,7 +4,10 @@
 #include <algorithm>
 #include <cmath>
 #include <cstdlib>
+#include <limits>
 #include <sstream>
+#include <stdexcept>
+#include <stdlib.h>
 
 #ifdef DEBUG
 #define DEBUG_PRINT(expr)                                                                          \
@@ -12,18 +15,8 @@
 	{                                                                                              \
 		(expr);                                                                                    \
 	} while (0)
-#define DEBUG_BLOCK(code)                                                                          \
-	do                                                                                             \
-	{                                                                                              \
-		code                                                                                       \
-	} while (0)
 #else
 #define DEBUG_PRINT(expr)                                                                          \
-	do                                                                                             \
-	{                                                                                              \
-		(void)0;                                                                                   \
-	} while (0)
-#define DEBUG_BLOCK(code)                                                                          \
 	do                                                                                             \
 	{                                                                                              \
 		(void)0;                                                                                   \
@@ -35,23 +28,37 @@
 */
 
 template < typename C >
-PmergeMe< C >::PmergeMe()
+PmergeMe< C >::PmergeMe() : mContainer(), mComp(0)
 {
-	mComp = 0;
 }
 
 template < typename C >
 PmergeMe< C >::PmergeMe(const PmergeMe< C > &src)
 {
 	this->mContainer = src.mContainer;
+	this->mComp = src.mComp;
 }
 
 template < typename C >
 PmergeMe< C >::PmergeMe(char **argv)
 {
+	mComp = 0;
 	for (int i = 1; argv[i]; i++)
 	{
+		long long tmp = std::atoll(argv[i]);
+		if (std::numeric_limits<int>::max() < tmp)
+		{
+			throw std::out_of_range("Too big number!");
+		}
+		else if (std::numeric_limits<int>::min() > tmp)
+		{
+			throw std::out_of_range("Too small number!");
+		}
 		mContainer.push_back(std::atoi(argv[i]));
+	}
+	if (mContainer.size() < 2)
+	{
+		throw std::runtime_error("Not enough numbers!");
 	}
 }
 
@@ -61,11 +68,24 @@ PmergeMe< C >::PmergeMe(const std::string &str)
 	std::stringstream ss(str);
 	std::string buffer;
 
+	mComp = 0;
 	for (; std::getline(ss, buffer, ' ');)
 	{
+		long long tmp = std::atoll(buffer.c_str());
+		if (std::numeric_limits<int>::max() < tmp)
+		{
+			throw std::out_of_range("Too big number!");
+		}
+		else if (std::numeric_limits<int>::min() > tmp)
+		{
+			throw std::out_of_range("Too small number!");
+		}
 		mContainer.push_back(std::atoi(buffer.c_str()));
 	}
-	mComp = 0;
+	if (mContainer.size() < 2)
+	{
+		throw std::runtime_error("Not enough numbers!");
+	}
 }
 
 /*
@@ -85,6 +105,7 @@ template < typename C >
 PmergeMe< C > &PmergeMe< C >::operator=(PmergeMe const &rhs)
 {
 	this->mContainer = rhs.mContainer;
+	this->mComp = rhs.mComp;
 	return *this;
 }
 
@@ -99,6 +120,14 @@ std::ostream &operator<<(std::ostream &o, PmergeMe< C > const &i)
 ** --------------------------------- METHODS ----------------------------------
 */
 
+/**
+	Sorts the member container of ints using the Ford-Johnson algorithm.
+
+	Algorithm Breakdown:
+	1. Pairwise Comparison: Divide vector into pairs and sort them recursively.
+	2. Insert Pending Elements: Start from the deepest level of recursion from
+	previous step and insert elements according to the Jacobsthal sequnce.
+*/
 template < typename Container >
 void PmergeMe< Container >::sort()
 {
@@ -115,7 +144,7 @@ void PmergeMe< Container >::sort()
 	}
 	DEBUG_PRINT(std::cout << "-----" << std::endl);
 	DEBUG_PRINT(std::cout << "Pair Comparison Stage" << std::endl);
-	int pairSize = pairCompare();	
+	int pairSize = pairCompare();
 
 	DEBUG_PRINT(std::cout << "-----" << std::endl);
 	DEBUG_PRINT(std::cout << "Insertion Stage" << std::endl);
@@ -132,14 +161,26 @@ void PmergeMe< Container >::sort()
 	std::cout << "Total Comparisons : " << mComp << std::endl;
 }
 
+/**
+	Pairwise comparison, aka the "Merge" part
+
+	Break container into pairs starting at size 1, and compare the last
+	elements. If they are out of order, they are swapped in place.
+
+	Odd pairs and leftovers are ignored, for now.
+
+	Recursively calls itself and increases pair size until only one pair is
+	made.
+*/
 template < typename C >
 int PmergeMe< C >::pairCompare()
 {
 	static size_t pairSize = 1;
-
 	int units = mContainer.size() / pairSize;
-	if (units < 2)
+
+	if (units < 2) // base case, only one pair can be made
 		return (pairSize / 2);
+
 	DEBUG_PRINT(std::cout << "-----" << std::endl);
 	DEBUG_PRINT(std::cout << "Pair Size: " << pairSize << std::endl);
 
@@ -164,6 +205,7 @@ int PmergeMe< C >::pairCompare()
 
 			DEBUG_PRINT(std::cout << "Swapping: " << *lastA << " and " << *lastB << std::endl);
 			std::advance(mid, pairSize);
+			// std::swap_ranges(first pair, one past the first pair, start of second pair)
 			std::swap_ranges(it, mid, mid);
 		}
 		std::advance(it, pairSize * 2);
@@ -173,10 +215,20 @@ int PmergeMe< C >::pairCompare()
 	return (pairCompare());
 }
 
+/**
+	Insert pending pairs into the main chain.
+
+	1. First, the container is rearranged so that main chain elements are placed
+	in front.
+	2. Then, the Jacobsthal sequence is generated for the curent recursion
+	depth.
+	3. Finally, each pending pair is binary inserted into the main chain using
+	the Jacobsthal order.
+*/
 template < typename Container >
 void PmergeMe< Container >::insert(int pairSize, int numPend, Container &jacobSeq)
 {
-	int posPend;
+	int posPend; // position of the start of pending elements
 	size_t contSize = mContainer.size();
 	Container mMain, mPend;
 
@@ -199,7 +251,7 @@ void PmergeMe< Container >::insert(int pairSize, int numPend, Container &jacobSe
 	DEBUG_PRINT(printMainChain(posPend, pairSize));
 	DEBUG_PRINT(std::cout << "-----" << std::endl);
 
-	Container insertOrder = PmergeMe<Container>::insertOrder(numPend, jacobSeq);
+	Container insertOrder = PmergeMe< Container >::insertOrder(numPend, jacobSeq);
 
 	for (size_t i = 0; i < insertOrder.size(); ++i)
 	{
@@ -208,16 +260,25 @@ void PmergeMe< Container >::insert(int pairSize, int numPend, Container &jacobSe
 		int bX = *it;
 		size_t numMoved = countNumMoved(insertOrder, it, bX);
 
-		size_t start = posPend + (bX - 1 - numMoved) * pairSize;
+		// start = start pos for pending
+		// posPend is the absolute index in mContainer where pending elements begin.
+		// bX is the 1-based pending-pair number (b1, b2, ...).
+		// numMoved is how many earlier pending indices (< bX) have already been moved
+		// pair index -> element offset, then add posPend to get absolute element index
+		size_t start = posPend + (bX - numMoved - 1) * pairSize;
+		// end is one-past-the-last element of this pending pair: [start, end
 		size_t end = start + pairSize;
 
 		int k = getK(bX, jacobSeq);
 		size_t usefulMain = getUsefulMain(k, posPend, pairSize);
 
-		DEBUG_PRINT(std::cout << "Looking at b" << bX << ", value = " << getElement(end - 1) << std::endl);
+		DEBUG_PRINT(std::cout << "Looking at b" << bX << ", value = " << getElement(end - 1)
+							  << std::endl);
 		DEBUG_PRINT(std::cout << "insertion group k: " << k << std::endl);
 		DEBUG_PRINT(std::cout << "last useful chain: " << usefulMain << std::endl);
-		size_t insertPos = (bX != 1) ? insertPair(getElement(end - 1), pairSize, usefulMain) : 0;
+
+		// first element (b1) is always inserted with no comparisons
+		size_t insertPos = (bX != 1) ? insertPairPos(getElement(end - 1), pairSize, usefulMain) : 0;
 
 		if (insertPos < start)
 		{
@@ -228,10 +289,14 @@ void PmergeMe< Container >::insert(int pairSize, int numPend, Container &jacobSe
 			std::advance(first, insertPos);
 			std::advance(middle, start);
 			std::advance(last, end);
+			// std::rotate rotates mContainer such that middle is now the first element
+			// first = begin + insertPos, middle = pending pair, last = end of pending pair
+			// effectively grabs the pending pair and places it in insertPos position
 			std::rotate(first, middle, last);
 		}
 		DEBUG_PRINT(printData("container after insertion:\t"));
 		DEBUG_PRINT(std::cout << "-----" << std::endl);
+		// main chain has grown by one pair, so posPend moves up by pairSize
 		posPend += pairSize;
 	}
 }
@@ -240,6 +305,12 @@ void PmergeMe< Container >::insert(int pairSize, int numPend, Container &jacobSe
 ** --------------------------------- HELPERS ---------------------------------
 */
 
+/**
+	Returns the Jacobsthal number for the given n.
+
+	Sequence: 0, 1, 1, 3, 5, 11, 21, 43, ...
+*/
+// TODO: optimise this with the alternate sequential formula
 template < typename C >
 int PmergeMe< C >::getJacobsthal(int n)
 {
@@ -247,12 +318,22 @@ int PmergeMe< C >::getJacobsthal(int n)
 }
 
 /**
-	returns true if an element is part of the main chain (comapred)
+	returns true if an element is part of the main chain (compared)
+
+	Elements are laid out in the order: b1, a1, b2, a2, etc
+
+	\param i index of element
+	\param pairSize used to determine size of pair, where the main chain
+	element is the last one
+	\param size total size of container
 */
 bool isMainChain(int i, int pairSize, int size)
 {
+	// outside the container
 	if (i + pairSize > size)
 		return (false);
+
+	// main chain: element where i is a multiple of pairSize
 	if ((i / pairSize) % 2 == 1)
 		return (true);
 
@@ -300,18 +381,38 @@ Container PmergeMe< Container >::insertOrder(int numPend, Container &jacobSeq)
 	return (order);
 }
 
+/**
+	Gets number of main pairs that are considered when inserting a pending pair.
+
+	For a given k, elements must be inserted with no more than k comparisons.
+	This function returns the number of pairs that can be used to compare which
+	satisfies the comparison limit.
+
+	If k exceeds the number of elements in the main chain, then the upper limit
+	is the size of the main chain itself.
+*/
 size_t getUsefulMain(int k, size_t posPend, size_t pairSize)
 {
-	size_t usefulEnd = (1u << k) - 1;
-	size_t availPairs = posPend / pairSize;
+	size_t usefulPairs = (1u << k) - 1;
+	size_t mainPairs = posPend / pairSize;
 
-	if (usefulEnd > availPairs)
-		return (availPairs);
-	return (usefulEnd);
+	if (usefulPairs > mainPairs)
+		return (mainPairs);
+	return (usefulPairs);
 }
 
+/**
+	Returns the insertion point for a pending pair into the main chain.
+
+	Binary search algorithm is used to locate the position, by comparing value
+	with the last element of each pair aka the main chain.
+
+	\param value pending value to be inserted
+	\param pairSize number of elements in each pair
+	\param numPairs number of main chain elements to be considered for insertion
+*/
 template < typename Container >
-size_t PmergeMe< Container >::insertPair(int value, size_t pairSize, size_t numPairs)
+size_t PmergeMe< Container >::insertPairPos(int value, size_t pairSize, size_t numPairs)
 {
 	size_t left = 0;
 	size_t right = numPairs;
@@ -331,6 +432,11 @@ size_t PmergeMe< Container >::insertPair(int value, size_t pairSize, size_t numP
 	return (left * pairSize);
 }
 
+/**
+	Computes the "insertion group" k of a pending element.
+
+	Equivalent to the max number of comparisons required for the element.
+*/
 template < typename Container >
 int PmergeMe< Container >::getK(int bX, const Container &jacobSeq)
 {
@@ -343,6 +449,10 @@ int PmergeMe< Container >::getK(int bX, const Container &jacobSeq)
 	return (i);
 }
 
+/**
+	Returns the number of elements in the insertion order that are smaller than
+	the pending element
+*/
 template < typename Container >
 size_t PmergeMe< Container >::countNumMoved(const Container &insertOrder, iterator endIt, int bX)
 {
@@ -419,7 +529,7 @@ void PmergeMe< C >::printPairs(size_t orderNum)
 }
 
 template < typename C >
-void PmergeMe<C>::printMainChain(int posPend, int pairSize)
+void PmergeMe< C >::printMainChain(int posPend, int pairSize)
 {
 	std::cout << "main: [ ";
 	for (int i = pairSize - 1; i < posPend; i += pairSize)

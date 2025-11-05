@@ -7,9 +7,9 @@
 // https://github.com/decidedlyso/merge-insertion-sort
 #include "PmergeMe.hpp"
 #include <bits/types/struct_timeval.h>
-#include <vector>
 #include <list>
 #include <sys/time.h>
+#include <vector>
 
 timeval getTimeStruct()
 {
@@ -23,7 +23,7 @@ long getElapsedTime(const timeval &start, const timeval &end)
 {
 	long sec = end.tv_sec - start.tv_sec;
 	long usec = end.tv_usec - start.tv_usec;
-	
+
 	return (sec * 1000000 + usec);
 }
 
@@ -38,25 +38,44 @@ int main(int argc, char **argv)
 	}
 	else if (argc == 2)
 	{
-		vect = PmergeMe< std::vector< int > >(std::string(argv[1]));
-		list = PmergeMe< std::list< int > >(std::string(argv[1]));
+		try
+		{
+			vect = PmergeMe< std::vector< int > >(std::string(argv[1]));
+			list = PmergeMe< std::list< int > >(std::string(argv[1]));
+		}
+		catch (std::exception &e)
+		{
+			std::cerr << "Error: " << e.what() << std::endl;
+			return (0);
+		}
 	}
 	else if (argc > 2)
 	{
-		vect = PmergeMe< std::vector< int > >(argv);
-		list = PmergeMe< std::list< int > >(argv);
+		try
+		{
+			vect = PmergeMe< std::vector< int > >(argv);
+			list = PmergeMe< std::list< int > >(argv);
+		}
+		catch (std::exception &e)
+		{
+			std::cerr << "Error: " << e.what() << std::endl;
+			return (0);
+		}
 	}
+
 	vect.printData("Before:\t");
 	timeval start = getTimeStruct();
 	vect.sort();
 	timeval end = getTimeStruct();
-	std::cout << "Time to process with std::vector<int> : " << getElapsedTime(start, end) << " us" << std::endl;
+	std::cout << "Time to process with std::vector<int> : " << getElapsedTime(start, end) << " us"
+			  << std::endl;
 	vect.isSorted();
 	list.printData("Before:\t");
 	start = getTimeStruct();
 	list.sort();
 	end = getTimeStruct();
-	std::cout << "Time to process with std::list<int> : " << getElapsedTime(start, end) << " us" << std::endl;
+	std::cout << "Time to process with std::list<int> : " << getElapsedTime(start, end) << " us"
+			  << std::endl;
 	list.isSorted();
 	return (0);
 }
