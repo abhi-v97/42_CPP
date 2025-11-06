@@ -60,7 +60,7 @@ void RPN::addNumber(std::string &buffer)
 }
 void RPN::performOperation(std::string &buffer)
 {
-	if (mData.size() < 1)
+	if (mData.size() < 2)
 		throw(std::runtime_error("not enough operands for operator " + buffer));
 	double rhs = mData.top();
 	mData.pop();

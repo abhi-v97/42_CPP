@@ -46,11 +46,11 @@ PmergeMe< C >::PmergeMe(char **argv)
 	for (int i = 1; argv[i]; i++)
 	{
 		long long tmp = std::atoll(argv[i]);
-		if (std::numeric_limits<int>::max() < tmp)
+		if (std::numeric_limits< int >::max() < tmp)
 		{
 			throw std::out_of_range("Too big number!");
 		}
-		else if (std::numeric_limits<int>::min() > tmp)
+		else if (std::numeric_limits< int >::min() > tmp)
 		{
 			throw std::out_of_range("Too small number!");
 		}
@@ -72,11 +72,11 @@ PmergeMe< C >::PmergeMe(const std::string &str)
 	for (; std::getline(ss, buffer, ' ');)
 	{
 		long long tmp = std::atoll(buffer.c_str());
-		if (std::numeric_limits<int>::max() < tmp)
+		if (std::numeric_limits< int >::max() < tmp)
 		{
 			throw std::out_of_range("Too big number!");
 		}
-		else if (std::numeric_limits<int>::min() > tmp)
+		else if (std::numeric_limits< int >::min() > tmp)
 		{
 			throw std::out_of_range("Too small number!");
 		}
@@ -112,6 +112,7 @@ PmergeMe< C > &PmergeMe< C >::operator=(PmergeMe const &rhs)
 template < typename C >
 std::ostream &operator<<(std::ostream &o, PmergeMe< C > const &i)
 {
+	(void) i;
 	o << "This class attempts to sort a list of numbers using the Merge-Insertion Sort Algorithm";
 	return o;
 }
@@ -558,7 +559,7 @@ void PmergeMe< C >::isSorted()
 			return;
 		}
 	}
-	std::cout << "SEE IT, SAY IT, SORTED" << std::endl;
+	std::cout << "SORTED" << std::endl;
 }
 
 /* ************************************************************************** */

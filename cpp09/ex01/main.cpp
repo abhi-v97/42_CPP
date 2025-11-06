@@ -26,7 +26,6 @@ int main(int argc, char **argv)
 
 	try
 	{
-		std::cout.precision(2);
 		std::cout << calculator.calculate(expr) << std::endl;
 	}
 	catch (std::exception &e)
